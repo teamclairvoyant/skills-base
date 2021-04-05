@@ -19,6 +19,7 @@ public class SkillRestController {
     private SkillService skillService;
 
     //get all required skills
+    @CrossOrigin()
     @GetMapping("")
     public List<Skill> findAll() {
         return skillService.findAll();

@@ -9,6 +9,8 @@ import com.prd.skillbase.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 
 @RestController
 @RequestMapping("/")
@@ -39,6 +41,11 @@ public class UserLoginRegistrationController {
 
         userService.saveUser(newUser);
         return Status.SUCCESS;
+    }
+    @GetMapping("/prevent")
+    public Principal prevent(Principal principal)
+    {
+        return principal;
     }
 
 }

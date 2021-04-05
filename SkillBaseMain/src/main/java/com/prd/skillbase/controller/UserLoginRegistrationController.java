@@ -6,12 +6,15 @@ import com.prd.skillbase.model.User;
 import com.prd.skillbase.repository.UserRepository;
 
 import com.prd.skillbase.service.UserService;
+import com.prd.skillbase.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/employees")
 public class UserLoginRegistrationController {
 
     private UserService userService;
@@ -21,11 +24,11 @@ public class UserLoginRegistrationController {
 
     @Autowired
     public UserLoginRegistrationController (UserService userService){
-       this.userService = userService ;
+       this.userService = userService;
     }
 
     @CrossOrigin()
-    @PostMapping(value = "/signup")
+    @PostMapping("")
     public Status registerUser(@RequestBody User newUser) {
 
         User userExists = userService.findByEmail(newUser.getEmail());
@@ -39,6 +42,16 @@ public class UserLoginRegistrationController {
 
         userService.saveUser(newUser);
         return Status.SUCCESS;
+    }
+    //get all employees
+    @GetMapping("")
+    public List<User> findAll() {
+        return userService.findAll();
+    }
+
+    @GetMapping("/{employeeId}")
+    public User findById(@PathVariable String employeeId){
+        return userService.findById(employeeId);
     }
 
 }

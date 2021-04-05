@@ -1,14 +1,25 @@
 package com.prd.skillbase.model;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "employee")
-public class User {
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class User implements Serializable {
 
 //    Fields of the Database
 
@@ -24,6 +35,14 @@ public class User {
 
     @Column(name = "email", unique = true, length = 45)
     private String email;
+
+
+    //relationship with Employee_skill
+    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
+            CascadeType.DETACH , CascadeType.MERGE})
+    @JoinColumn(name = "emp_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private List<EmployeeSkill> employeeSkills;
 
 //      Constructor
 
@@ -60,6 +79,35 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+
+    public List<EmployeeSkill> getEmployeeSkills() {
+        return employeeSkills;
+    }
+
+    public void setEmployeeSkills(List<EmployeeSkill> employeeSkills) {
+        this.employeeSkills = employeeSkills;
+    }
+
+
+    public void addEmployeeSkills(EmployeeSkill empSkill){
+        if(employeeSkills == null){
+            employeeSkills = new ArrayList<>();
+        }
+
+        employeeSkills.add(empSkill);
+    }
+
+
+    public  void  deleteSkill(EmployeeSkill employeeSkill){
+
+        if (employeeSkills == null){
+            employeeSkills= new ArrayList<>();
+        }
+
+        employeeSkills.remove(employeeSkill);
     }
 
 

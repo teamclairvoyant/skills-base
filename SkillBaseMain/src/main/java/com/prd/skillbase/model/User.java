@@ -30,7 +30,10 @@ public class User implements Serializable {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "name", length = 45)
+    @Column(name = "emp_id")
+    private String empId;
+
+    @Column(name = "emp_name", length = 45)
     private String name;
 
     @Column(name = "email", unique = true, length = 45)
@@ -81,7 +84,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getEmpId() {
+        return empId;
+    }
 
+    public void setEmpId(String empId) {
+        this.empId = empId;
+    }
 
     public List<EmployeeSkill> getEmployeeSkills() {
         return employeeSkills;
@@ -115,6 +124,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
+                ", empId='" + empId + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';

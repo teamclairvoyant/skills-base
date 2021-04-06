@@ -26,7 +26,7 @@ public class Skill implements Serializable {
     @Column(name="id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "skill_name")
     private String skillName;
 
     //relationship with Employee_Skills
@@ -62,7 +62,7 @@ public class Skill implements Serializable {
         this.skillName = skillName;
     }
 
-    public List<EmployeeSkill> getEmployeeSkillss() {
+    public List<EmployeeSkill> getEmployeeSkills() {
         return employeeSkills;
     }
 

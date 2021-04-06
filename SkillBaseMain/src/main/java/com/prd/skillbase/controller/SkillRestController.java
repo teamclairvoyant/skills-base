@@ -5,6 +5,8 @@ import com.prd.skillbase.enums.Status;
 import com.prd.skillbase.model.EmployeeSkill;
 import com.prd.skillbase.model.Skill;
 import com.prd.skillbase.service.SkillService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +17,16 @@ import java.util.List;
 @RequestMapping("/skills")
 public class SkillRestController {
 
+    private static final Logger LOGGER = LogManager.getLogger(SkillRestController.class);
+
     @Autowired
     private SkillService skillService;
 
     //get all required skills
     @CrossOrigin()
     @GetMapping("")
-    public List<Skill> findAll() {
+    public List<Skill> findAll(){
+
         return skillService.findAll();
     }
 
@@ -29,6 +34,8 @@ public class SkillRestController {
     //add new skills to skill table
     @PostMapping("")
     public Status addSkill(@RequestBody Skill theSkill) {
+
+        LOGGER.info(theSkill);
 
         skillService.save(theSkill);
 
@@ -39,6 +46,7 @@ public class SkillRestController {
     @PostMapping("/{empId}/{skillId}")
     public Status updateSkill(@PathVariable String empId , @PathVariable String skillId, @RequestBody EmployeeSkill employeeSkill) {
 
+        LOGGER.info("Employee Id :"+empId+" Skill Id"+skillId+" employeeSkill :"+employeeSkill);
 
         skillService.updateSkill(empId , skillId , employeeSkill);
 
@@ -48,6 +56,8 @@ public class SkillRestController {
     //delete skills from specific employee
     @DeleteMapping("/{employeeSkillId}")
     public Status deleteSkills(@PathVariable String employeeSkillId) {
+
+        LOGGER.info("Employee Skill Id :"+employeeSkillId);
 
        skillService.deleteSkills(employeeSkillId);
 

@@ -7,6 +7,8 @@ import com.prd.skillbase.repository.UserRepository;
 
 import com.prd.skillbase.service.UserService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,8 @@ public class UserLoginRegistrationController {
 
     private UserService userService;
 
+    private static final Logger LOGGER = LogManager.getLogger(UserLoginRegistrationController.class);
+
     @Autowired
     UserRepository userRepository;
 
@@ -36,11 +40,11 @@ public class UserLoginRegistrationController {
     public Status registerUser(@RequestBody User newUser) {
 
         User userExists = userService.findByEmail(newUser.getEmail());
-        System.out.println("New User: " + newUser.toString());
-        System.out.println(userExists);
+        LOGGER.info("New User: " + newUser.toString());
+        LOGGER.info(userExists);
 
         if (userExists != null){
-            System.out.println("User Already Exists!");
+            LOGGER.info("User Already Exists!");
             return Status.USER_ALREADY_EXISTS;
         }
 

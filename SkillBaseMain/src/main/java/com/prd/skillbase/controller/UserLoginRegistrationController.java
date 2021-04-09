@@ -2,11 +2,15 @@ package com.prd.skillbase.controller;
 
 
 import com.prd.skillbase.enums.Status;
+import com.prd.skillbase.model.AccessToken;
 import com.prd.skillbase.model.User;
 import com.prd.skillbase.repository.UserRepository;
 
 import com.prd.skillbase.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -42,10 +46,21 @@ public class UserLoginRegistrationController {
         userService.saveUser(newUser);
         return Status.SUCCESS;
     }
-    @GetMapping("/prevent")
-    public Principal prevent(Principal principal)
-    {
-        return principal;
+    @GetMapping("/test")
+    public String sayHelloAdmin(){
+        return "Hello Admin! Welcome to SkillsBase Tool...!!!";
     }
 
+    @GetMapping("/prevent")
+    public AccessToken prevent(@AuthenticationPrincipal OidcUser principal) {
+
+        // Get ID Token Object
+        OidcIdToken idToken = principal.getIdToken();
+
+        // Get ID Token Value
+        String tokenValue = idToken.getTokenValue();
+        AccessToken accessToken = new AccessToken();
+        accessToken.setAccessToken(idToken.getTokenValue());
+        return accessToken;
+    }
 }

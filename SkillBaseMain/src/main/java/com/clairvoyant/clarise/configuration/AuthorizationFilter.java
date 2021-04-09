@@ -1,4 +1,4 @@
-package com.prd.skillbase.configuration;
+package com.clairvoyant.clarise.configuration;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;

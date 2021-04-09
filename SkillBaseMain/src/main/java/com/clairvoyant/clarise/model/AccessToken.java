@@ -1,4 +1,4 @@
-package com.prd.skillbase.model;
+package com.clairvoyant.clarise.model;
 
 public class AccessToken {
     private String accessToken;

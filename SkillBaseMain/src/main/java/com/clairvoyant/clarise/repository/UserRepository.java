@@ -1,11 +1,13 @@
-package com.prd.skillbase.repository;
+package com.clairvoyant.clarise.repository;
 
-import com.prd.skillbase.model.User;
+import com.clairvoyant.clarise.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     User findByEmail(String email);
+
+
 
 }

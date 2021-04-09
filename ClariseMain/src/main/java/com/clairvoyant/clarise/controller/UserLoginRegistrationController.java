@@ -45,23 +45,6 @@ public class UserLoginRegistrationController {
        this.userService = userService;
     }
 
-    @CrossOrigin()
-    @PostMapping("")
-    public Status registerUser(@RequestBody User newUser) {
-
-        User userExists = userService.findByEmail(newUser.getEmail());
-        LOGGER.info("New User: " + newUser.toString());
-        LOGGER.info(userExists);
-
-        if (userExists != null){
-            LOGGER.info("User Already Exists!");
-            return Status.USER_ALREADY_EXISTS;
-        }
-
-        userService.saveUser(newUser);
-        return Status.SUCCESS;
-    }
-
     //get all employees
     @GetMapping("")
     public List<User> findAll() {

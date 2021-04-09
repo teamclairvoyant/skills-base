@@ -4,6 +4,7 @@ package com.clairvoyant.clarise.service;
 import com.clairvoyant.clarise.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,12 @@ public class MailServiceImpl implements MailService{
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Value("${app.baseurl}")
+    private String baseurl;
+
+    @Value("${mail.invitation.subject}")
+    private String subject;
+
     public void sendEmail(User user) throws MessagingException {
 
 
@@ -24,9 +31,9 @@ public class MailServiceImpl implements MailService{
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
         helper.setTo(user.getEmail());
 
-        String url = "http://localhost:8081/"+user.getEmpId();
+        String url = baseurl +user.getEmpId();
 
-        helper.setSubject("SkillBase Invitation Link");
+        helper.setSubject(subject);
 
         helper.setText("<html>" +
                 "<body>" +

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.backend</groupId>
-	<artifactId>skillBaseMain</artifactId>
+	<artifactId>Clarise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>skillBaseMain</name>
-	<description>Backend application for skills-base tool</description>
+	<name>Clarise</name>
+	<description>Backend application for clarise tool</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -55,6 +55,11 @@
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
 		<!--Adding Log4j2 dependency-->

@@ -1,6 +1,6 @@
-package com.prd.skillbase.repository;
+package com.clairvoyant.clarise.repository;
 
-import com.prd.skillbase.model.EmployeeSkill;
+import com.clairvoyant.clarise.model.EmployeeSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployeeSkillRepository extends JpaRepository<EmployeeSkill , String> {

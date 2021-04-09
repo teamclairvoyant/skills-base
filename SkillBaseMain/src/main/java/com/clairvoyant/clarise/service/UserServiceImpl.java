@@ -1,8 +1,8 @@
-package com.prd.skillbase.service;
+package com.clairvoyant.clarise.service;
 
 
-import com.prd.skillbase.model.User;
-import com.prd.skillbase.repository.UserRepository;
+import com.clairvoyant.clarise.model.User;
+import com.clairvoyant.clarise.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

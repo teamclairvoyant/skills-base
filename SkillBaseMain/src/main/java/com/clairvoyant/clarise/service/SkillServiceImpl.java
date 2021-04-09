@@ -1,12 +1,12 @@
-package com.prd.skillbase.service;
+package com.clairvoyant.clarise.service;
 
 
-import com.prd.skillbase.model.EmployeeSkill;
-import com.prd.skillbase.model.Skill;
-import com.prd.skillbase.model.User;
-import com.prd.skillbase.repository.EmployeeSkillRepository;
-import com.prd.skillbase.repository.SkillRepository;
-import com.prd.skillbase.repository.UserRepository;
+import com.clairvoyant.clarise.model.Skill;
+import com.clairvoyant.clarise.model.User;
+import com.clairvoyant.clarise.repository.EmployeeSkillRepository;
+import com.clairvoyant.clarise.repository.SkillRepository;
+import com.clairvoyant.clarise.repository.UserRepository;
+import com.clairvoyant.clarise.model.EmployeeSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +24,6 @@ public class SkillServiceImpl implements SkillService {
 
     @Autowired
     private EmployeeSkillRepository employeeSkillRepository;
-
-
 
 
     @Override

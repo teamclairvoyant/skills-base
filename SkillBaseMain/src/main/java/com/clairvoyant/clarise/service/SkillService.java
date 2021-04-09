@@ -1,8 +1,8 @@
-package com.prd.skillbase.service;
+package com.clairvoyant.clarise.service;
 
 
-import com.prd.skillbase.model.EmployeeSkill;
-import com.prd.skillbase.model.Skill;
+import com.clairvoyant.clarise.model.Skill;
+import com.clairvoyant.clarise.model.EmployeeSkill;
 
 import java.util.List;
 

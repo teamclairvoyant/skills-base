@@ -1,14 +1,15 @@
-package com.prd.skillbase.controller;
+package com.clairvoyant.clarise.controller;
 
 
-import com.prd.skillbase.enums.Status;
-import com.prd.skillbase.model.EmployeeSkill;
-import com.prd.skillbase.model.Skill;
-import com.prd.skillbase.service.SkillService;
+import com.clairvoyant.clarise.enums.Status;
+import com.clairvoyant.clarise.model.Skill;
+import com.clairvoyant.clarise.model.EmployeeSkill;
+import com.clairvoyant.clarise.service.SkillService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class SkillRestController {
     private SkillService skillService;
 
     //get all required skills
-    @CrossOrigin()
     @GetMapping("")
     public List<Skill> findAll(){
 

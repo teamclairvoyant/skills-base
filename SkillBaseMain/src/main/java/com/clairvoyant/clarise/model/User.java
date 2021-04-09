@@ -1,4 +1,4 @@
-package com.prd.skillbase.model;
+package com.clairvoyant.clarise.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

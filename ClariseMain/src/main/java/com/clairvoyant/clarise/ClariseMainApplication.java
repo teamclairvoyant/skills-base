@@ -9,10 +9,10 @@ import org.springframework.core.Ordered;
 
 
 @SpringBootApplication
-public class SkillBaseMainApplication  {
+public class ClariseMainApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SkillBaseMainApplication.class, args); }
+		SpringApplication.run(ClariseMainApplication.class, args); }
 
 	@Bean
 	public FilterRegistrationBean<AuthorizationFilter> loggingFilter() {

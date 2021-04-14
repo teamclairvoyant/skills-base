@@ -19,7 +19,7 @@ public class ClariseMainApplication {
 	public FilterRegistrationBean<AuthorizationFilter> loggingFilter() {
 		FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
 		registrationBean.setFilter(new AuthorizationFilter());
-		registrationBean.addUrlPatterns("/employees/test");
+		registrationBean.addUrlPatterns("/api/*");
 		registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 		return registrationBean;
 	}

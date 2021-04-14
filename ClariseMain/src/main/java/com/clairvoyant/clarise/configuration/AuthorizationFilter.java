@@ -24,8 +24,13 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String authToken = httpRequest.getHeader("Authorization");
+        
+        // TODO: sometime token is coming as null
         if (!StringUtils.hasLength(authToken)) {
-            throw new AuthenticationServiceException("Authentication failed");
+        	System.out.println("authToken" + authToken);
+        	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
+        	 response.sendError(401, "Unauthorised");
+             return;
         }
         String[] header = authToken.split(" ");
         String idToken = header[1];
@@ -33,7 +38,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         String apiUrl = new StringBuffer("https://oauth2.googleapis.com/tokeninfo")
                 .append("?id_token={idToken}").toString();
         ResponseEntity<Map> restResponse = null;
-
         try {
             restResponse = restTemplate.getForEntity(apiUrl, Map.class, idToken);
         } catch (Exception e) {
@@ -41,7 +45,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         }
 
         if (!restResponse.getStatusCode().toString().contains("200")) {
-            throw new AuthenticationServiceException("Authentication failed");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // HTTP 401.
+            response.sendError(401, "Unauthorised");
+            return;
         }
         setContext(idToken);
         filterChain.doFilter(request, response);

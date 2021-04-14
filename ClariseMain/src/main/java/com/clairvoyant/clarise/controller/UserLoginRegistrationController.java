@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.mail.MessagingException;
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 
+import java.util.List;
+import java.io.IOException;
 import java.security.Principal;
 
 
@@ -62,7 +64,7 @@ public class UserLoginRegistrationController {
     }
 
     @GetMapping("/prevent")
-    public AccessToken prevent(@AuthenticationPrincipal OidcUser principal) {
+    public AccessToken prevent(@AuthenticationPrincipal OidcUser principal, HttpServletResponse httpResponse) throws IOException {
 
         // Get ID Token Object
         OidcIdToken idToken = principal.getIdToken();
@@ -71,6 +73,8 @@ public class UserLoginRegistrationController {
         String tokenValue = idToken.getTokenValue();
         AccessToken accessToken = new AccessToken();
         accessToken.setAccessToken(idToken.getTokenValue());
+        // TODO: Change with redirect uri passed from ui
+        httpResponse.sendRedirect("http://localhost:3000/oauth/redirect?access_token=" + idToken.getTokenValue());
         return accessToken;
     }
 

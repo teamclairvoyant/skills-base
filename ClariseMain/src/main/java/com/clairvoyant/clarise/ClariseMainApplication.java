@@ -20,7 +20,7 @@ public class ClariseMainApplication {
 		FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
 		registrationBean.setFilter(new AuthorizationFilter());
 		registrationBean.addUrlPatterns("/api/*");
-		registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//		registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 		return registrationBean;
 	}
 
@@ -28,7 +28,7 @@ public class ClariseMainApplication {
 	public FilterRegistrationBean<SimpleCORSFilter> corsFilter() {
 		FilterRegistrationBean<SimpleCORSFilter> registrationBean = new FilterRegistrationBean<>();
 		registrationBean.setFilter(new SimpleCORSFilter());
-//		registrationBean.addUrlPatterns("/api/*");
+		registrationBean.addUrlPatterns("/api/*");
 //		registrationBean.addUrlPatterns("/assets/*");
 //		registrationBean.addUrlPatterns("/v2/assets/*");
 		registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);

@@ -27,8 +27,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         System.out.println("response authToken --> " + httpRequest.getHeader("Authorization"));
         
         String authToken = httpRequest.getHeader("Authorization");
-       // TODO: sometime token is coming as null
-        
+        // TODO: sometime token is coming as null
+        // 
         if (!StringUtils.hasLength(authToken)) {
         	System.out.println("authToken" + authToken);
         	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 

@@ -63,7 +63,7 @@ public class UserLoginRegistrationController {
         return "Hello Admin! Welcome to SkillsBase Tool...!!!";
     }
 
-    @GetMapping("/prevent")
+    @GetMapping("/login")
     public AccessToken prevent(@AuthenticationPrincipal OidcUser principal, HttpServletResponse httpResponse) throws IOException {
 
 //    	if(principal == null ) {

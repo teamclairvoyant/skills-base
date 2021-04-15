@@ -66,6 +66,11 @@ public class UserLoginRegistrationController {
     @GetMapping("/prevent")
     public AccessToken prevent(@AuthenticationPrincipal OidcUser principal, HttpServletResponse httpResponse) throws IOException {
 
+//    	if(principal == null ) {
+//            httpResponse.sendRedirect("http://localhost:3000/oauth/logout");
+//            AccessToken accessToken1 = new AccessToken();
+//            return accessToken1;
+//    	}
         // Get ID Token Object
         OidcIdToken idToken = principal.getIdToken();
 

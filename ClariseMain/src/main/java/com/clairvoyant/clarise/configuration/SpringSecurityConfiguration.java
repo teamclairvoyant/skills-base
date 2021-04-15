@@ -15,10 +15,14 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        	.antMatchers("/employees/test")
 //        	.permitAll();
     	
-    	http
-    		.authorizeRequests()
-    		.antMatchers("/employees/test")
-    		.permitAll();
+//    	http
+//    		.authorizeRequests()
+//    		.antMatchers("/employees/test")
+//    		.permitAll()
+//    		.and()
+//    		.oauth2Login();
+    	http.authorizeRequests().antMatchers("/employees/test","/api/*").permitAll()
+        .anyRequest().authenticated().and().oauth2Login();
 
     }
 

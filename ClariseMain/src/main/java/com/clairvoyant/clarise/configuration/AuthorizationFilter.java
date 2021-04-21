@@ -30,7 +30,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         // TODO: sometime token is coming as null
 
         if (!StringUtils.hasLength(authToken)) {
-        	System.out.println("authToken" + authToken);
+        	//System.out.println("authToken" + authToken);
         	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
         	 response.sendError(401, "Unauthorised");
              return;
@@ -60,7 +60,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private void setContext(String accessToken) {
         try {
             DecodedJWT jwt = JWT.decode(accessToken);
-            System.out.println(jwt);
         } catch (JWTDecodeException exception){
 
         }

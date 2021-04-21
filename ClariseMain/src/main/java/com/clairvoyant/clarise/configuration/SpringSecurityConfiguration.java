@@ -2,7 +2,7 @@ package com.clairvoyant.clarise.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 
 @Configuration
@@ -24,6 +24,11 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     	http.authorizeRequests().antMatchers("/employees/test","/api/*").permitAll()
         .anyRequest().authenticated().and().oauth2Login();
 
+    	/*
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasRole("ADMIN","USER")
+                 .antMatchers("/").permitAll()
+                         */
     }
 
 

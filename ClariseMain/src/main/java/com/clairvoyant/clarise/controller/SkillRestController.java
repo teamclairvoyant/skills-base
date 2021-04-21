@@ -16,7 +16,7 @@ import java.util.List;
 //skill controller
 @RestController
 @RequestMapping("/api/skills")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class SkillRestController {
 
     private static final Logger LOGGER = LogManager.getLogger(SkillRestController.class);

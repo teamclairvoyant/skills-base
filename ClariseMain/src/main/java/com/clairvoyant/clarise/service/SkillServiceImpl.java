@@ -58,7 +58,6 @@ public class SkillServiceImpl implements SkillService {
 
     }
 
-
     @Override
     public void deleteSkills(String employeeSkillId) {
 

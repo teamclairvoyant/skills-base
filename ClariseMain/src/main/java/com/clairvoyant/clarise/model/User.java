@@ -100,7 +100,6 @@ public class User implements Serializable {
         this.employeeSkills = employeeSkills;
     }
 
-
     public void addEmployeeSkills(EmployeeSkill empSkill){
         if(employeeSkills == null){
             employeeSkills = new ArrayList<>();

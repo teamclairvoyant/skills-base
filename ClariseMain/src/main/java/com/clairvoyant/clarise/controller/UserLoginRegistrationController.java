@@ -2,13 +2,11 @@ package com.clairvoyant.clarise.controller;
 
 
 import com.clairvoyant.clarise.enums.Status;
-import com.clairvoyant.clarise.model.AccessToken;
 import com.clairvoyant.clarise.model.User;
 import com.clairvoyant.clarise.repository.UserRepository;
-
 import com.clairvoyant.clarise.service.MailService;
 import com.clairvoyant.clarise.service.UserService;
-
+import com.clairvoyant.clarise.service.ValidateDomainService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.io.IOException;
-import java.security.Principal;
-
 
 
 @RestController
@@ -36,6 +32,9 @@ public class UserLoginRegistrationController {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private ValidateDomainService validateDomainService;
 
     private static final Logger LOGGER = LogManager.getLogger(UserLoginRegistrationController.class);
 
@@ -64,25 +63,16 @@ public class UserLoginRegistrationController {
     }
 
     @GetMapping("/login")
-    public AccessToken prevent(@AuthenticationPrincipal OidcUser principal, HttpServletResponse httpResponse) throws IOException {
+    public void prevent(@AuthenticationPrincipal OidcUser principal, HttpServletResponse httpResponse) throws IOException {
 
-//    	if(principal == null ) {
-//            httpResponse.sendRedirect("http://localhost:3000/oauth/logout");
-//            AccessToken accessToken1 = new AccessToken();
-//            return accessToken1;
-//    	}
         // Get ID Token Object
         OidcIdToken idToken = principal.getIdToken();
 
-        // Get ID Token Value
-        String tokenValue = idToken.getTokenValue();
-        AccessToken accessToken = new AccessToken();
-        accessToken.setAccessToken(idToken.getTokenValue());
-        // TODO: Change with redirect uri passed from ui
-        httpResponse.sendRedirect("http://localhost:3000/oauth/redirect?access_token=" + idToken.getTokenValue());
-        return accessToken;
-    }
+        // call service
+        validateDomainService.checkDomain(idToken,httpResponse);
 
+        // TODO: Change with redirect uri passed from ui
+    }
 
 
     //endpoint to send invitation link

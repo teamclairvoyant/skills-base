@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
+
+
+    public void saveUser(User user) { userRepository.save(user); }
 
     @Override
     public List<User> findAll() {
@@ -47,5 +47,13 @@ public class UserServiceImpl implements UserService {
         return tempEmployee;
     }
 
+    @Override
+    public void updateUser(String empId, User userDetails) {
+       User user = userRepository.findById(empId)
+                .orElseThrow(()-> new RuntimeException("Employee not exist with empId: "+empId));
+        user.setRole(userDetails.getRole());
+
+        userRepository.save(user);
+    }
 
 }

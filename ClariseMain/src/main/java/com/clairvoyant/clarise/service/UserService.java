@@ -13,4 +13,6 @@ public interface UserService {
     public List<User> findAll();
 
     public User findById(String employeeId);
+
+    public void updateUser(String empId, User user);
 }

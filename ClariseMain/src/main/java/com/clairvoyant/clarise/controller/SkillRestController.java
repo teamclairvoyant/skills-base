@@ -15,7 +15,7 @@ import java.util.List;
 
 //skill controller
 @RestController
-@RequestMapping("/api/skills")
+@RequestMapping("/api/user")
 //@CrossOrigin(origins = "*")
 public class SkillRestController {
 
@@ -25,7 +25,7 @@ public class SkillRestController {
     private SkillService skillService;
 
     //get all required skills
-    @GetMapping("")
+    @GetMapping("/skills")
     public List<Skill> findAll(){
 
         return skillService.findAll();
@@ -33,7 +33,7 @@ public class SkillRestController {
 
 
     //add new skills to skill table
-    @PostMapping("")
+    @PostMapping("/addskill")
     public Status addSkill(@RequestBody Skill theSkill) {
 
         LOGGER.info(theSkill);

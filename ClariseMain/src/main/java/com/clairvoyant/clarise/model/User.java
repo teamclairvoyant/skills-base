@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 @Entity
 @Table(name = "employee")
 @JsonIdentityInfo(
@@ -38,6 +37,11 @@ public class User implements Serializable {
 
     @Column(name = "email", unique = true, length = 45)
     private String email;
+
+    @Column(name = "role", length = 45)
+    private String role;
+
+    //private Set<String> roles = new HashSet<>();
 
 
     //relationship with Employee_skill
@@ -98,6 +102,14 @@ public class User implements Serializable {
 
     public void setEmployeeSkills(List<EmployeeSkill> employeeSkills) {
         this.employeeSkills = employeeSkills;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void addEmployeeSkills(EmployeeSkill empSkill){

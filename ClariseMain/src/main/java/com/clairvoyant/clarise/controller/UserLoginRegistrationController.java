@@ -47,17 +47,17 @@ public class UserLoginRegistrationController {
     }
 
     //get all employees
-    @GetMapping("")
+    @GetMapping("/admin/employess")
     public List<User> findAll() {
         return userService.findAll();
     }
 
-    @GetMapping("/{employeeId}")
+    @GetMapping("/user/{employeeId}")
     public User findById(@PathVariable String employeeId){
         return userService.findById(employeeId);
 
     }
-    @GetMapping("/test")
+    @GetMapping("/user/test")
     public String sayHelloAdmin(){
         return "Hello Admin! Welcome to SkillsBase Tool...!!!";
     }
@@ -73,6 +73,21 @@ public class UserLoginRegistrationController {
 
         // TODO: Change with redirect uri passed from ui
     }
+
+    //update Employee/user rest controller
+
+    @PutMapping("admin/update/{empId}")
+    public Status updateEmployee(@PathVariable String empId, @RequestBody User userDetails){
+
+        userService.updateUser(empId,userDetails);
+
+        return Status.SUCCESS;
+    }
+    /*@PutMapping("/update")
+    public User updateUser(@RequestBody User user){
+        userService.saveUser(user);
+        return user;
+    }*/
 
 
     //endpoint to send invitation link

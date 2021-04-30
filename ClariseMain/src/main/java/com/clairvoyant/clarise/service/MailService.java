@@ -1,10 +1,10 @@
 package com.clairvoyant.clarise.service;
 
-import com.clairvoyant.clarise.model.User;
+import com.clairvoyant.clarise.model.Employee;
 
 import javax.mail.MessagingException;
 
 public interface MailService {
 
-    public void sendEmail(User user) throws MessagingException;
+    public void sendEmail(Employee employee) throws MessagingException;
 }

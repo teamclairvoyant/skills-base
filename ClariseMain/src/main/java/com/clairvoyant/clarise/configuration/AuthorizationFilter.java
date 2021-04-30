@@ -3,9 +3,9 @@ package com.clairvoyant.clarise.configuration;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.util.Map;
 
 public class AuthorizationFilter extends OncePerRequestFilter {
+
+    @Value("${app.googleApi}")
+    private String googleApi;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -30,13 +33,14 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         // TODO: sometime token is coming as null
 
         if (!StringUtils.hasLength(authToken)) {
-        	//System.out.println("authToken" + authToken);
         	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
         	 response.sendError(401, "Unauthorised");
              return;
         }
         String[] header = authToken.split(" ");
-        String idToken = header[1];
+        String token = header[1];
+        DecodedJWT jwt = JWT.decode(token);
+        String idToken = jwt.getClaim("sub").asString();
         RestTemplate restTemplate = new RestTemplate();
         String apiUrl = new StringBuffer("https://oauth2.googleapis.com/tokeninfo")
                 .append("?id_token={idToken}").toString();

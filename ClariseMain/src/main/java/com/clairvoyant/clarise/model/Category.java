@@ -2,12 +2,14 @@ package com.clairvoyant.clarise.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Data
 @Table(name="category")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -21,37 +23,6 @@ public class Category implements Serializable {
     private String id;
 
     @Column(name = "cat_name")
-    private String cat_name;
+    private String catName;
 
-    public Category(){
-
-    }
-
-    public Category(String cat_name) {
-        this.cat_name = cat_name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCat_name() {
-        return cat_name;
-    }
-
-    public void setCat_name(String cat_name) {
-        this.cat_name = cat_name;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id='" + id + '\'' +
-                ", cat_name='" + cat_name + '\'' +
-                '}';
-    }
 }

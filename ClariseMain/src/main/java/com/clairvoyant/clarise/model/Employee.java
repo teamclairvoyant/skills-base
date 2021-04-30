@@ -2,8 +2,8 @@ package com.clairvoyant.clarise.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
 import org.hibernate.annotations.*;
-
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,13 +12,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
+@Data
 @Table(name = "employee")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class User implements Serializable {
+public class Employee implements Serializable {
 
 //    Fields of the Database
 
@@ -41,76 +41,12 @@ public class User implements Serializable {
     @Column(name = "role", length = 45)
     private String role;
 
-    //private Set<String> roles = new HashSet<>();
-
-
     //relationship with Employee_skill
     @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
             CascadeType.DETACH , CascadeType.MERGE})
     @JoinColumn(name = "emp_id")
     @NotFound(action = NotFoundAction.IGNORE)
     private List<EmployeeSkill> employeeSkills;
-
-//      Constructor
-
-    public User() {
-    }
-
-//    Specifically request username
-
-    public User(String email) {
-        this.email = email;
-    }
-
-    //      Getters and Setters
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(String empId) {
-        this.empId = empId;
-    }
-
-    public List<EmployeeSkill> getEmployeeSkills() {
-        return employeeSkills;
-    }
-
-    public void setEmployeeSkills(List<EmployeeSkill> employeeSkills) {
-        this.employeeSkills = employeeSkills;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public void addEmployeeSkills(EmployeeSkill empSkill){
         if(employeeSkills == null){
@@ -130,14 +66,4 @@ public class User implements Serializable {
         employeeSkills.remove(employeeSkill);
     }
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", empId='" + empId + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

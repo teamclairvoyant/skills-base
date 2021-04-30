@@ -15,32 +15,28 @@ import java.util.List;
 
 //skill controller
 @RestController
-@RequestMapping("/api/user")
-//@CrossOrigin(origins = "*")
-public class SkillRestController {
+@RequestMapping("/v1/skills")
+public class SkillController {
 
-    private static final Logger LOGGER = LogManager.getLogger(SkillRestController.class);
+    private static final Logger LOGGER = LogManager.getLogger(SkillController.class);
 
     @Autowired
     private SkillService skillService;
 
-    //get all required skills
-    @GetMapping("/skills")
+    //get all skills
+    @GetMapping
     public List<Skill> findAll(){
 
         return skillService.findAll();
     }
 
-
     //add new skills to skill table
-    @PostMapping("/addskill")
-    public Status addSkill(@RequestBody Skill theSkill) {
+    @PostMapping
+    public Skill addSkill(@RequestBody Skill skill) {
 
-        LOGGER.info(theSkill);
+        LOGGER.info(skill);
 
-        skillService.save(theSkill);
-
-        return Status.SUCCESS;
+        return skillService.save(skill);
     }
 
     //add skill to specific employee

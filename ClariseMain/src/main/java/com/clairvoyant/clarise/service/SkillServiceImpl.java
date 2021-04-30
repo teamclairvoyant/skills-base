@@ -1,11 +1,10 @@
 package com.clairvoyant.clarise.service;
 
-
 import com.clairvoyant.clarise.model.Skill;
-import com.clairvoyant.clarise.model.User;
+import com.clairvoyant.clarise.model.Employee;
 import com.clairvoyant.clarise.repository.EmployeeSkillRepository;
 import com.clairvoyant.clarise.repository.SkillRepository;
-import com.clairvoyant.clarise.repository.UserRepository;
+import com.clairvoyant.clarise.repository.EmployeeRepository;
 import com.clairvoyant.clarise.model.EmployeeSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class SkillServiceImpl implements SkillService {
     private SkillRepository skillRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private EmployeeSkillRepository employeeSkillRepository;
@@ -32,8 +31,8 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public void save(Skill theSkill) {
-        skillRepository.save(theSkill);
+    public Skill save(Skill skill) {
+        return skillRepository.save(skill);
     }
 
 
@@ -41,20 +40,19 @@ public class SkillServiceImpl implements SkillService {
     public void updateSkill(String empId, String skillId , EmployeeSkill employeeSkill) {
 
 
-        Optional<User> emp = userRepository.findById(empId);
+        Optional<Employee> emp = employeeRepository.findById(empId);
 
         Optional<Skill> tempSkill = skillRepository.findById(skillId);
 
         EmployeeSkill empSkill = new EmployeeSkill();
 
-        empSkill.setUser(emp.get());
+        empSkill.setEmployee(emp.get());
         empSkill.setSkill(tempSkill.get());
         empSkill.setRating(employeeSkill.getRating());
 
         emp.get().addEmployeeSkills(empSkill);
 
-        userRepository.save(emp.get());
-
+        employeeRepository.save(emp.get());
 
     }
 
@@ -64,6 +62,5 @@ public class SkillServiceImpl implements SkillService {
         employeeSkillRepository.deleteById(employeeSkillId);
 
     }
-
 
 }

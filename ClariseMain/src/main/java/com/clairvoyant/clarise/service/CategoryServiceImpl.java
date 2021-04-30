@@ -19,8 +19,8 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void save(Category theCategory) {
-        categoryRepository.save(theCategory);
+    public Category save(Category category) {
+        return categoryRepository.save(category);
     }
 
     @Override

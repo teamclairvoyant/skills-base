@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/v1/category")
 public class CategoryController {
 
     private static final Logger LOGGER = LogManager.getLogger(CategoryController.class);
@@ -18,19 +18,15 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/category")
+    @GetMapping
     public List<Category> findAll(){
-
         return categoryService.findAll();
     }
 
-    @PostMapping("")
-    public Status addCategory(@RequestBody Category theCategory) {
+    @PostMapping
+    public Category addCategory(@RequestBody Category category) {
+        LOGGER.info(category);
 
-        LOGGER.info(theCategory);
-
-        categoryService.save(theCategory);
-
-        return Status.SUCCESS;
+        return categoryService.save(category);
     }
 }

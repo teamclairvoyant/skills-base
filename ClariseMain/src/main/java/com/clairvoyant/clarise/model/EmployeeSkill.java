@@ -2,6 +2,7 @@ package com.clairvoyant.clarise.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 //model for employee skill join table
 @Entity
+@Data
 @Table(name="employee_skill")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -27,7 +29,7 @@ public class EmployeeSkill implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "emp_id" , referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
-    private User user;
+    private Employee employee;
 
     //relationship with Skill model
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -38,45 +40,4 @@ public class EmployeeSkill implements Serializable {
     @Column(name = "rating")
     private String rating;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Skill getSkill() {
-        return skill;
-    }
-
-    public void setSkill(Skill skill) {
-        this.skill = skill;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee_Skill{" +
-                "id='" + id+ '\'' +
-                ", empId='" + user + '\'' +
-                ", skillId='" + skill + '\'' +
-                ", rating='" + rating + '\'' +
-                '}';
-    }
 }

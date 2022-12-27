@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 //skills model
 @Entity
@@ -30,21 +30,10 @@ public class Skill implements Serializable {
     @Column(name = "skill_name")
     private String skillName;
 
-    //relationship with Employee_Skills
-    @OneToMany(cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
-            CascadeType.DETACH , CascadeType.MERGE})
-    @JoinColumn(name = "skill_id")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private List<EmployeeSkill> employeeSkills;
+    private String description;
 
-
-    public void addEmployeeSkills(EmployeeSkill empSkill){
-        if(employeeSkills == null){
-            employeeSkills = new ArrayList<>();
-        }
-
-        employeeSkills.add(empSkill);
-    }
+    @Column(name = "is_active")
+    private boolean isActive;
 }
 
 

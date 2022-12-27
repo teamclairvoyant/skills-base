@@ -14,7 +14,7 @@ import com.clairvoyant.clarise.repository.QualificationStatusRepository;
 import com.clairvoyant.clarise.service.QualificationStatusService;
 
 @Service
-public class QualificationStatusServiceImpl implements QualificationStatusService {
+public class DefaultQualificationStatusService implements QualificationStatusService {
 
 	@Autowired
 	private QualificationStatusRepository repository;
@@ -46,7 +46,7 @@ public class QualificationStatusServiceImpl implements QualificationStatusServic
 
 	@Override
 	public QualificationStatus findById(String id) {
-		Optional<QualificationStatus> result = repository.findByIdAndIsActive(id, true);
+		Optional<QualificationStatus> result = repository.findById(id);
 		if (result.isEmpty()) {
 			throw new ResourceNotFoundException("Qualification Status Not Found");
 		}
@@ -63,7 +63,7 @@ public class QualificationStatusServiceImpl implements QualificationStatusServic
 
 	@Override
 	public List<QualificationStatus> findAll() {
-		List<QualificationStatus> result = repository.findByIsActive(true);
+		List<QualificationStatus> result = repository.findAll();
 		return result;
 	}
 

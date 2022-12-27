@@ -14,7 +14,7 @@ import com.clairvoyant.clarise.repository.DesignationRepository;
 import com.clairvoyant.clarise.service.DesignationService;
 
 @Service
-public class DesignationServiceImpl implements DesignationService {
+public class DefaultDesignationService implements DesignationService {
 
 	@Autowired
 	private DesignationRepository repository;
@@ -45,7 +45,7 @@ public class DesignationServiceImpl implements DesignationService {
 
 	@Override
 	public Designation findById(String id) {
-		Optional<Designation> result = repository.findByIdAndIsActive(id, true);
+		Optional<Designation> result = repository.findById(id);
 		if (result.isEmpty()) {
 			throw new ResourceNotFoundException("Designation Not Found");
 		}
@@ -61,7 +61,7 @@ public class DesignationServiceImpl implements DesignationService {
 
 	@Override
 	public List<Designation> findAll() {
-		List<Designation> result = repository.findByIsActive(true);
+		List<Designation> result = repository.findAll();
 		return result;
 	}
 

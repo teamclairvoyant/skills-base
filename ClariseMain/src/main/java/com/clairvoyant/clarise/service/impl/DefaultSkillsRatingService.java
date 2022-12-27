@@ -14,7 +14,7 @@ import com.clairvoyant.clarise.repository.SkillsRatingRepository;
 import com.clairvoyant.clarise.service.SkillsRatingService;
 
 @Service
-public class SkillsRatingServiceImpl implements SkillsRatingService {
+public class DefaultSkillsRatingService implements SkillsRatingService {
 
 	@Autowired
 	private SkillsRatingRepository ratingRepository;
@@ -45,7 +45,7 @@ public class SkillsRatingServiceImpl implements SkillsRatingService {
 
 	@Override
 	public SkillsRating findById(String id) {
-		Optional<SkillsRating> result = ratingRepository.findByIdAndIsActive(id, true);
+		Optional<SkillsRating> result = ratingRepository.findById(id);
 		System.out.println("the result of findby id is:" + result);
 		if (result.isEmpty()) {
 			throw new ResourceNotFoundException("Skill Rating Not Found");
@@ -62,7 +62,7 @@ public class SkillsRatingServiceImpl implements SkillsRatingService {
 
 	@Override
 	public List<SkillsRating> findAll() {
-		List<SkillsRating> result = ratingRepository.findByIsActive(true);
+		List<SkillsRating> result = ratingRepository.findAll();
 		return result;
 	}
 

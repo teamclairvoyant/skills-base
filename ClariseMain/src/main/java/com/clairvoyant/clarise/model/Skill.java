@@ -30,7 +30,12 @@ public class Skill implements Serializable {
     @Column(name = "skill_name")
     private String skillName;
 
-    //relationship with Employee_Skills
+    private String description;
+
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    /*//relationship with Employee_Skills
     @OneToMany(cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
             CascadeType.DETACH , CascadeType.MERGE})
     @JoinColumn(name = "skill_id")
@@ -44,7 +49,7 @@ public class Skill implements Serializable {
         }
 
         employeeSkills.add(empSkill);
-    }
+    }*/
 }
 
 

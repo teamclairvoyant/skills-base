@@ -3,14 +3,17 @@ package com.clairvoyant.clarise.controller;
 
 import com.clairvoyant.clarise.enums.Status;
 import com.clairvoyant.clarise.model.Skill;
-import com.clairvoyant.clarise.model.EmployeeSkill;
 import com.clairvoyant.clarise.service.SkillService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 //skill controller
@@ -30,16 +33,16 @@ public class SkillController {
         return skillService.findAll();
     }
 
-    //add new skills to skill table
-    @PostMapping
-    public Skill addSkill(@RequestBody Skill skill) {
+    //add or update skill to skills table
+    @PutMapping
+    public Skill addOrUpdateSkill(@RequestBody Skill skill) {
 
         LOGGER.info(skill);
 
-        return skillService.save(skill);
+        return skillService.addOrUpdateSkill(skill);
     }
 
-    //add skill to specific employee
+    /*//add skill to specific employee
     @PostMapping("/{empId}/{skillId}")
     public Status updateSkill(@PathVariable String empId , @PathVariable String skillId, @RequestBody EmployeeSkill employeeSkill) {
 
@@ -48,17 +51,24 @@ public class SkillController {
         skillService.updateSkill(empId , skillId , employeeSkill);
 
         return Status.SUCCESS;
+    }*/
+
+    //get skill
+    @GetMapping("/{skillId}")
+    public Skill find(@PathVariable String skillId){
+
+        return skillService.findSkill(skillId);
     }
 
-    //delete skills from specific employee
-    @DeleteMapping("/{employeeSkillId}")
-    public Status deleteSkills(@PathVariable String employeeSkillId) {
+    //delete skill
+    @DeleteMapping("/{skillId}")
+    public Status deleteSkill(@PathVariable String skillId) {
 
-        LOGGER.info("Employee Skill Id :"+employeeSkillId);
+        LOGGER.info("deleteSkill of skill Id :" + skillId);
 
-       skillService.deleteSkills(employeeSkillId);
+        skillService.deleteSkill(skillId);
 
-       return Status.SUCCESS;
+        return Status.SUCCESS;
     }
 
 }

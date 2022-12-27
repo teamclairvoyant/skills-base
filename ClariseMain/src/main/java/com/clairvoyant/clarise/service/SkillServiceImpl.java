@@ -1,16 +1,11 @@
 package com.clairvoyant.clarise.service;
 
 import com.clairvoyant.clarise.model.Skill;
-import com.clairvoyant.clarise.model.Employee;
-import com.clairvoyant.clarise.repository.EmployeeSkillRepository;
 import com.clairvoyant.clarise.repository.SkillRepository;
-import com.clairvoyant.clarise.repository.EmployeeRepository;
-import com.clairvoyant.clarise.model.EmployeeSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SkillServiceImpl implements SkillService {
@@ -18,25 +13,25 @@ public class SkillServiceImpl implements SkillService {
     @Autowired
     private SkillRepository skillRepository;
 
-    @Autowired
+    /*@Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private EmployeeSkillRepository employeeSkillRepository;
+    private EmployeeSkillRepository employeeSkillRepository;*/
 
 
     @Override
     public List<Skill> findAll() {
-        return skillRepository.findAll();
+        return skillRepository.findByIsActive(true);
     }
 
     @Override
-    public Skill save(Skill skill) {
+    public Skill addOrUpdateSkill(Skill skill) {
         return skillRepository.save(skill);
     }
 
 
-    @Override
+    /*@Override
     public void updateSkill(String empId, String skillId , EmployeeSkill employeeSkill) {
 
 
@@ -54,13 +49,21 @@ public class SkillServiceImpl implements SkillService {
 
         employeeRepository.save(emp.get());
 
+    }*/
+
+    @Override
+    public Skill findSkill(String skillId) {
+        Skill skill = skillRepository.findById(skillId).get();
+        return skill;
     }
 
     @Override
-    public void deleteSkills(String employeeSkillId) {
-
-        employeeSkillRepository.deleteById(employeeSkillId);
-
+    public void deleteSkill(String skillId) {
+        Skill skill = skillRepository.findById(skillId).get();
+        if (skill != null) {
+            skill.setActive(false);
+            skillRepository.save(skill);
+        }
     }
 
 }

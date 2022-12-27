@@ -42,17 +42,6 @@ public class SkillController {
         return skillService.addOrUpdateSkill(skill);
     }
 
-    /*//add skill to specific employee
-    @PostMapping("/{empId}/{skillId}")
-    public Status updateSkill(@PathVariable String empId , @PathVariable String skillId, @RequestBody EmployeeSkill employeeSkill) {
-
-        LOGGER.info("Employee Id :"+empId+" Skill Id"+skillId+" employeeSkill :"+employeeSkill);
-
-        skillService.updateSkill(empId , skillId , employeeSkill);
-
-        return Status.SUCCESS;
-    }*/
-
     //get skill
     @GetMapping("/{skillId}")
     public Skill find(@PathVariable String skillId){

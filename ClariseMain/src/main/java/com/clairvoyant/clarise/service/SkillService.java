@@ -9,8 +9,6 @@ public interface SkillService {
 
    public Skill addOrUpdateSkill(Skill skill);
 
-//   public void updateSkill(String empId, String skillId , EmployeeSkill employeeSkill);
-
    public Skill findSkill(String skillId);
 
    public void deleteSkill(String skillId);

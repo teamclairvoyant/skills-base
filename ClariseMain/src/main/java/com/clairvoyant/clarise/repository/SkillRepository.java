@@ -9,10 +9,6 @@ import java.util.List;
 
 @Repository
 public interface SkillRepository extends JpaRepository<Skill, String> {
-
-   // JDBC-based database access and object-relational mappings.
-    //select * from employee where
-
     List<Skill> findByIsActive(boolean isActive);
 
 }

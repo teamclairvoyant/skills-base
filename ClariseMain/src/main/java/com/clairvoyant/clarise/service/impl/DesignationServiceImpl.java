@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.service;
+package com.clairvoyant.clarise.service.impl;
 
 import java.time.Instant;
 import java.util.List;
@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.clairvoyant.clarise.exceptions.DesignationNotFoundException;
+import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
 import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.repository.DesignationRepository;
+import com.clairvoyant.clarise.service.DesignationService;
 
 @Service
 public class DesignationServiceImpl implements DesignationService {
@@ -46,7 +47,7 @@ public class DesignationServiceImpl implements DesignationService {
 	public Designation findById(String id) {
 		Optional<Designation> result = repository.findByIdAndIsActive(id, true);
 		if (result.isEmpty()) {
-			throw new DesignationNotFoundException("Designation Not Found");
+			throw new ResourceNotFoundException("Designation Not Found");
 		}
 		return result.get();
 	}
@@ -55,7 +56,7 @@ public class DesignationServiceImpl implements DesignationService {
 	public void delete(Designation designation) {
 		Designation result = findById(designation.getId());
 		result.setActive(false);
-		save(result);
+		repository.save(result);
 	}
 
 	@Override

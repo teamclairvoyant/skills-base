@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.service;
+package com.clairvoyant.clarise.service.impl;
 
 import java.time.Instant;
 import java.util.List;
@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.clairvoyant.clarise.exceptions.SkillRatingNotFoundException;
+import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
 import com.clairvoyant.clarise.model.SkillsRating;
 import com.clairvoyant.clarise.repository.SkillsRatingRepository;
+import com.clairvoyant.clarise.service.SkillsRatingService;
 
 @Service
 public class SkillsRatingServiceImpl implements SkillsRatingService {
@@ -39,7 +40,7 @@ public class SkillsRatingServiceImpl implements SkillsRatingService {
 			skillsRating.setCreatedBy("");
 			skillsRating.setActive(true);
 		}
-		return ratingRepository.save(skillsRating);
+		return ratingRepository.save(skillsRating); 
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class SkillsRatingServiceImpl implements SkillsRatingService {
 		Optional<SkillsRating> result = ratingRepository.findByIdAndIsActive(id, true);
 		System.out.println("the result of findby id is:" + result);
 		if (result.isEmpty()) {
-			throw new SkillRatingNotFoundException("Skill Rating Not Found");
+			throw new ResourceNotFoundException("Skill Rating Not Found");
 		}
 		return result.get();
 	}
@@ -55,10 +56,8 @@ public class SkillsRatingServiceImpl implements SkillsRatingService {
 	@Override
 	public void delete(SkillsRating rating) {
 		SkillsRating result = findById(rating.getId());
-
 		result.setActive(false);
-		save(result);
-
+		ratingRepository.save(result);
 	}
 
 	@Override

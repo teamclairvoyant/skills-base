@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.service;
+package com.clairvoyant.clarise.service.impl;
 
 import java.time.Instant;
 import java.util.List;
@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.clairvoyant.clarise.exceptions.QualificationStatusNotFoundException;
+import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
 import com.clairvoyant.clarise.model.QualificationStatus;
 import com.clairvoyant.clarise.repository.QualificationStatusRepository;
+import com.clairvoyant.clarise.service.QualificationStatusService;
 
 @Service
 public class QualificationStatusServiceImpl implements QualificationStatusService {
@@ -39,7 +40,7 @@ public class QualificationStatusServiceImpl implements QualificationStatusServic
 			qualificationStatus.setCreatedBy("");
 			qualificationStatus.setActive(true);
 		}
-		
+
 		return repository.save(qualificationStatus);
 	}
 
@@ -47,7 +48,7 @@ public class QualificationStatusServiceImpl implements QualificationStatusServic
 	public QualificationStatus findById(String id) {
 		Optional<QualificationStatus> result = repository.findByIdAndIsActive(id, true);
 		if (result.isEmpty()) {
-			throw new QualificationStatusNotFoundException("Qualification Status Not Found");
+			throw new ResourceNotFoundException("Qualification Status Not Found");
 		}
 
 		return result.get();
@@ -57,7 +58,7 @@ public class QualificationStatusServiceImpl implements QualificationStatusServic
 	public void delete(QualificationStatus qualificationStatus) {
 		QualificationStatus result = findById(qualificationStatus.getId());
 		result.setActive(false);
-		save(result);
+		repository.save(result);
 	}
 
 	@Override

@@ -18,55 +18,56 @@ import java.util.Map;
 
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-    @Value("${app.googleApi}")
-    private String googleApi;
+	@Value("${app.googleApi}")
+	private String googleApi;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        //System.out.println("response authToken --> " + httpRequest.getHeader("Authorization"));
-        
-        String authToken = httpRequest.getHeader("Authorization");
-        // TODO: sometime token is coming as null
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		// System.out.println("response authToken --> " +
+		// httpRequest.getHeader("Authorization"));
 
-        if (!StringUtils.hasLength(authToken)) {
-        	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
-        	 response.sendError(401, "Unauthorised");
-             return;
-        }
-        String[] header = authToken.split(" ");
-        String token = header[1];
-        DecodedJWT jwt = JWT.decode(token);
-        String idToken = jwt.getClaim("sub").asString();
-        RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = new StringBuffer("https://oauth2.googleapis.com/tokeninfo")
-                .append("?id_token={idToken}").toString();
-        ResponseEntity<Map> restResponse = null;
-        try {
-            restResponse = restTemplate.getForEntity(apiUrl, Map.class, idToken);
-        } catch (Exception e) {
-            restResponse= new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-        }
+		String authToken = httpRequest.getHeader("Authorization");
+		// TODO: sometime token is coming as null
 
-        if (!restResponse.getStatusCode().toString().contains("200")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // HTTP 401.
-            response.sendError(401, "Unauthorised");
-            return;
-        }
-        setContext(idToken);
-        filterChain.doFilter(request, response);
-    }
+		if (!StringUtils.hasLength(authToken)) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.sendError(401, "Unauthorised");
+			return;
+		}
+		String[] header = authToken.split(" ");
+		String token = header[1];
+		DecodedJWT jwt = JWT.decode(token);
+		String idToken = jwt.getClaim("sub").asString();
+		RestTemplate restTemplate = new RestTemplate();
+		String apiUrl = new StringBuffer("https://oauth2.googleapis.com/tokeninfo").append("?id_token={idToken}")
+				.toString();
+		ResponseEntity<Map> restResponse = null;
+		try {
+			restResponse = restTemplate.getForEntity(apiUrl, Map.class, idToken);
+		} catch (Exception e) {
+			restResponse = new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+		}
 
+		if (!restResponse.getStatusCode().toString().contains("200")) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // HTTP 401.
+			response.sendError(401, "Unauthorised");
+			return;
+		}
+		setContext(idToken);
 
-    private void setContext(String accessToken) {
-        try {
-            DecodedJWT jwt = JWT.decode(accessToken);
-        } catch (JWTDecodeException exception){
+		filterChain.doFilter(request, response);
+	}
 
-        }
+	private void setContext(String accessToken) {
+		try {
+			DecodedJWT jwt = JWT.decode(accessToken);
+		} catch (JWTDecodeException exception) {
 
-    }
+		}
+
+	}
 }

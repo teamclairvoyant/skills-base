@@ -25,4 +25,9 @@ public class Category implements Serializable {
     @Column(name = "cat_name")
     private String catName;
 
+    private String description;
+
+    @Column(name = "is_active")
+    private boolean isActive;
+
 }

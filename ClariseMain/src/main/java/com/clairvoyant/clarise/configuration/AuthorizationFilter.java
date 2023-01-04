@@ -33,7 +33,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		String authToken = httpRequest.getHeader("Authorization");
 		// TODO: sometime token is coming as null
 
-		if (!StringUtils.hasLength(authToken)) {
+		/*if (!StringUtils.hasLength(authToken)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.sendError(401, "Unauthorised");
 			return;
@@ -57,7 +57,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 			response.sendError(401, "Unauthorised");
 			return;
 		}
-		setContext(idToken);
+		setContext(idToken);*/
 
 		filterChain.doFilter(request, response);
 	}

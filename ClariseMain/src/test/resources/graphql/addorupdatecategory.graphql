@@ -1,0 +1,6 @@
+mutation {
+    addOrUpdateCategory(catName: "Article", description :"This is a Java Article", isActive:true){
+        id
+        catName
+    }
+}

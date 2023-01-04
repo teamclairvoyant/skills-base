@@ -3,16 +3,6 @@ package com.clairvoyant.clarise.model.superclass;
 import com.clairvoyant.clarise.configuration.constants.CommonConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import java.io.Serializable;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -21,6 +11,16 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import java.io.Serializable;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Objects;
 
 /**
  * Base abstract class for entities which will hold definitions for created, modified by and
@@ -57,11 +57,15 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @NotNull
     private ZonedDateTime modifiedDate;
 
+    public static ZonedDateTime getUtcZonedDateTime() {
+        return ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("UTC"));
+    }
+
     @PrePersist
     void onCreate() throws Exception {
         SecurityContext context = SecurityContextHolder.getContext();
-        this.setCreatedDate(getUTCZonedDateTime());
-        this.setModifiedDate(getUTCZonedDateTime());
+        this.setCreatedDate(getUtcZonedDateTime());
+        this.setModifiedDate(getUtcZonedDateTime());
 
         // TODO : Set proper condition for checking if SecurityContext is having the required auth data.
         if (Objects.nonNull(context.getAuthentication())) {
@@ -76,17 +80,13 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @PreUpdate
     void onPersist() throws Exception {
         SecurityContext context = SecurityContextHolder.getContext();
-        this.setModifiedDate(getUTCZonedDateTime());
+        this.setModifiedDate(getUtcZonedDateTime());
         if (Objects.nonNull(context.getAuthentication())) {
             // TODO : Set proper data after implementing SecurityContext and having auth user in it.
             this.setModifiedBy(context.getAuthentication().getName());
         } else {
             throw new Exception(CommonConstants.AUDIT_TRAIL_EXCEPTION);
         }
-    }
-
-    public static ZonedDateTime getUTCZonedDateTime() {
-        return ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("UTC"));
     }
 }
 

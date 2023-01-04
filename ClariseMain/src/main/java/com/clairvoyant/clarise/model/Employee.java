@@ -4,10 +4,14 @@ import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import org.hibernate.annotations.*;
-import javax.persistence.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,21 +43,18 @@ public class Employee extends Persistable {
     @NotFound(action = NotFoundAction.IGNORE)
     private List<EmployeeSkill> employeeSkills;
 
-    public void addEmployeeSkills(EmployeeSkill empSkill){
-        if(employeeSkills == null){
+    public void addEmployeeSkills(EmployeeSkill empSkill) {
+        if (employeeSkills == null) {
             employeeSkills = new ArrayList<>();
         }
-
         employeeSkills.add(empSkill);
     }
 
 
-    public  void  deleteSkill(EmployeeSkill employeeSkill){
-
-        if (employeeSkills == null){
-            employeeSkills= new ArrayList<>();
+    public  void  deleteSkill(EmployeeSkill employeeSkill) {
+        if (employeeSkills == null) {
+            employeeSkills = new ArrayList<>();
         }
-
         employeeSkills.remove(employeeSkill);
     }
 

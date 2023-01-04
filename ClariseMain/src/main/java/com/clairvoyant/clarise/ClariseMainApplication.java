@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = "com.clairvoyant.clarise.*")
 public class ClariseMainApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ClariseMainApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ClariseMainApplication.class, args);
+    }
 }

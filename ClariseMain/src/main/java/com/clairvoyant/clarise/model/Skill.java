@@ -24,7 +24,7 @@ public class Skill implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name="id")
+    @Column(name = "id")
     private String id;
 
     @Column(name = "skill_name")

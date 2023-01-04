@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-public class MailServiceImpl implements MailService{
+public class MailServiceImpl implements MailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -35,12 +35,12 @@ public class MailServiceImpl implements MailService{
 
         helper.setSubject(subject);
 
-        helper.setText("<html>" +
-                "<body>" +
-                "Invitation Link : "+
-                "<a href='"+url+"'>"+url+"</a></body>" +
-                "</html>", true);
-        
+        helper.setText("<html>"
+                + "<body>"
+                + "Invitation Link : "
+                + "<a href='" + url + "'>" + url + "</a></body>"
+                + "</html>", true);
+
         javaMailSender.send(mail);
     }
 }

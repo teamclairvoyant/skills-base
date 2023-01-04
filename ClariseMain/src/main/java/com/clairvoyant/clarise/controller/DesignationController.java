@@ -23,34 +23,34 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = SwaggerConfig.DESIGNATION)
 public class DesignationController {
 
-	@Autowired
-	private DesignationService service;
+    @Autowired
+    private DesignationService service;
 
-	@PostMapping
-	@ApiOperation(value = "Create and update the designation", response = Designation.class)
-	public Designation addDesignation(@RequestBody Designation designation) {
-		return service.save(designation);
-	}
+    @PostMapping
+    @ApiOperation(value = "Create and update the designation", response = Designation.class)
+    public Designation addDesignation(@RequestBody Designation designation) {
+        return service.save(designation);
+    }
 
-	@GetMapping("/{id}")
-	@ApiOperation(value = "Get gesignation by id", response = Designation.class)
-	public Designation findById(@PathVariable String id) {
-		return service.findById(id);
-	}
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Get gesignation by id", response = Designation.class)
+    public Designation findById(@PathVariable String id) {
+        return service.findById(id);
+    }
 
-	@GetMapping
-	@ApiOperation(value = "Get all designations", response = List.class)
-	public List<Designation> findAll() {
-		return service.findAll();
-	}
+    @GetMapping
+    @ApiOperation(value = "Get all designations", response = List.class)
+    public List<Designation> findAll() {
+        return service.findAll();
+    }
 
-	@DeleteMapping("/{id}")
-	@ApiOperation(value = "Deletes the designation by id", response = String.class)
-	public String delete(@PathVariable String id) {
-		Designation status = new Designation();
-		status.setId(id);
-		service.delete(status);
-		return "Record Deleted";
-	}
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes the designation by id", response = String.class)
+    public String delete(@PathVariable String id) {
+        Designation status = new Designation();
+        status.setId(id);
+        service.delete(status);
+        return "Record Deleted";
+    }
 
 }

@@ -15,7 +15,6 @@ public class SkillServiceImpl implements SkillService {
     @Autowired
     private SkillRepository skillRepository;
 
-
     @Override
     public List<Skill> findAll() {
         return skillRepository.findAll();

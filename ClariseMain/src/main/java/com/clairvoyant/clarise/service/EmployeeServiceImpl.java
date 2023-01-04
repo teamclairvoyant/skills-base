@@ -16,15 +16,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository){
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee findByEmail(String email){
+    public Employee findByEmail(String email) {
         return employeeRepository.findByEmail(email);
     }
 
-    public void saveEmployee(Employee employee) { employeeRepository.save(employee); }
+    public void saveEmployee(Employee employee) {
+        employeeRepository.save(employee);
+    }
 
     @Override
     public List<Employee> findAll() {
@@ -37,8 +39,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee tempEmployee = null;
 
-        if(result.isPresent()) {
-            tempEmployee =result.get();
+        if (result.isPresent()) {
+            tempEmployee = result.get();
         }
 
         return tempEmployee;
@@ -46,8 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void updateEmployee(String employeeId, Employee employeeDetails) {
-       Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(()-> new RuntimeException("Employee not exist with empId: "+employeeId));
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not exist with empId: " + employeeId));
         employee.setRole(employeeDetails.getRole());
 
         employeeRepository.save(employee);

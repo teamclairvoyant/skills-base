@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
@@ -16,30 +17,22 @@ import java.util.UUID;
 @Service
 public class ValidateDomainServiceImpl implements ValidateDomainService {
 
-    @Value("${app.fixedDomain}")
-    private String fixedDomain;
-
-    @Value("${app.authorizedUrl}")
-    private String authorizedUrl;
-
-    @Value("${app.unAuthorizedUrl}")
-    private String unAuthorizedUrl;
-
-    @Value("${app.superAdminId}")
-    private String superAdminId;
-
-    @Value("${app.defaultRole}")
-    private String defaultRole;
-
-    @Value("${app.superAdminRole}")
-    private String superAdminRole;
-
-    @Value("${app.insertQuery}")
-    private String insertQuery;
-
     @Autowired
     EmployeeRepository employeeRepository;
-
+    @Value("${app.fixedDomain}")
+    private String fixedDomain;
+    @Value("${app.authorizedUrl}")
+    private String authorizedUrl;
+    @Value("${app.unAuthorizedUrl}")
+    private String unAuthorizedUrl;
+    @Value("${app.superAdminId}")
+    private String superAdminId;
+    @Value("${app.defaultRole}")
+    private String defaultRole;
+    @Value("${app.superAdminRole}")
+    private String superAdminRole;
+    @Value("${app.insertQuery}")
+    private String insertQuery;
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -52,31 +45,28 @@ public class ValidateDomainServiceImpl implements ValidateDomainService {
 
         DecodedJWT jwt = JWT.decode(idToken.getTokenValue());
         //fixedDomain = clairvoyantsoft.com;
-        if(fixedDomain.equals(jwt.getClaim("hd").asString()))
-        {
+        if (fixedDomain.equals(jwt.getClaim("hd").asString())) {
             //if domain is authorized redirect to homepage
             UUID uuid = UUID.randomUUID();
             String uuidAsString = uuid.toString();
             //defaultRole = ROLE_USER
             String role = defaultRole;
             //superAdminId = clarise@clairvoyantsoft.com
-            if(superAdminId.equals(idToken.getEmail()))
-            {
+            if (superAdminId.equals(idToken.getEmail())) {
                 // superAdminRole = ROLE_SUPERADMIN
                 role = superAdminRole;
             }
             JwtUtil customToken = new JwtUtil();
-            String token=customToken.generateToken(idToken.getTokenValue(),role);
+            String token = customToken.generateToken(idToken.getTokenValue(), role);
             //System.out.println("Custom token---------------------"+token + " Custom token end");
             Employee employee = employeeRepository.findByEmail(idToken.getEmail());
-            if(employee ==null){
+            if (employee == null) {
                 String query = insertQuery;
-                jdbcTemplate.update(query, uuidAsString,idToken.getEmail(),idToken.getFullName(),role);
+                jdbcTemplate.update(query, uuidAsString, idToken.getEmail(), idToken.getFullName(), role);
             }
             //httpResponse.sendRedirect(authorizedUrl + idToken.getTokenValue()+"&role="+role);
             httpResponse.sendRedirect(authorizedUrl + token);
-        }
-        else{
+        } else {
             //if domain is unauthorized redirect to login page again
             httpResponse.sendRedirect(unAuthorizedUrl + 1001);
         }

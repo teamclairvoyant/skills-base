@@ -1,17 +1,16 @@
 package com.clairvoyant.clarise.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.clairvoyant.clarise.model.SkillsRating;
+
+import java.util.List;
 
 public interface SkillsRatingService {
 
-	public SkillsRating save(SkillsRating skillsRating);
+    public SkillsRating save(SkillsRating skillsRating);
 
-	public SkillsRating findById(String id);
+    public SkillsRating findById(String id);
 
-	public void delete(SkillsRating rating);
+    public void delete(SkillsRating rating);
 
-	public List<SkillsRating> findAll();
+    public List<SkillsRating> findAll();
 }

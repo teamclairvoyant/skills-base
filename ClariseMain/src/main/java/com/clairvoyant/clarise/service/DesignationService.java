@@ -7,11 +7,11 @@ import com.clairvoyant.clarise.model.Designation;
 
 public interface DesignationService {
 
-	public Designation save(Designation designation);
+    public Designation save(Designation designation);
 
-	public Designation findById(String id);
+    public Designation findById(String id);
 
-	public void delete(Designation designation);
+    public void delete(Designation designation);
 
-	public List<Designation> findAll();
+    public List<Designation> findAll();
 }

@@ -126,11 +126,29 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>4.6.2</version>
 		</dependency>
-
-
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>9.3</version>
+        </dependency>
 	</dependencies>
 
-	<build>
+    <build>
+        <!--<pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-maven-plugin</artifactId>
+                    <version>3.4.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>-->
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -139,7 +157,7 @@
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.4.1</version>
+                <version>4.6.2</version>
 				<configuration>
 					<diffChangeLogFile>src/main/resources/changelog/db.changelog.${maven.build.timestamp}.xml</diffChangeLogFile>
 					<propertyFile>liquibase.properties</propertyFile>
@@ -152,7 +170,59 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-		</plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <configLocation>src/checkstyle/checkstyle.xml</configLocation>
+                    <!--<headerLocation>src/checkstyle/java.header</headerLocation>-->
+                    <failsOnError>true</failsOnError>
+                    <consoleOutput>true</consoleOutput>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <propertyExpansion>checkstyle.build.directory=${project.build.directory}</propertyExpansion>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>checkstyle-validation</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
 	</build>
 
+    <repositories>
+    <repository>
+        <id>central</id>
+        <url>http://localhost:8080/artifactory/sfly-repos</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+    <repository>
+        <id>snapshots</id>
+        <url>http://localhost:8080/artifactory/sfly-repos</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+    </repository>
+</repositories>
+
+    <pluginRepositories>
+    <pluginRepository>
+        <id>spring-releases</id>
+        <url>http://localhost:8080/artifactory/sfly-repos</url>
+    </pluginRepository>
+</pluginRepositories>
+     
 </project>

@@ -1,6 +1,7 @@
 package com.clairvoyant.clarise.service;
 
 import io.jsonwebtoken.Jwts;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ public class JwtUtil {
 
     public String generateToken(String token, String role) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role",role);
+        claims.put("role", role);
         return createToken(claims, token);
     }
 

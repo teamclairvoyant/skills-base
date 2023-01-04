@@ -29,7 +29,7 @@ public class LoginController {
         validateDomainService.checkDomain(idToken,httpResponse);
     }
     @GetMapping("/test")
-    public String sayHelloAdmin(){
+    public String sayHelloAdmin() {
         return "Hello Admin! Welcome to SkillsBase Tool...!!!";
     }
 

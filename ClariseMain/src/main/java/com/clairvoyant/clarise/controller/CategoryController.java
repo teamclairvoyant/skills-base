@@ -26,7 +26,7 @@ public class CategoryController {
 
     //get all categories
     @GetMapping
-    public List<Category> findAll(){
+    public List<Category> findAll() {
         return categoryService.findAll();
     }
 
@@ -41,7 +41,7 @@ public class CategoryController {
 
     //get category
     @GetMapping("/{categoryId}")
-    public Category find(@PathVariable String categoryId){
+    public Category find(@PathVariable String categoryId) {
 
         return categoryService.findCategory(categoryId);
     }

@@ -23,34 +23,34 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = SwaggerConfig.QUALIFICATION_STATUS)
 public class QualificationStatusController {
 
-	@Autowired
-	private QualificationStatusService service;
+    @Autowired
+    private QualificationStatusService service;
 
-	@PostMapping
-	@ApiOperation(value = "Create and update qualification status", response = QualificationStatus.class)
-	public QualificationStatus addqualificationStatus(@RequestBody QualificationStatus qualificationStatus) {
-		return service.save(qualificationStatus);
-	}
+    @PostMapping
+    @ApiOperation(value = "Create and update qualification status", response = QualificationStatus.class)
+    public QualificationStatus addqualificationStatus(@RequestBody QualificationStatus qualificationStatus) {
+        return service.save(qualificationStatus);
+    }
 
-	@GetMapping("/{id}")
-	@ApiOperation(value = "Gets qualification status by id", response = QualificationStatus.class)
-	public QualificationStatus findById(@PathVariable String id) {
-		return service.findById(id);
-	}
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Gets qualification status by id", response = QualificationStatus.class)
+    public QualificationStatus findById(@PathVariable String id) {
+        return service.findById(id);
+    }
 
-	@GetMapping
-	@ApiOperation(value = "Get all qualification status", response = List.class)
-	public List<QualificationStatus> findAll() {
-		return service.findAll();
-	}
+    @GetMapping
+    @ApiOperation(value = "Get all qualification status", response = List.class)
+    public List<QualificationStatus> findAll() {
+        return service.findAll();
+    }
 
-	@DeleteMapping("/{id}")
-	@ApiOperation(value = "Deletes the qualification status by id")
-	public String delete(@PathVariable String id) {
-		QualificationStatus status = new QualificationStatus();
-		status.setId(id);
-		service.delete(status);
-		return "Record Deleted";
-	}
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes the qualification status by id")
+    public String delete(@PathVariable String id) {
+        QualificationStatus status = new QualificationStatus();
+        status.setId(id);
+        service.delete(status);
+        return "Record Deleted";
+    }
 
 }

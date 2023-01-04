@@ -23,34 +23,34 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = SwaggerConfig.SKILLS_RATING)
 public class SkillsRatingController {
 
-	@Autowired
-	private SkillsRatingService service;
+    @Autowired
+    private SkillsRatingService service;
 
-	@PostMapping
-	@ApiOperation(value = "Create and update the skills rating", response = SkillsRating.class)
-	public SkillsRating addRating(@RequestBody SkillsRating skillsRating) {
-		return service.save(skillsRating);
-	}
+    @PostMapping
+    @ApiOperation(value = "Create and update the skills rating", response = SkillsRating.class)
+    public SkillsRating addRating(@RequestBody SkillsRating skillsRating) {
+        return service.save(skillsRating);
+    }
 
-	@GetMapping("/{id}")
-	@ApiOperation(value = "Gets Skills rating by id", response = SkillsRating.class)
-	public SkillsRating findById(@PathVariable String id) {
-		return service.findById(id);
-	}
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Gets Skills rating by id", response = SkillsRating.class)
+    public SkillsRating findById(@PathVariable String id) {
+        return service.findById(id);
+    }
 
-	@GetMapping
-	@ApiOperation(value = "Get all skills rating", response = List.class)
-	public List<SkillsRating> findAll() {
-		return service.findAll();
-	}
+    @GetMapping
+    @ApiOperation(value = "Get all skills rating", response = List.class)
+    public List<SkillsRating> findAll() {
+        return service.findAll();
+    }
 
-	@DeleteMapping("/{id}")
-	@ApiOperation(value = "Deletes the skill rating by id", response = String.class)
-	public String deleteRating(@PathVariable String id) {
-		SkillsRating rating = new SkillsRating();
-		rating.setId(id);
-		service.delete(rating);
-		return "Record Deleted";
-	}
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes the skill rating by id", response = String.class)
+    public String deleteRating(@PathVariable String id) {
+        SkillsRating rating = new SkillsRating();
+        rating.setId(id);
+        service.delete(rating);
+        return "Record Deleted";
+    }
 
 }

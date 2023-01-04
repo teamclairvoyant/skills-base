@@ -10,8 +10,8 @@ import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
 @RestControllerAdvice
 public class ExceptionController {
 
-	@ExceptionHandler(value = ResourceNotFoundException.class)
-	public ResponseEntity<String> noResourceFound(ResourceNotFoundException ex) {
-		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-	}
+    @ExceptionHandler(value = ResourceNotFoundException.class)
+    public ResponseEntity<String> noResourceFound(ResourceNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

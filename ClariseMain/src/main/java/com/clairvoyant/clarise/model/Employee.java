@@ -3,10 +3,17 @@ package com.clairvoyant.clarise.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import org.hibernate.annotations.*;
-import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,9 +27,6 @@ import java.util.List;
         property = "id")
 public class Employee implements Serializable {
 
-//    Fields of the Database
-
-//    This way you can create generatable id of String type:
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -42,14 +46,14 @@ public class Employee implements Serializable {
     private String role;
 
     //relationship with Employee_skill
-    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
-            CascadeType.DETACH , CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST,
+            CascadeType.DETACH, CascadeType.MERGE})
     @JoinColumn(name = "emp_id")
     @NotFound(action = NotFoundAction.IGNORE)
     private List<EmployeeSkill> employeeSkills;
 
-    public void addEmployeeSkills(EmployeeSkill empSkill){
-        if(employeeSkills == null){
+    public void addEmployeeSkills(EmployeeSkill empSkill) {
+        if (employeeSkills == null) {
             employeeSkills = new ArrayList<>();
         }
 
@@ -57,10 +61,10 @@ public class Employee implements Serializable {
     }
 
 
-    public  void  deleteSkill(EmployeeSkill employeeSkill){
+    public void deleteSkill(EmployeeSkill employeeSkill) {
 
-        if (employeeSkills == null){
-            employeeSkills= new ArrayList<>();
+        if (employeeSkills == null) {
+            employeeSkills = new ArrayList<>();
         }
 
         employeeSkills.remove(employeeSkill);

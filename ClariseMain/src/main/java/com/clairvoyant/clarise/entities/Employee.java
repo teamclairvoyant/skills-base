@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.model;
+package com.clairvoyant.clarise.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

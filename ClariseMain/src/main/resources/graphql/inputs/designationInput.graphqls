@@ -1,0 +1,8 @@
+input DesignationInput{
+    id:String
+    name:String!
+    description:String
+    createdBy:String
+    updatedBy:String
+
+}

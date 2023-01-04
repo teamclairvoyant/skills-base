@@ -1,0 +1,10 @@
+type SkillsRating{
+    id:String
+    name:String
+    description:String
+    createdBy:String
+    createdOn:String
+    updatedBy:String
+    updatedOn:String
+    isActive:Boolean
+}

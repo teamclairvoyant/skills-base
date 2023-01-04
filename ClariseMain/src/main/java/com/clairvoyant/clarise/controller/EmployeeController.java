@@ -1,11 +1,10 @@
 package com.clairvoyant.clarise.controller;
 
 import com.clairvoyant.clarise.enums.Status;
-import com.clairvoyant.clarise.model.Employee;
+import com.clairvoyant.clarise.entities.Employee;
 import com.clairvoyant.clarise.repository.EmployeeRepository;
 import com.clairvoyant.clarise.service.MailService;
 import com.clairvoyant.clarise.service.EmployeeService;
-import com.clairvoyant.clarise.service.ValidateDomainService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

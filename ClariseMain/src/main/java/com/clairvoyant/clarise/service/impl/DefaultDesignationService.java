@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
-import com.clairvoyant.clarise.model.Designation;
+import com.clairvoyant.clarise.entities.Designation;
 import com.clairvoyant.clarise.repository.DesignationRepository;
 import com.clairvoyant.clarise.service.DesignationService;
 
@@ -37,7 +37,7 @@ public class DefaultDesignationService implements DesignationService {
 
 		} else {
 			designation.setCreatedOn(Instant.now());
-			designation.setCreatedBy("");
+			designation.setCreatedBy(designation.getCreatedBy());
 			designation.setActive(true);
 		}
 		return repository.save(designation);

@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.repository;
 
-import com.clairvoyant.clarise.model.Category;
+import com.clairvoyant.clarise.entities.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

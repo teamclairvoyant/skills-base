@@ -11,6 +11,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
    		  http.authorizeRequests().antMatchers("/api/*", "/v1/**").permitAll()
+                  .antMatchers("/graphql").permitAll()
 		  .anyRequest().authenticated().and().oauth2Login().and().csrf().disable();
 		 
     	/*

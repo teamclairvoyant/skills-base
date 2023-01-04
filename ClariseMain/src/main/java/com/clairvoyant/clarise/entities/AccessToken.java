@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.model;
+package com.clairvoyant.clarise.entities;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -15,6 +15,7 @@
 	<description>Backend application for clarise tool</description>
 	<properties>
 		<java.version>11</java.version>
+		<graphql.version>11.0.0</graphql.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,7 +49,6 @@
 				</exclusion>
 			</exclusions>
 
-
 			<!--Exclude logging from starter-->
 		</dependency>
 			<dependency>
@@ -66,6 +66,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+
+		<!-- GraphQl Dependency-->
+		<dependency>
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>graphql-spring-boot-starter</artifactId>
+			<version>${graphql.version}</version>
+		</dependency>
+
+		<!--Playground Extension-->
+		<dependency>
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>playground-spring-boot-starter</artifactId>
+			<version>${graphql.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!--Voyager Extension-->
+		<dependency>
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>voyager-spring-boot-starter</artifactId>
+			<version>${graphql.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+
 
 		<!--Adding Log4j2 dependency-->
 		<dependency>

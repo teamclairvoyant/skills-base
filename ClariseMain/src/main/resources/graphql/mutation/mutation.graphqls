@@ -1,0 +1,12 @@
+type Mutation {
+    #Designation related Mutations
+    addOrUpdateDesignation(input:DesignationInput!):Designation!
+    deleteDesignation(designationId:ID!):String!
+
+    #SkillRating related Mutations
+    addOrUpdateSkillRating(skillRatingInput:SkillRatingInput!):SkillsRating!
+    deleteSkillRating(skillRatingId:ID!):String!
+
+
+}
+

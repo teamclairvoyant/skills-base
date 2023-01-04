@@ -1,0 +1,9 @@
+type Query{
+    #Designation Related Queries
+    getAllDesignations:[Designation]
+    getDesignationById(designationId:ID!):Designation!
+
+    #SkillRatings Related Queries
+    getAllSkillRatings:[SkillsRating]
+    getSkillRatingById(skillRatingId:ID!):SkillsRating!
+}

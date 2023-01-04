@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clairvoyant.clarise.configuration.SwaggerConfig;
-import com.clairvoyant.clarise.model.QualificationStatus;
+import com.clairvoyant.clarise.entities.QualificationStatus;
 import com.clairvoyant.clarise.service.QualificationStatusService;
 
 import io.swagger.annotations.Api;

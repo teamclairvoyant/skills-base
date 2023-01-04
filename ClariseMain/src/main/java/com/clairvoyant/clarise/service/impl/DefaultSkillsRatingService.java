@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
-import com.clairvoyant.clarise.model.SkillsRating;
+import com.clairvoyant.clarise.entities.SkillsRating;
 import com.clairvoyant.clarise.repository.SkillsRatingRepository;
 import com.clairvoyant.clarise.service.SkillsRatingService;
 
@@ -37,7 +37,7 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 
 		} else {
 			skillsRating.setCreatedOn(Instant.now());
-			skillsRating.setCreatedBy("");
+			skillsRating.setCreatedBy(skillsRating.getCreatedBy());
 			skillsRating.setActive(true);
 		}
 		return ratingRepository.save(skillsRating); 

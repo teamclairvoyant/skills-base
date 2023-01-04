@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.service;
 
-import com.clairvoyant.clarise.model.Category;
+import com.clairvoyant.clarise.entities.Category;
 
 import java.util.List;
 

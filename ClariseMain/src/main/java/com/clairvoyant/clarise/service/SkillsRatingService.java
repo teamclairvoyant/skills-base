@@ -1,9 +1,8 @@
 package com.clairvoyant.clarise.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.clairvoyant.clarise.model.SkillsRating;
+import com.clairvoyant.clarise.entities.SkillsRating;
 
 public interface SkillsRatingService {
 

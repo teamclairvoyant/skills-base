@@ -1,25 +1,20 @@
-package com.clairvoyant.clarise.model;
+package com.clairvoyant.clarise.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.io.Serializable;
 
-//skills model
 @Entity
 @Data
-@Table(name = "skills")
+@Table(name="category")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Skill implements Serializable {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -27,16 +22,12 @@ public class Skill implements Serializable {
     @Column(name="id")
     private String id;
 
-    @Column(name = "skill_name")
-    private String skillName;
+    @Column(name = "cat_name")
+    private String catName;
 
     private String description;
 
     @Column(name = "is_active")
     private boolean isActive;
+
 }
-
-
-
-
-

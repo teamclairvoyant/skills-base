@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.model;
+package com.clairvoyant.clarise.entities;
 
 import java.time.Instant;
 
@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 

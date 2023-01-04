@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.service.impl;
 
-import com.clairvoyant.clarise.model.Category;
+import com.clairvoyant.clarise.entities.Category;
 import com.clairvoyant.clarise.repository.CategoryRepository;
 import com.clairvoyant.clarise.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

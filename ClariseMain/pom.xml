@@ -95,7 +95,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
@@ -134,22 +133,7 @@
 	</dependencies>
 
     <build>
-        <!--<pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.liquibase</groupId>
-                    <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>3.4.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.2.0</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>-->
-
-		<plugins>
+        <plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -196,33 +180,4 @@
             </plugin>
         </plugins>
 	</build>
-
-    <repositories>
-    <repository>
-        <id>central</id>
-        <url>http://localhost:8080/artifactory/sfly-repos</url>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-    </repository>
-    <repository>
-        <id>snapshots</id>
-        <url>http://localhost:8080/artifactory/sfly-repos</url>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
-        <releases>
-            <enabled>false</enabled>
-        </releases>
-    </repository>
-</repositories>
-
-    <pluginRepositories>
-    <pluginRepository>
-        <id>spring-releases</id>
-        <url>http://localhost:8080/artifactory/sfly-repos</url>
-    </pluginRepository>
-</pluginRepositories>
-     
 </project>

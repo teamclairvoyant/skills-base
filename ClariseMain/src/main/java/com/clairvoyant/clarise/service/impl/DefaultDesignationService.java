@@ -1,6 +1,5 @@
 package com.clairvoyant.clarise.service.impl;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +29,10 @@ public class DefaultDesignationService implements DesignationService {
 				if (StringUtils.hasLength(designation.getDescription()))
 					result.get().setDescription(designation.getDescription());
 
-				result.get().setUpdatedBy("");
-				result.get().setUpdatedOn(Instant.now());
 				designation = result.get();
 			}
 
 		} else {
-			designation.setCreatedOn(Instant.now());
 			designation.setCreatedBy("");
 			designation.setActive(true);
 		}

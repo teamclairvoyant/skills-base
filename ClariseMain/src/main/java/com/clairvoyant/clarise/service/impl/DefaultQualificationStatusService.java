@@ -1,6 +1,5 @@
 package com.clairvoyant.clarise.service.impl;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +29,10 @@ public class DefaultQualificationStatusService implements QualificationStatusSer
 				if (StringUtils.hasLength(qualificationStatus.getDescription()))
 					result.get().setDescription(qualificationStatus.getDescription());
 
-				result.get().setUpdatedBy("");
-				result.get().setUpdatedOn(Instant.now());
 				qualificationStatus = result.get();
 			}
 
 		} else {
-			qualificationStatus.setCreatedOn(Instant.now());
 			qualificationStatus.setCreatedBy("");
 			qualificationStatus.setActive(true);
 		}

@@ -1,6 +1,5 @@
 package com.clairvoyant.clarise.service.impl;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,57 +15,52 @@ import com.clairvoyant.clarise.service.QualificationStatusService;
 @Service
 public class DefaultQualificationStatusService implements QualificationStatusService {
 
-    @Autowired
-    private QualificationStatusRepository repository;
+	@Autowired
+	private QualificationStatusRepository repository;
 
-    @Override
-    public QualificationStatus save(QualificationStatus qualificationStatus) {
-        if (StringUtils.hasText(qualificationStatus.getId())) {
-            Optional<QualificationStatus> result = repository.findById(qualificationStatus.getId());
-            if (result.isPresent()) {
-                if (StringUtils.hasLength(qualificationStatus.getName())) {
-                    result.get().setName(qualificationStatus.getName());
-                }
+	@Override
+	public QualificationStatus save(QualificationStatus qualificationStatus) {
+		if (StringUtils.hasText(qualificationStatus.getId())) {
+			Optional<QualificationStatus> result = repository.findById(qualificationStatus.getId());
+			if (result.isPresent()) {
+				if (StringUtils.hasLength(qualificationStatus.getName()))
+					result.get().setName(qualificationStatus.getName());
 
-                if (StringUtils.hasLength(qualificationStatus.getDescription())) {
-                    result.get().setDescription(qualificationStatus.getDescription());
-                }
+				if (StringUtils.hasLength(qualificationStatus.getDescription()))
+					result.get().setDescription(qualificationStatus.getDescription());
 
-                result.get().setUpdatedBy("");
-                result.get().setUpdatedOn(Instant.now());
-                qualificationStatus = result.get();
-            }
+				qualificationStatus = result.get();
+			}
 
-        } else {
-            qualificationStatus.setCreatedOn(Instant.now());
-            qualificationStatus.setCreatedBy("");
-            qualificationStatus.setActive(true);
-        }
+		} else {
+			qualificationStatus.setCreatedBy("");
+			qualificationStatus.setActive(true);
+		}
 
-        return repository.save(qualificationStatus);
-    }
+		return repository.save(qualificationStatus);
+	}
 
-    @Override
-    public QualificationStatus findById(String id) {
-        Optional<QualificationStatus> result = repository.findById(id);
-        if (result.isEmpty()) {
-            throw new ResourceNotFoundException("Qualification Status Not Found");
-        }
+	@Override
+	public QualificationStatus findById(String id) {
+		Optional<QualificationStatus> result = repository.findById(id);
+		if (result.isEmpty()) {
+			throw new ResourceNotFoundException("Qualification Status Not Found");
+		}
 
-        return result.get();
-    }
+		return result.get();
+	}
 
-    @Override
-    public void delete(QualificationStatus qualificationStatus) {
-        QualificationStatus result = findById(qualificationStatus.getId());
-        result.setActive(false);
-        repository.save(result);
-    }
+	@Override
+	public void delete(QualificationStatus qualificationStatus) {
+		QualificationStatus result = findById(qualificationStatus.getId());
+		result.setActive(false);
+		repository.save(result);
+	}
 
-    @Override
-    public List<QualificationStatus> findAll() {
-        List<QualificationStatus> result = repository.findAll();
-        return result;
-    }
+	@Override
+	public List<QualificationStatus> findAll() {
+		List<QualificationStatus> result = repository.findAll();
+		return result;
+	}
 
 }

@@ -1,21 +1,14 @@
 package com.clairvoyant.clarise.model;
 
+import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
+import org.hibernate.annotations.*;
+import javax.persistence.*;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +18,7 @@ import java.util.List;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Employee implements Serializable {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "id")
-    private String id;
+public class Employee extends Persistable {
 
     @Column(name = "emp_id")
     private String empId;
@@ -46,14 +33,14 @@ public class Employee implements Serializable {
     private String role;
 
     //relationship with Employee_skill
-    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST,
-            CascadeType.DETACH, CascadeType.MERGE})
+    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
+            CascadeType.DETACH , CascadeType.MERGE})
     @JoinColumn(name = "emp_id")
     @NotFound(action = NotFoundAction.IGNORE)
     private List<EmployeeSkill> employeeSkills;
 
-    public void addEmployeeSkills(EmployeeSkill empSkill) {
-        if (employeeSkills == null) {
+    public void addEmployeeSkills(EmployeeSkill empSkill){
+        if(employeeSkills == null){
             employeeSkills = new ArrayList<>();
         }
 
@@ -61,10 +48,10 @@ public class Employee implements Serializable {
     }
 
 
-    public void deleteSkill(EmployeeSkill employeeSkill) {
+    public  void  deleteSkill(EmployeeSkill employeeSkill){
 
-        if (employeeSkills == null) {
-            employeeSkills = new ArrayList<>();
+        if (employeeSkills == null){
+            employeeSkills= new ArrayList<>();
         }
 
         employeeSkills.remove(employeeSkill);

@@ -12,7 +12,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     	http.authorizeRequests()
                 .antMatchers("/api/*", "/v1/**", "/graphql").permitAll()
-                //.antMatchers("/graphql").permitAll()
+                .antMatchers("/graphql").permitAll()
 
                 //authorize requests from graphql related apps that we will need
                 .antMatchers("/graphiql").permitAll()

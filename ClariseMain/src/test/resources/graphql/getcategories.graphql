@@ -1,0 +1,7 @@
+{
+getCategories{
+    id
+    catName
+}
+
+}

@@ -1,0 +1,4 @@
+mutation {
+    deleteCategory(categoryId : "498090909090987398809")
+
+}

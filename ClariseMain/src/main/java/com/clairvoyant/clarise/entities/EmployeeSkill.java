@@ -1,5 +1,6 @@
 package com.clairvoyant.clarise.entities;
 
+import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
@@ -8,7 +9,6 @@ import org.hibernate.annotations.*;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 //model for employee skill join table
 @Entity
@@ -17,13 +17,7 @@ import java.io.Serializable;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class EmployeeSkill implements Serializable {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name="id")
-    private String id;
+public class EmployeeSkill extends Persistable {
 
     //relationship with User model
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -39,5 +33,4 @@ public class EmployeeSkill implements Serializable {
 
     @Column(name = "rating")
     private String rating;
-
 }

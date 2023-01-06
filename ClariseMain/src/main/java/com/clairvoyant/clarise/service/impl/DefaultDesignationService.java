@@ -37,7 +37,7 @@ public class DefaultDesignationService implements DesignationService {
 
 		} else {
 			designation.setCreatedOn(Instant.now());
-			designation.setCreatedBy(designation.getCreatedBy());
+			designation.setCreatedBy("");
 			designation.setActive(true);
 		}
 		return repository.save(designation);

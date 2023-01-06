@@ -1,0 +1,6 @@
+mutation {
+    addOrUpdateSkill(skillName: "Article", description :"This is a hibernate Article", isActive:true){
+        id
+        skillName
+    }
+}

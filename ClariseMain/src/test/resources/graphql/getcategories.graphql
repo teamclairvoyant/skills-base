@@ -1,7 +1,6 @@
 {
-getCategories{
-    id
-    catName
-}
-
+    getCategories{
+        id
+        catName
+    }
 }

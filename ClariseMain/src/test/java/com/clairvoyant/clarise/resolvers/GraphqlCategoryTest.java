@@ -4,7 +4,6 @@ import com.clairvoyant.clarise.model.Category;
 import com.clairvoyant.clarise.service.impl.CategoryServiceImpl;
 import com.graphql.spring.boot.test.GraphQLResponse;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
-import liquibase.pro.packaged.C;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.powermock.api.mockito.PowerMockito;
@@ -22,9 +21,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doReturn;
 
-/*@Import(CategoryServiceImpl.class)*/
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CategoryMutationTest {
+public class GraphqlCategoryTest {
     @Autowired
     private GraphQLTestTemplate graphQLTestTemplate;
 
@@ -59,6 +57,7 @@ public class CategoryMutationTest {
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/deletecategory.graphql");
         assertThat(response.isOk()).isTrue();
 
+        assertThat(response.get("$.data.deleteCategory")).isEqualTo("SUCCESS");
 
     }
 

@@ -1,0 +1,6 @@
+{
+    getSkills{
+        id
+        skillName
+    }
+}

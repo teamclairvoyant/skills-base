@@ -1,0 +1,6 @@
+{
+    findSkillById(skillId:"63827889990534"){
+        id
+        skillName
+    }
+}

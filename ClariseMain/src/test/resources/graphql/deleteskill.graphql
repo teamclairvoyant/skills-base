@@ -1,0 +1,4 @@
+mutation {
+    deleteSkill(skillId : "498090909090987398809")
+
+}

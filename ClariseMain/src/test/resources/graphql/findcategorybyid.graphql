@@ -1,6 +1,6 @@
 {
-findCategoryById(categoryId:"63827889990534"){
-id
-catName
-}
+    findCategoryById(categoryId:"63827889990534"){
+        id
+        catName
+    }
 }

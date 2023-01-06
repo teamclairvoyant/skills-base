@@ -2,7 +2,7 @@ package com.clairvoyant.clarise.service;
 
 import java.util.List;
 
-import com.clairvoyant.clarise.entities.Designation;
+import com.clairvoyant.clarise.model.Designation;
 
 
 public interface DesignationService {

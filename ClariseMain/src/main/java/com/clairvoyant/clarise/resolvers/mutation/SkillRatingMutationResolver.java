@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.resolvers.mutation;
 
-import com.clairvoyant.clarise.entities.SkillsRating;
+import com.clairvoyant.clarise.model.SkillsRating;
 import com.clairvoyant.clarise.input.SkillRatingInput;
 import com.clairvoyant.clarise.service.SkillsRatingService;
 import graphql.kickstart.tools.GraphQLMutationResolver;

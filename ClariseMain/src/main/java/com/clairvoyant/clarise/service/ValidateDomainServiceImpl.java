@@ -2,7 +2,7 @@ package com.clairvoyant.clarise.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.clairvoyant.clarise.entities.Employee;
+import com.clairvoyant.clarise.model.Employee;
 import com.clairvoyant.clarise.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

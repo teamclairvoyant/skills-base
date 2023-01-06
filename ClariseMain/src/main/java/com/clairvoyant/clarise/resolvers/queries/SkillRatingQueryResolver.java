@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.resolvers.queries;
 
-import com.clairvoyant.clarise.entities.SkillsRating;
+import com.clairvoyant.clarise.model.SkillsRating;
 import com.clairvoyant.clarise.service.SkillsRatingService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.extern.slf4j.Slf4j;

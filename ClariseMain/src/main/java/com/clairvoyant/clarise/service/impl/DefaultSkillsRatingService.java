@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
-import com.clairvoyant.clarise.entities.SkillsRating;
+import com.clairvoyant.clarise.model.SkillsRating;
 import com.clairvoyant.clarise.repository.SkillsRatingRepository;
 import com.clairvoyant.clarise.service.SkillsRatingService;
 

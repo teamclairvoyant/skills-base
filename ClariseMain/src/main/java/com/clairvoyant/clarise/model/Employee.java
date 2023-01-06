@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.entities;
+package com.clairvoyant.clarise.model;
 
 import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;

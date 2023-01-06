@@ -1,7 +1,7 @@
 package com.clairvoyant.clarise.controller;
 
 import com.clairvoyant.clarise.enums.Status;
-import com.clairvoyant.clarise.entities.Employee;
+import com.clairvoyant.clarise.model.Employee;
 import com.clairvoyant.clarise.repository.EmployeeRepository;
 import com.clairvoyant.clarise.service.MailService;
 import com.clairvoyant.clarise.service.EmployeeService;

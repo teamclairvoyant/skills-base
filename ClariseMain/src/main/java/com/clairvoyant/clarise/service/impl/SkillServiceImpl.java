@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.service.impl;
 
-import com.clairvoyant.clarise.entities.Skill;
+import com.clairvoyant.clarise.model.Skill;
 import com.clairvoyant.clarise.repository.SkillRepository;
 import com.clairvoyant.clarise.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;

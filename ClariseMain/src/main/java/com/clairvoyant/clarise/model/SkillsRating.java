@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.entities;
+package com.clairvoyant.clarise.model;
 
 import java.time.Instant;
 

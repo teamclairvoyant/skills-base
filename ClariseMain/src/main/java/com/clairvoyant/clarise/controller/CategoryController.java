@@ -1,7 +1,7 @@
 package com.clairvoyant.clarise.controller;
 
 import com.clairvoyant.clarise.enums.Status;
-import com.clairvoyant.clarise.entities.Category;
+import com.clairvoyant.clarise.model.Category;
 import com.clairvoyant.clarise.service.CategoryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

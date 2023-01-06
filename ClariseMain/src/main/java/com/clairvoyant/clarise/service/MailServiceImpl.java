@@ -1,7 +1,7 @@
 package com.clairvoyant.clarise.service;
 
 
-import com.clairvoyant.clarise.entities.Employee;
+import com.clairvoyant.clarise.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;

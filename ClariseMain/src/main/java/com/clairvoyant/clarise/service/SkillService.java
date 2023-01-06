@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.service;
 
-import com.clairvoyant.clarise.entities.Skill;
+import com.clairvoyant.clarise.model.Skill;
 import java.util.List;
 
 public interface SkillService {

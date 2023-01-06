@@ -1,26 +1,31 @@
-package com.clairvoyant.clarise.entities;
+package com.clairvoyant.clarise.model;
 
 import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Column;
 
+//skills model
 @Entity
 @Data
-@Table(name="category")
+@Table(name = "skills")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Category extends Persistable {
+public class Skill extends Persistable {
 
-    @Column(name = "cat_name")
-    private String catName;
-
+    @Column(name = "skill_name")
+    private String skillName;
     private String description;
-
     @Column(name = "is_active")
     private boolean isActive;
-
 }
+
+
+
+
+

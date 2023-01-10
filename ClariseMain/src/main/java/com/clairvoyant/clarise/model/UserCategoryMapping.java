@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -20,9 +21,11 @@ import javax.persistence.Table;
 public class UserCategoryMapping extends Persistable {
 
     @ManyToOne(targetEntity=User.class,fetch = FetchType.LAZY, optional = false )
+    @JoinColumn(name ="user_id")
     private User user;
 
     @ManyToOne(targetEntity=Role.class,fetch = FetchType.LAZY, optional = false )
+    @JoinColumn(name ="category_id")
     private Category category;
 
 }

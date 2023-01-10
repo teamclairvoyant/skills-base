@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Set;
@@ -36,11 +37,12 @@ public class User extends Persistable {
     private String reportingManager;
 
     @ManyToMany
+    @JoinColumn(name ="user_category_id")
     Set<UserCategoryMapping> userCategory;
 
     @ManyToMany
+    @JoinColumn(name ="user_role_id")
     Set<UserRoleMapping> userRole;
 
 
-    //Empl No	Empl Name	Grade	Title	Project	Role	RM	Total Exp.	CV exp.
 }

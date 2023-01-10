@@ -1,3 +1,4 @@
+/*
 package com.clairvoyant.clarise.configuration;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class SimpleCORSFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         //System.out.println("CORS Filter" + request.getHeader("Authorization"));
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Credentials", "false");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Authorization");
@@ -42,4 +43,4 @@ public class SimpleCORSFilter implements Filter {
     @Override
     public void destroy() {
     }
-}
+}*/

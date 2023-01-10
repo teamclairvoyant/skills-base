@@ -7,25 +7,18 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Data
-@Table(name="role")
+@Table(name="assessment_status")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class UserRoleMapping extends Persistable {
+public class AssessmentStatus extends Persistable {
 
-    @ManyToOne(targetEntity=User.class,fetch = FetchType.LAZY, optional = false )
-    @JoinColumn(name ="user_id")
-    private User user;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToOne(targetEntity=Role.class,fetch = FetchType.LAZY, optional = false )
-    @JoinColumn(name ="role_id")
-    private Role role;
-
+    private String description;
 }

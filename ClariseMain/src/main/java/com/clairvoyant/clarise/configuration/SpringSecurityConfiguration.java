@@ -1,3 +1,4 @@
+/*
 package com.clairvoyant.clarise.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -35,3 +36,4 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin().disable();;
     }
 }
+*/

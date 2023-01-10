@@ -20,7 +20,9 @@ public class Skill extends Persistable {
 
     @Column(name = "skill_name")
     private String skillName;
+
     private String description;
+
     @Column(name = "is_active")
     private boolean isActive;
 }

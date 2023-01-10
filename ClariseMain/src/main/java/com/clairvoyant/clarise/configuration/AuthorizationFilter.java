@@ -1,3 +1,4 @@
+/*
 package com.clairvoyant.clarise.configuration;
 
 import com.auth0.jwt.JWT;
@@ -70,4 +71,4 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		}
 
 	}
-}
+}*/

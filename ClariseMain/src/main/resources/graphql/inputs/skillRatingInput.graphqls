@@ -1,0 +1,6 @@
+input SkillRatingInput{
+    id:String
+    name:String!
+    description:String
+    isActive:Boolean
+}

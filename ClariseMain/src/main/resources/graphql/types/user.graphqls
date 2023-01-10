@@ -1,0 +1,8 @@
+type User{
+    name:String
+    emailAddress:String
+    grade:String
+    password:String
+    reportingManager:String
+    designation:Designation
+}

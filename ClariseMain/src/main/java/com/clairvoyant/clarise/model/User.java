@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,12 +33,21 @@ public class User extends Persistable {
     @Column(name = "reporting_to", length = 45)
     private String reportingManager;
 
-    @ManyToMany
-    Set<UserCategoryMapping> userCategory;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role_mapping",
+            joinColumns = @JoinColumn(name = "userId",unique = true),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
+    private List<Role> role;
 
-    @ManyToMany
-    Set<UserRoleMapping> userRole;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_category_mapping",
+            joinColumns = @JoinColumn(name = "userId",unique = true),
+            inverseJoinColumns = @JoinColumn(name = "categoryId"))
+    private List<Category> category;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "designation_id",unique = true)
+    private Designation designation;
 
     //Empl No	Empl Name	Grade	Title	Project	Role	RM	Total Exp.	CV exp.
 }

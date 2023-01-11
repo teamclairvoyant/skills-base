@@ -1,0 +1,8 @@
+input UserInput{
+    name:String
+    emailAddress:String
+    grade:String
+    password:String
+    reportingManager:String
+    designation:DesignationInput
+}

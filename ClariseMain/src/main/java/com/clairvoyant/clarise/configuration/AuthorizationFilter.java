@@ -34,31 +34,31 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		String authToken = httpRequest.getHeader("Authorization");
 		// TODO: sometime token is coming as null
 
-		if (!StringUtils.hasLength(authToken)) {
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			response.sendError(401, "Unauthorised");
-			return;
-		}
-		String[] header = authToken.split(" ");
-		String token = header[1];
-		DecodedJWT jwt = JWT.decode(token);
-		String idToken = jwt.getClaim("sub").asString();
-		RestTemplate restTemplate = new RestTemplate();
-		String apiUrl = new StringBuffer("https://oauth2.googleapis.com/tokeninfo").append("?id_token={idToken}")
-				.toString();
-		ResponseEntity<Map> restResponse = null;
-		try {
-			restResponse = restTemplate.getForEntity(apiUrl, Map.class, idToken);
-		} catch (Exception e) {
-			restResponse = new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-		}
-
-		if (!restResponse.getStatusCode().toString().contains("200")) {
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // HTTP 401.
-			response.sendError(401, "Unauthorised");
-			return;
-		}
-		setContext(idToken);
+//		if (!StringUtils.hasLength(authToken)) {
+//			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//			response.sendError(401, "Unauthorised");
+//			return;
+//		}
+//		String[] header = authToken.split(" ");
+//		String token = header[1];
+//		DecodedJWT jwt = JWT.decode(token);
+//		String idToken = jwt.getClaim("sub").asString();
+//		RestTemplate restTemplate = new RestTemplate();
+//		String apiUrl = new StringBuffer("https://oauth2.googleapis.com/tokeninfo").append("?id_token={idToken}")
+//				.toString();
+//		ResponseEntity<Map> restResponse = null;
+//		try {
+//			restResponse = restTemplate.getForEntity(apiUrl, Map.class, idToken);
+//		} catch (Exception e) {
+//			restResponse = new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+//		}
+//
+//		if (!restResponse.getStatusCode().toString().contains("200")) {
+//			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // HTTP 401.
+//			response.sendError(401, "Unauthorised");
+//			return;
+//		}
+//		setContext(idToken);
 
 		filterChain.doFilter(request, response);
 	}

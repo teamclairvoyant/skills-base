@@ -4,6 +4,8 @@ import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,18 +16,22 @@ import javax.persistence.Table;
 
 @Entity
 @Data
-@Table(name="role")
+@Table(name="user_role_mapping")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class UserRoleMapping extends Persistable {
 
-    @ManyToOne(targetEntity=User.class,fetch = FetchType.LAZY, optional = false )
-    @JoinColumn(name ="user_id")
+    //relationship with User model
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    @Fetch(FetchMode.JOIN)
     private User user;
 
-    @ManyToOne(targetEntity=Role.class,fetch = FetchType.LAZY, optional = false )
-    @JoinColumn(name ="role_id")
+    //relationship with Role model
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "role_id" , referencedColumnName = "id")
+    @Fetch(FetchMode.JOIN)
     private Role role;
 
 }

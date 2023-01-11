@@ -12,30 +12,26 @@ import javax.persistence.*;
 //skills model
 @Entity
 @Data
-@Table(name = "assesement")
+@Table(name = "assessment")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Assesement extends Persistable {
+public class Assessment extends Persistable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
     private User user;
 
-    /*@OneToOne( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
-            CascadeType.DETACH , CascadeType.MERGE})*/
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "assesementstatus_id", referencedColumnName = "id")
+    @JoinColumn(name = "assessment_status_id", referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
-    private AssesementStatus assesementStatus;
+    private AssessmentStatus assessmentStatus;
 
-   /* @OneToOne( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
-            CascadeType.DETACH , CascadeType.MERGE})*/
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "assesementtype_id", referencedColumnName = "id")
+    @JoinColumn(name = "assessment_type_id", referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
-    private AssesementType assesementType;
+    private AssessmentType assessmentType;
 
     @Column(name = "comments", length = 100)
     private String comments;

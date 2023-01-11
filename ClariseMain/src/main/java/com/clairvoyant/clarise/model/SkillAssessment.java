@@ -12,24 +12,24 @@ import javax.persistence.*;
 //skills model
 @Entity
 @Data
-@Table(name = "skill_assesement")
+@Table(name = "skill_assessment")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class SkillAssesement extends Persistable {
+public class SkillAssessment extends Persistable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "assesement_id" , referencedColumnName = "id")
+    @JoinColumn(name = "assessment_id" , referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
-    private Assesement assesement;
+    private Assessment assessment;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "skillcategory_id" , referencedColumnName = "id")
+    @JoinColumn(name = "skill_category_id" , referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
     private SkillCategory skillCategory;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "skillsrating_id")
+    @JoinColumn(name = "skill_rating_id")
     @Fetch(FetchMode.JOIN)
     private SkillsRating skillsRating;
 }

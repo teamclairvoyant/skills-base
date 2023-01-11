@@ -12,11 +12,11 @@ import javax.persistence.Table;
 //skills model
 @Entity
 @Data
-@Table(name = "assesement_type")
+@Table(name = "assessment_status")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class AssesementType extends Persistable {
+public class AssessmentStatus extends Persistable {
 
     @Column(name = "status")
     private String name;

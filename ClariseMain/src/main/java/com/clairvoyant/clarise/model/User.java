@@ -35,18 +35,6 @@ public class User extends Persistable {
     @Column(name = "reporting_to", length = 45)
     private String reportingManager;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "user_role_mapping",
-//            joinColumns = @JoinColumn(name = "userId",unique = true),
-//            inverseJoinColumns = @JoinColumn(name = "roleId"))
-//    private List<Role> role;
-
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "user_category_mapping",
-//            joinColumns = @JoinColumn(name = "userId",unique = true),
-//            inverseJoinColumns = @JoinColumn(name = "categoryId"))
-//    private List<Category> category;
-
     //relationship with Designation
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "designation_id",unique = true)

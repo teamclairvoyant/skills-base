@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.clairvoyant.clarise.exceptions.ResourceNotFoundException;
-import com.clairvoyant.clarise.entities.QualificationStatus;
+import com.clairvoyant.clarise.model.QualificationStatus;
 import com.clairvoyant.clarise.repository.QualificationStatusRepository;
 import com.clairvoyant.clarise.service.QualificationStatusService;
 

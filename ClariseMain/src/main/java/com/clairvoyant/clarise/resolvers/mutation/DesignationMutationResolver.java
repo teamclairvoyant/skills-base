@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.resolvers.mutation;
 
-import com.clairvoyant.clarise.entities.Designation;
+import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.input.DesignationInput;
 import com.clairvoyant.clarise.service.DesignationService;
 import graphql.kickstart.tools.GraphQLMutationResolver;

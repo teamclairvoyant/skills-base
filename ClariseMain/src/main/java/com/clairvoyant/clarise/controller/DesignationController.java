@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clairvoyant.clarise.configuration.SwaggerConfig;
-import com.clairvoyant.clarise.entities.Designation;
+import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.service.DesignationService;
 
 import io.swagger.annotations.Api;

@@ -2,7 +2,7 @@ package com.clairvoyant.clarise.service;
 
 import java.util.List;
 
-import com.clairvoyant.clarise.entities.QualificationStatus;
+import com.clairvoyant.clarise.model.QualificationStatus;
 
 
 public interface QualificationStatusService {

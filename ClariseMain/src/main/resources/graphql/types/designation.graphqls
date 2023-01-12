@@ -1,10 +1,10 @@
 type Designation{
-     id:String
+     id:ID
      name:String
      description:String
-#     createdBy:String
-#     createdOn:String
-#     updatedBy:String
-#     updatedOn:String
+     createdBy:String
+     createdOn:String
+     updatedBy:String
+     updatedOn:String
      isActive:Boolean
 }

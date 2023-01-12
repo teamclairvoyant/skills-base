@@ -1,13 +1,20 @@
-package com.clairvoyant.clarise.input;
-
-import lombok.Data;
-
-@Data
-public class UserInput {
-    String name;
-    String emailAddress;
-    String grade;
-    String password;
-    String reportingManager;
-    DesignationInput designation;
-}
+//package com.clairvoyant.clarise.input;
+//
+//import com.clairvoyant.clarise.model.Designation;
+//import lombok.AllArgsConstructor;
+//import lombok.Data;
+//import lombok.NoArgsConstructor;
+//
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
+//public class UserInput {
+//    private String name;
+//    private String emailAddress;
+//    private String grade;
+//    private String password;
+//    private String reportingManager;
+//
+//    Designation designationInput;
+//
+//}

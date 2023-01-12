@@ -1,5 +1,6 @@
 input DesignationInput{
-    id:String
+
+    id:ID
     name:String
     description:String
     isActive:Boolean

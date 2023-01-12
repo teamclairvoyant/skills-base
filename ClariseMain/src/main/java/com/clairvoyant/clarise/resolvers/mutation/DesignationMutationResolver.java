@@ -1,6 +1,5 @@
 package com.clairvoyant.clarise.resolvers.mutation;
 
-import com.clairvoyant.clarise.input.DesignationInput;
 import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.service.DesignationService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
@@ -15,7 +14,7 @@ public class DesignationMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private DesignationService service;
 
-    public Designation addOrUpdateDesignation(DesignationInput input){
+    public Designation addOrUpdateDesignation(Designation input){
         log.info("Adding Designation {} ",input);
         Designation designation = new Designation();
         BeanUtils.copyProperties(input,designation);

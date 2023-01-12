@@ -8,5 +8,5 @@ type Query{
     getSkillRatingById(skillRatingId:ID!):SkillsRating!
 
     #Users related queries
-    allUsers:[User]
+    #allUsers:[User]
 }

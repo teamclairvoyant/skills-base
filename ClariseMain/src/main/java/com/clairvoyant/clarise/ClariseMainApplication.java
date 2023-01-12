@@ -10,4 +10,6 @@ public class ClariseMainApplication {
 		SpringApplication.run(ClariseMainApplication.class, args);
 	}
 
+
+
 }

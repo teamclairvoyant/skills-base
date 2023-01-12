@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/v1/designation")
+@RequestMapping("designation")
 @Api(tags = SwaggerConfig.DESIGNATION)
 public class DesignationController {
 
@@ -29,6 +29,8 @@ public class DesignationController {
 	@PostMapping
 	@ApiOperation(value = "Create and update the designation", response = Designation.class)
 	public Designation addDesignation(@RequestBody Designation designation) {
+
+		System.out.println("Here is Desig : "+designation);
 		return service.save(designation);
 	}
 

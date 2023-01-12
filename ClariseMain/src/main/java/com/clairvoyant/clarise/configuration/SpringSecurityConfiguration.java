@@ -33,7 +33,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
             .and()
             .csrf().disable()
-            .formLogin().disable();;
+            .formLogin().disable();
     }
 }
 

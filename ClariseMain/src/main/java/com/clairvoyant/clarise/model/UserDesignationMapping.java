@@ -11,22 +11,24 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name="user_category_mapping")
+@Table(name="user_designation_mapping")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class UserCategoryMapping extends Persistable {
+public class UserDesignationMapping extends Persistable {
 
     //relationship with User model
-    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
-    @Fetch(FetchMode.JOIN)
+    //@Fetch(FetchMode.JOIN)
     private User user;
 
-    //relationship with Category model
-    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id" , referencedColumnName = "id")
-    @Fetch(FetchMode.JOIN)
-    private Category category;
+    //relationship with Designation model
+    @ManyToOne
+    @JoinColumn(name = "designation_id" , referencedColumnName = "id")
+    //@Fetch(FetchMode.JOIN)
+    private Designation designation;
+
+    private boolean isActive;
 
 }

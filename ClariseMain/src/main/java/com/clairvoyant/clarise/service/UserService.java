@@ -6,11 +6,11 @@ import com.clairvoyant.clarise.model.User;
 import java.util.List;
 
 public interface UserService {
-    public User save(User user);
+    public User addOrUpdateUser(User user);
 
     public User findById(String id);
 
-    public void delete(User user);
+    public void delete(String userId);
 
     public List<User> findAll();
 }

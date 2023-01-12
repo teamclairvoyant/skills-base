@@ -8,6 +8,6 @@ type Mutation {
     deleteSkillRating(skillRatingId:ID!):String!
 
     #User Related Mutation
-    addOrUpdateUser(userInput:UserInput):User
+    #addOrUpdateUser(userInput:UserInput):User
 }
 

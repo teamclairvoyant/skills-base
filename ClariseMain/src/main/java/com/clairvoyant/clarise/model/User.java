@@ -29,29 +29,33 @@ public class User extends Persistable {
     @Column(name = "grade", length = 45)
     private String grade;
 
+    @Lob
     @Column(name = "password", length = 45)
     private String password;
 
     @Column(name = "reporting_to", length = 45)
     private String reportingManager;
 
-    //relationship with Designation
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "designation_id",unique = true)
-    private Designation designation;
+    @Column(name="is_active", length = 45)
+    private boolean isActive;
+
+//    //relationship with UserDesignationMapping
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "designation_id")
+//    private UserDesignationMapping userDesignationMapping;
 
     //relationship with UserRoleMapping
-    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
-            CascadeType.DETACH , CascadeType.MERGE})
-    @JoinColumn(name = "user_id")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private List<UserRoleMapping> userRoleMappings;
+//    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
+//            CascadeType.DETACH , CascadeType.MERGE})
+//    @JoinColumn(name = "user_id")
+//    @NotFound(action = NotFoundAction.IGNORE)
+//    private List<UserRoleMapping> userRoleMappings;
 
     //relationship with UserCategoryMapping
-    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
-            CascadeType.DETACH , CascadeType.MERGE})
-    @JoinColumn(name = "user_id")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private List<UserCategoryMapping> userCategoryMappings;
+//    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
+//            CascadeType.DETACH , CascadeType.MERGE})
+//    @JoinColumn(name = "user_id")
+//    @NotFound(action = NotFoundAction.IGNORE)
+//    private List<UserCategoryMapping> userCategoryMappings;
 
 }

@@ -31,12 +31,19 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
             newSkillMapping(skillCategoryDto.getCategoryId(), skillCategoryDto.getSkillIds(), skillCategoryList);
         }
         else {
-            List<String> dbSkillIds = skillCategories.stream().map(skillCategory -> skillCategory.getSkill().getId()).collect(Collectors.toList());
+            List<String> dbSkillIds = skillCategories
+                    .stream()
+                    .map(skillCategory -> skillCategory
+                                    .getSkill()
+                                    .getId())
+                    .collect(Collectors.toList());
+
             List<String> dbActiveSkillIds = skillCategories.stream().filter(skillCategory -> skillCategory.isActive())
                     .map(skillCategory -> skillCategory.getSkill().getId()).collect(Collectors.toList());
 
             //Insert new Skill for the category -- create
-            List<String> newSkillIds = new ArrayList<>(Sets.difference(Sets.newHashSet(skillCategoryDto.getSkillIds()), Sets.newHashSet(dbSkillIds)));
+            List<String> newSkillIds = new ArrayList<>(Sets.difference(Sets.newHashSet(skillCategoryDto.getSkillIds()),
+                    Sets.newHashSet(dbSkillIds)));
             newSkillMapping(skillCategoryDto.getCategoryId(), newSkillIds, skillCategoryList);
 
             //removing newly inserted skillIds from request so that newly inserted ids will not come while updating in the below
@@ -44,9 +51,16 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
 
 
             //update to inactive for existing mappings -- delete
-            List<String> deletedSkillIds = new ArrayList<>(Sets.difference(Sets.newHashSet(dbActiveSkillIds), Sets.newHashSet(skillCategoryDto.getSkillIds())));
+            List<String> deletedSkillIds = new ArrayList<>(Sets.difference(Sets.newHashSet(dbActiveSkillIds),
+                    Sets.newHashSet(skillCategoryDto.getSkillIds())));
             for (String skillId : deletedSkillIds) {
-                SkillCategory skillCategory = skillCategories.stream().filter(dbSkillCategory -> skillId.equals(dbSkillCategory.getSkill().getId())).findFirst().get();
+                SkillCategory skillCategory =
+                        skillCategories.
+                                stream()
+                                .filter(dbSkillCategory ->
+                                        skillId.equals(dbSkillCategory.getSkill().getId()))
+                                .findFirst()
+                                .get();
                 skillCategory.setActive(false);
                 skillCategoryList.add(skillCategory);
             }
@@ -63,6 +77,7 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
         if (Objects.nonNull(skillCategoryList) && skillCategoryList.size() > 0) {
             return skillCategoryRepository.saveAll(skillCategoryList);
         }
+
         return null;
     }
 
@@ -71,6 +86,7 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
 
         List<SkillCategory> skillCategories = skillCategoryRepository.findByCategoryIdAndIsActive(categoryId, true);
         return skillCategories.stream().map(skillCategory -> skillCategory.getSkill()).collect(Collectors.toList());
+
     }
 
     private void newSkillMapping(String categoryId, List<String> newSkillIds, List<SkillCategory> skillCategoryList) {

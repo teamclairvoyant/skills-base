@@ -13,10 +13,11 @@ public class SkillMutationResolver implements GraphQLMutationResolver {
     private SkillService skillService;
 
     public Skill addOrUpdateSkill(String skillName, String description, Boolean isActive) {
-        Skill skill = new Skill();
-        skill.setSkillName(skillName);
-        skill.setDescription(description);
-        skill.setActive(isActive);
+        Skill skill = Skill.builder()
+                .skillName(skillName)
+                .description(description)
+                .isActive(isActive)
+                .build();
 
         return skillService.addOrUpdateSkill(skill);
     }

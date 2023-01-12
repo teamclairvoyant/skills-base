@@ -6,6 +6,7 @@ import com.clairvoyant.clarise.model.SkillCategory;
 import com.clairvoyant.clarise.repository.CategoryRepository;
 import com.clairvoyant.clarise.repository.SkillRepository;
 import graphql.kickstart.tools.GraphQLResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -13,15 +14,10 @@ import java.util.Optional;
 @Component
 public class SkillCategoryFieldResolver implements GraphQLResolver<SkillCategory> {
 
+    @Autowired
     private CategoryRepository categoryRepository;
-
+    @Autowired
     private SkillRepository skillRepository;
-
-    public SkillCategoryFieldResolver(
-            CategoryRepository categoryRepository, SkillRepository skillRepository) {
-        this.categoryRepository = categoryRepository;
-        this.skillRepository = skillRepository;
-    }
 
     public Category category(SkillCategory skillCategory) {
         Optional<Category> opt= categoryRepository.findById(skillCategory.getCategory().getId());

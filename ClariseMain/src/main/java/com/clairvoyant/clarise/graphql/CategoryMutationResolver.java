@@ -18,10 +18,11 @@ public class CategoryMutationResolver implements GraphQLMutationResolver {
     private CategoryService categoryService;
 
     public Category addOrUpdateCategory(String catName, String description, Boolean isActive) {
-        Category category = new Category();
-        category.setCatName(catName);
-        category.setDescription(description);
-        category.setActive(isActive);
+        Category category = Category.builder()
+                .catName(catName)
+                .description(description)
+                .isActive(isActive)
+                .build();
 
         return categoryService.addOrUpdateCategory(category);
     }

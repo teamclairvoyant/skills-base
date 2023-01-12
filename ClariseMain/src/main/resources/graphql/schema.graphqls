@@ -39,6 +39,7 @@ enum Status{
     MESSAGE_SENT
 
 }
+
 type SkillCategory{
     skill:Skill!
     category:Category!
@@ -46,6 +47,6 @@ type SkillCategory{
 
 }
 input SkillCategoryDto{
-    categoryId:String
-    skillIds:[String]
+    categoryId:String!
+    skillIds:[String]!
 }

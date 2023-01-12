@@ -1,14 +1,14 @@
 type Category{
     id: String!
     catName: String!
-    description:String!
+    description:String
     isActive:Boolean!
 }
 
 type Skill{
     id: String!
     skillName: String!
-    description:String!
+    description:String
     isActive:Boolean!
 }
 
@@ -23,10 +23,10 @@ type Query{
 }
 
 type Mutation{
-    addOrUpdateCategory(catName: String!, description :String!, isActive:Boolean!): Category!
+    addOrUpdateCategory(catName: String!, description :String, isActive:Boolean!): Category!
     deleteCategory( categoryId: String!):Status
 
-    addOrUpdateSkill(skillName:String!,description:String!,isActive: Boolean!):  Skill!
+    addOrUpdateSkill(skillName:String!,description:String,isActive: Boolean!):  Skill!
     deleteSkill( skillId: String!):Status
 
     addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]

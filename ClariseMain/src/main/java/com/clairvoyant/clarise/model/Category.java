@@ -3,14 +3,18 @@ package com.clairvoyant.clarise.model;
 import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="category")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,

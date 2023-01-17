@@ -27,6 +27,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/v1/**").hasAnyRole("USER","ADMIN")
+            .antMatchers(HttpMethod.POST, "/graphql/**").hasAnyRole("USER","ADMIN")
             .antMatchers(HttpMethod.POST, "/v1/**").hasRole("ADMIN")
             .antMatchers(HttpMethod.PUT, "/v1/**").hasRole("ADMIN")
             .antMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")

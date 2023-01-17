@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.graphql;
+package com.clairvoyant.clarise.graphql.resolver.mutation;
 
 import com.clairvoyant.clarise.enums.Status;
 import com.clairvoyant.clarise.model.Skill;

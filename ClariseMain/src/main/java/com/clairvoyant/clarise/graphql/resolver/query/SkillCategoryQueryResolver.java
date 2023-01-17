@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.graphql;
+package com.clairvoyant.clarise.graphql.resolver.query;
 
 import com.clairvoyant.clarise.model.Category;
 import com.clairvoyant.clarise.model.Skill;

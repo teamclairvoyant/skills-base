@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.graphql;
+package com.clairvoyant.clarise.graphql.resolver.query;
 
 import com.clairvoyant.clarise.model.Skill;
 import com.clairvoyant.clarise.service.SkillService;

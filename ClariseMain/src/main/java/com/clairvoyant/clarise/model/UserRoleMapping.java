@@ -7,11 +7,8 @@ import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,15 +19,14 @@ import javax.persistence.Table;
 public class UserRoleMapping extends Persistable {
 
     //relationship with User model
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
     private User user;
 
     //relationship with Role model
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "role_id" , referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
-    private Role role;
-
+    private Role roles;
 }

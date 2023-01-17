@@ -10,6 +10,5 @@ import java.util.List;
 public interface UserDesignationService {
 
     public List<UserDesignationMapping>  addOrUpdateUserDesignation(UserDesignationDto userDesignationDto);
-
     public List<User> allUsers(String designationId);
 }

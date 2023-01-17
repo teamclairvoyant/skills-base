@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,20 +20,20 @@ public class Assessment extends Persistable {
     private String comments;
 
     @OneToMany
-    @JoinColumn(name = "user_id")
-    Set<User> users;
+//    @JoinColumn(name = "user_id")
+    List<User> users;
 
     @OneToMany
     @JoinColumn(name = "category_id")
-    Set<Category> category;
+    List<Category> category;
 
     @OneToMany
     @JoinColumn(name = "assessment_status_id")
-    Set<AssessmentStatus> assessmentStatus;
+    List<AssessmentStatus> assessmentStatus;
 
     @OneToMany
     @JoinColumn(name = "assessment_type_id")
-    Set<AssessmentType> assessmentType;
+    List<AssessmentType> assessmentType;
 
 
 }

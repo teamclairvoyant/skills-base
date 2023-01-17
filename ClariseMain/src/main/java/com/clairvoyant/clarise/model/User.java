@@ -39,21 +39,20 @@ public class User extends Persistable {
     @Column(name="is_active", length = 45)
     private boolean isActive;
 
-//    //relationship with UserDesignationMapping
+    //relationship with UserDesignationMapping
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "designation_id")
 //    private UserDesignationMapping userDesignationMapping;
-
-    //relationship with UserRoleMapping
+//
+//    //relationship with UserRoleMapping
 //    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
 //            CascadeType.DETACH , CascadeType.MERGE})
 //    @JoinColumn(name = "user_id")
 //    @NotFound(action = NotFoundAction.IGNORE)
 //    private List<UserRoleMapping> userRoleMappings;
-
-    //relationship with UserCategoryMapping
-//    @OneToMany( cascade = {CascadeType.REFRESH , CascadeType.PERSIST ,
-//            CascadeType.DETACH , CascadeType.MERGE})
+//
+//    //relationship with UserCategoryMapping
+//    @OneToMany( cascade = CascadeType.ALL)
 //    @JoinColumn(name = "user_id")
 //    @NotFound(action = NotFoundAction.IGNORE)
 //    private List<UserCategoryMapping> userCategoryMappings;

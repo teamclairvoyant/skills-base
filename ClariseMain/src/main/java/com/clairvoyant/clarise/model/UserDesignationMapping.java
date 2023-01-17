@@ -20,13 +20,13 @@ public class UserDesignationMapping extends Persistable {
     //relationship with User model
     @OneToOne
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
-    //@Fetch(FetchMode.JOIN)
+//    @Fetch(FetchMode.JOIN)
     private User user;
 
     //relationship with Designation model
     @ManyToOne
     @JoinColumn(name = "designation_id" , referencedColumnName = "id")
-    //@Fetch(FetchMode.JOIN)
+//    @Fetch(FetchMode.JOIN)
     private Designation designation;
 
     private boolean isActive;

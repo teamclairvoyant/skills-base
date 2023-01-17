@@ -17,14 +17,14 @@ import javax.persistence.*;
         property = "id")
 public class UserCategoryMapping extends Persistable {
 
-    //relationship with User model
-    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.ALL)
+//    relationship with User model
+    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
     private User user;
 
     //relationship with Category model
-    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id" , referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
     private Category category;

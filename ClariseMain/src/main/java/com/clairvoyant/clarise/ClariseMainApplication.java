@@ -9,4 +9,5 @@ public class ClariseMainApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClariseMainApplication.class, args);
 	}
+	
 }

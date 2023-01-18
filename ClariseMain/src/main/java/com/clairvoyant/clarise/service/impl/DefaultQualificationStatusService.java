@@ -20,22 +20,21 @@ public class DefaultQualificationStatusService implements QualificationStatusSer
 
 	@Override
 	public QualificationStatus save(QualificationStatus qualificationStatus) {
-		if (StringUtils.hasText(qualificationStatus.getId())) {
-			Optional<QualificationStatus> result = repository.findById(qualificationStatus.getId());
-			if (result.isPresent()) {
-				if (StringUtils.hasLength(qualificationStatus.getName()))
-					result.get().setName(qualificationStatus.getName());
-
-				if (StringUtils.hasLength(qualificationStatus.getDescription()))
-					result.get().setDescription(qualificationStatus.getDescription());
-
-				qualificationStatus = result.get();
-			}
-
-		} else {
-			qualificationStatus.setCreatedBy("");
-			qualificationStatus.setActive(true);
-		}
+		/*
+		 * if (StringUtils.hasText(qualificationStatus.getId())) {
+		 * Optional<QualificationStatus> result =
+		 * repository.findById(qualificationStatus.getId()); if (result.isPresent()) {
+		 * if (StringUtils.hasLength(qualificationStatus.getName()))
+		 * result.get().setName(qualificationStatus.getName());
+		 * 
+		 * if (StringUtils.hasLength(qualificationStatus.getDescription()))
+		 * result.get().setDescription(qualificationStatus.getDescription());
+		 * 
+		 * qualificationStatus = result.get(); }
+		 * 
+		 * } else { qualificationStatus.setCreatedBy("");
+		 * qualificationStatus.setActive(true); }
+		 */
 
 		return repository.save(qualificationStatus);
 	}
@@ -53,7 +52,7 @@ public class DefaultQualificationStatusService implements QualificationStatusSer
 	@Override
 	public void delete(QualificationStatus qualificationStatus) {
 		QualificationStatus result = findById(qualificationStatus.getId());
-		result.setActive(false);
+		//result.setActive(false);
 		repository.save(result);
 	}
 

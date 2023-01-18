@@ -23,18 +23,20 @@ public class DefaultDesignationService implements DesignationService {
 		if (StringUtils.hasText(designation.getId())) {
 			Optional<Designation> result = repository.findById(designation.getId());
 			if (result.isPresent()) {
-				if (StringUtils.hasLength(designation.getName()))
-					result.get().setName(designation.getName());
-
-				if (StringUtils.hasLength(designation.getDescription()))
-					result.get().setDescription(designation.getDescription());
+				/*
+				 * if (StringUtils.hasLength(designation.getName()))
+				 * result.get().setName(designation.getName());
+				 * 
+				 * if (StringUtils.hasLength(designation.getDescription()))
+				 * result.get().setDescription(designation.getDescription());
+				 */
 
 				designation = result.get();
 			}
 
 		} else {
-			designation.setCreatedBy("");
-			designation.setActive(true);
+			//designation.setCreatedBy("");
+			//designation.setActive(true);
 		}
 		return repository.save(designation);
 	}
@@ -51,7 +53,7 @@ public class DefaultDesignationService implements DesignationService {
 	@Override
 	public void delete(Designation designation) {
 		Designation result = findById(designation.getId());
-		result.setActive(false);
+		//result.setActive(false);
 		repository.save(result);
 	}
 

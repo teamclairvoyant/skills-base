@@ -21,25 +21,21 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 
 	@Override
 	public SkillsRating save(SkillsRating skillsRating) {
-		if (StringUtils.hasText(skillsRating.getId())) {
-			Optional<SkillsRating> result = ratingRepository.findById(skillsRating.getId());
-			if (result.isPresent()) {
-				if (StringUtils.hasLength(skillsRating.getName()))
-					result.get().setName(skillsRating.getName());
-
-				if (StringUtils.hasLength(skillsRating.getDescription()))
-					result.get().setDescription(skillsRating.getDescription());
-
-				result.get().setUpdatedBy("");
-				result.get().setUpdatedOn(Instant.now());
-				skillsRating = result.get();
-			}
-
-		} else {
-			skillsRating.setCreatedOn(Instant.now());
-			skillsRating.setCreatedBy("");
-			skillsRating.setActive(true);
-		}
+		/*
+		 * if (StringUtils.hasText(skillsRating.getId())) { Optional<SkillsRating>
+		 * result = ratingRepository.findById(skillsRating.getId()); if
+		 * (result.isPresent()) { if (StringUtils.hasLength(skillsRating.getName()))
+		 * result.get().setName(skillsRating.getName());
+		 * 
+		 * if (StringUtils.hasLength(skillsRating.getDescription()))
+		 * result.get().setDescription(skillsRating.getDescription());
+		 * 
+		 * result.get().setUpdatedBy(""); result.get().setUpdatedOn(Instant.now());
+		 * skillsRating = result.get(); }
+		 * 
+		 * } else { skillsRating.setCreatedOn(Instant.now());
+		 * skillsRating.setCreatedBy(""); skillsRating.setActive(true); }
+		 */
 		return ratingRepository.save(skillsRating); 
 	}
 
@@ -55,9 +51,9 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 
 	@Override
 	public void delete(SkillsRating rating) {
-		SkillsRating result = findById(rating.getId());
-		result.setActive(false);
-		ratingRepository.save(result);
+		//SkillsRating result = findById(rating.getId());
+		//result.setActive(false);
+		//ratingRepository.save(result);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.clairvoyant.clarise.service;
 
 import com.clairvoyant.clarise.dto.UserDto;
+import com.clairvoyant.clarise.dto.UserResponseDto;
 import com.clairvoyant.clarise.model.SkillsRating;
 import com.clairvoyant.clarise.model.User;
 
@@ -13,5 +14,5 @@ public interface UserService {
 
     public void delete(String userId);
 
-    public List<UserDto> findAll();
+    public List<UserResponseDto> findAll();
 }

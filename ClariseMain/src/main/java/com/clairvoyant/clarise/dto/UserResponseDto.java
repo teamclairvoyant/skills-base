@@ -1,18 +1,13 @@
 package com.clairvoyant.clarise.dto;
 
 import com.clairvoyant.clarise.model.Category;
-import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.model.Role;
-import com.clairvoyant.clarise.model.UserCategoryMapping;
 import lombok.Data;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Data
-public class UserDto {
+public class UserResponseDto {
 
     private String id;
     private String name;
@@ -22,6 +17,6 @@ public class UserDto {
     private String reportingManager;
     private boolean isActive;
 //    private UserDesignationDto userDesignationDto;
-    private List<String> userRoleIds;
-    private List<String> userCategoryIds;
+    private List<Role> userRoles;
+    private List<Category> userCategories;
 }

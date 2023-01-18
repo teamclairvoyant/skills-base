@@ -1,6 +1,7 @@
 package com.clairvoyant.clarise.resolvers.queries;
 
 import com.clairvoyant.clarise.dto.UserDto;
+import com.clairvoyant.clarise.dto.UserResponseDto;
 import com.clairvoyant.clarise.service.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class UserQueryResolver implements GraphQLQueryResolver {
     @Autowired
     private UserService userService;
 
-    public List<UserDto> getAllUsers(){
+    public List<UserResponseDto> getAllUsers(){
        return userService.findAll();
     }
 }

@@ -2,12 +2,11 @@ package com.clairvoyant.clarise.service.impl;
 
 import com.clairvoyant.clarise.dto.UserCategoryDto;
 import com.clairvoyant.clarise.dto.UserDto;
+import com.clairvoyant.clarise.dto.UserResponseDto;
 import com.clairvoyant.clarise.dto.UserRoleDto;
 import com.clairvoyant.clarise.model.*;
 import com.clairvoyant.clarise.repository.UserRepository;
-import com.clairvoyant.clarise.repository.UserRoleRepository;
 import com.clairvoyant.clarise.service.UserCategoryService;
-import com.clairvoyant.clarise.service.UserDesignationService;
 import com.clairvoyant.clarise.service.UserRoleService;
 import com.clairvoyant.clarise.service.UserService;
 import com.clairvoyant.clarise.util.PasswordUtil;
@@ -19,7 +18,6 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -99,34 +97,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAll() {
+    public List<UserResponseDto> findAll() {
         List<User> users = userRepository.findByIsActive(true);
-        List<UserDto> userDtos = new ArrayList<>();
+        List<UserResponseDto> userResponse = new ArrayList<>();
         List<UserRoleMapping> userRoleMappings = userRoleService.findAllUserRoleMapping();
         List<UserCategoryMapping> userCategoryMappings = userCategoryService.findAllUserCategoryMapping();
         for (User user : users) {
-            UserDto userDto = new UserDto();
-            BeanUtils.copyProperties(user, userDto);
-            List<String> roleIds = new ArrayList<>();
+            UserResponseDto userResponseDto = new UserResponseDto();
+            BeanUtils.copyProperties(user, userResponseDto);
+            List<Role> roles = new ArrayList<>();
             for (UserRoleMapping userRoleMapping : userRoleMappings) {
                 if (user.getId().equals(userRoleMapping.getUser().getId())) {
                     Role role = userRoleMapping.getRoles();
-                    String id = role.getId();
-                    roleIds.add(id);
+                    roles.add(role);
                 }
             }
-            List<String> categoryIds = new ArrayList<>();
+            List<Category> categories = new ArrayList<>();
             for (UserCategoryMapping userCategoryMapping : userCategoryMappings) {
                 if (user.getId().equals(userCategoryMapping.getUser().getId())) {
                     Category category = userCategoryMapping.getCategory();
-                    String id = category.getId();
-                    categoryIds.add(id);
+                    categories.add(category);
                 }
             }
-            userDto.setUserRoleIds(roleIds);
-            userDto.setUserCategoryIds(categoryIds);
-            userDtos.add(userDto);
+            userResponseDto.setUserRoles(roles);
+            userResponseDto.setUserCategories(categories);
+            userResponse.add(userResponseDto);
         }
-        return userDtos;
+        return userResponse;
     }
 }

@@ -1,6 +1,7 @@
 package com.clairvoyant.clarise.controller;
 
 import com.clairvoyant.clarise.dto.UserDto;
+import com.clairvoyant.clarise.dto.UserResponseDto;
 import com.clairvoyant.clarise.enums.Status;
 import com.clairvoyant.clarise.repository.UserRepository;
 import com.clairvoyant.clarise.service.UserService;
@@ -8,6 +9,7 @@ import com.clairvoyant.clarise.util.PasswordUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.clairvoyant.clarise.model.User;
 
@@ -30,10 +32,11 @@ public class UserController {
     }
 
 
-    @GetMapping
-    public List<UserDto> getAllUsers()
-    {
-        return userService.findAll();
+    @GetMapping("/allUsers")
+    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+        List<UserResponseDto> allUsers = userService.findAll();
+        System.out.println("ALL USERS \n "+ allUsers);
+        return ResponseEntity.ok(allUsers);
     }
 
     @GetMapping("/{userId}")

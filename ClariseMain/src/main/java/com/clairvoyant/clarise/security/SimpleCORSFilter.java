@@ -1,4 +1,4 @@
-package com.clairvoyant.clarise.configuration;
+package com.clairvoyant.clarise.security;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -9,14 +9,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class SimpleCORSFilter implements Filter {
-    private final Logger log = LoggerFactory.getLogger(SimpleCORSFilter.class);
     public SimpleCORSFilter() {
         log.info("SimpleCORSFilter init");
     }
@@ -24,7 +25,7 @@ public class SimpleCORSFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        //System.out.println("CORS Filter" + request.getHeader("Authorization"));
+        log.info("CORS Filter" + request.getHeader("Authorization"));
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");

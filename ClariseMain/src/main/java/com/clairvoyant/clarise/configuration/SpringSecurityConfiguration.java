@@ -1,4 +1,3 @@
-
 package com.clairvoyant.clarise.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,14 +26,13 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .httpBasic()
             .and()
             .authorizeRequests()
-//            .antMatchers(HttpMethod.GET, "/v1/**").hasAnyRole("USER","ADMIN")
-//            .antMatchers(HttpMethod.POST, "/v1/**").hasRole("ADMIN")
-//            .antMatchers(HttpMethod.PUT, "/v1/**").hasRole("ADMIN")
-//            .antMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
-                .anyRequest().permitAll()
+            .antMatchers(HttpMethod.GET, "/v1/**").hasAnyRole("USER","ADMIN")
+            .antMatchers(HttpMethod.POST, "/graphql/**").hasAnyRole("USER","ADMIN")
+            .antMatchers(HttpMethod.POST, "/v1/**").hasRole("ADMIN")
+            .antMatchers(HttpMethod.PUT, "/v1/**").hasRole("ADMIN")
+            .antMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
             .and()
             .csrf().disable()
-            .formLogin().disable();
+            .formLogin().disable();;
     }
 }
-

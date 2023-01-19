@@ -20,7 +20,7 @@ public class Assessment extends Persistable {
     private String comments;
 
     @OneToMany
-//    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id")
     List<User> users;
 
     @OneToMany

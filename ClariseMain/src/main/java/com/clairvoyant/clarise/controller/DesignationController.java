@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("designation")
+@RequestMapping("/v1/designation")
 @Api(tags = SwaggerConfig.DESIGNATION)
 public class DesignationController {
 

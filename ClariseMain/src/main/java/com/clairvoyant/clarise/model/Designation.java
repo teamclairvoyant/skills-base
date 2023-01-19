@@ -23,9 +23,5 @@ public class Designation extends Persistable {
 	@Column(name = "is_active")
 	private boolean isActive;
 
-//	@OneToOne(mappedBy = "designation" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-//	private User user;
-
-	//UserDesignationMapping
 
 }

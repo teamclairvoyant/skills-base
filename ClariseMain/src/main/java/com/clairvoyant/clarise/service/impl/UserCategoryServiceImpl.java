@@ -18,9 +18,9 @@ public class UserCategoryServiceImpl implements UserCategoryService {
 
     @Override
     public List<UserCategoryMapping> addOrUpdateUserCategory(UserCategoryDto userCategoryDto) {
-        Optional<UserCategoryMapping> userCategoryMapping = userCategoryRepository.findByUserId(userCategoryDto.getUserId());
+        Optional<List<UserCategoryMapping>> userCategoryMapping = userCategoryRepository.findByUserId(userCategoryDto.getUserId());
 
-        if (userCategoryMapping.isEmpty())
+        if (userCategoryMapping.get().isEmpty())
             newUserCategoryMapping(userCategoryDto.getUserId(), userCategoryDto.getCategoryIds());
 
         return userCategoryRepository.findAll();
@@ -32,8 +32,8 @@ public class UserCategoryServiceImpl implements UserCategoryService {
     }
 
     @Override
-    public List<String> findCategoryIdByUserId(String id) {
-        return userCategoryRepository.getCategoryIdByUserId(id);
+    public Optional<List<UserCategoryMapping>> findUserCategoryMappingByUserId(String id) {
+        return userCategoryRepository.findByUserId(id);
     }
 
     private void newUserCategoryMapping(String userId, List<String> categoryIds) {

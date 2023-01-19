@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService {
     public User addOrUpdateUser(UserDto userDto);
 
-    public UserDto findById(String id);
+    public UserResponseDto findById(String id);
 
     public void delete(String userId);
 

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRoleRepository extends JpaRepository<UserRoleMapping, String> {
-    Optional<UserRoleMapping> findByUserId(String userId);
+    Optional<List<UserRoleMapping>> findByUserId(String userId);
 
     @Query(value = "SELECT role_id FROM USER_ROLE_MAPPING WHERE user_id = ?1",  nativeQuery = true)
     List<String> getRoleIdByUserId(String userId);

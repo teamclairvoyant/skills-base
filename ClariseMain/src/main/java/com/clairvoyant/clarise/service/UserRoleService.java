@@ -4,6 +4,7 @@ import com.clairvoyant.clarise.dto.UserRoleDto;
 import com.clairvoyant.clarise.model.UserRoleMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRoleService {
 
@@ -11,5 +12,5 @@ public interface UserRoleService {
 
     List<UserRoleMapping> findAllUserRoleMapping();
 
-    List<String> findRoleIdByUserId(String userId);
+    Optional<List<UserRoleMapping>> findUserRoleMappingByUserId(String userId);
 }

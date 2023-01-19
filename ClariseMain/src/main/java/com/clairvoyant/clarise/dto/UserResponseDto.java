@@ -1,6 +1,7 @@
 package com.clairvoyant.clarise.dto;
 
 import com.clairvoyant.clarise.model.Category;
+import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.model.Role;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class UserResponseDto {
     private String password;
     private String reportingManager;
     private boolean isActive;
-    private UserDesignationDto userDesignationDto;
+    private Designation designation;
     private List<Role> userRoles;
     private List<Category> userCategories;
 }

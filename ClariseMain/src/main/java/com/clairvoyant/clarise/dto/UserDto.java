@@ -20,7 +20,7 @@ public class UserDto {
 
     private boolean isActive;
 
-    private UserDesignationDto userDesignationDto;
+    private String userDesignationId;
 
     private List<String> userRoleIds;
 

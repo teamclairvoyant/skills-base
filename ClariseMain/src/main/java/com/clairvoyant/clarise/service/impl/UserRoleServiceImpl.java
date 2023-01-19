@@ -18,9 +18,9 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public List<UserRoleMapping> addOrUpdateUserRole(UserRoleDto userRoleDto) {
-        Optional<UserRoleMapping> userRoleMapping = userRoleRepository.findByUserId(userRoleDto.getUserId());
+        Optional<List<UserRoleMapping>> userRoleMapping = userRoleRepository.findByUserId(userRoleDto.getUserId());
 
-        if (userRoleMapping.isEmpty())
+        if (userRoleMapping.get().isEmpty())
             newUserRoleMapping(userRoleDto.getUserId(), userRoleDto.getRoleIds());
 
         return userRoleRepository.findAll();
@@ -32,8 +32,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public List<String> findRoleIdByUserId(String userId) {
-        return userRoleRepository.getRoleIdByUserId(userId);
+    public Optional<List<UserRoleMapping>> findUserRoleMappingByUserId(String userId) {
+        return userRoleRepository.findByUserId(userId);
     }
 
     private void newUserRoleMapping(String userId, List<String> roleIds) {

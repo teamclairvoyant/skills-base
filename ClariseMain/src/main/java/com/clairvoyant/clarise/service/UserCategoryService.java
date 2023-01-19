@@ -6,6 +6,7 @@ import com.clairvoyant.clarise.model.UserCategoryMapping;
 import com.clairvoyant.clarise.model.UserRoleMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserCategoryService {
 
@@ -13,5 +14,5 @@ public interface UserCategoryService {
 
     List<UserCategoryMapping> findAllUserCategoryMapping();
 
-    List<String> findCategoryIdByUserId(String id);
+    Optional<List<UserCategoryMapping>> findUserCategoryMappingByUserId(String id);
 }

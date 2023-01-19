@@ -21,14 +21,11 @@ public class UserController {
     private static final Logger LOGGER = LogManager.getLogger(SkillController.class);
     private UserService userService;
 
-    private UserDesignationService userDesignationService;
-
-
 
     @Autowired
-    public UserController(UserService userService, UserDesignationService userDesignationService , UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
-        this.userDesignationService=userDesignationService;
+
     }
 
 
@@ -39,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public UserDto getUserById(@PathVariable String userId)
+    public UserResponseDto getUserById(@PathVariable String userId)
     {
         return userService.findById(userId);
     }
@@ -50,10 +47,6 @@ public class UserController {
         LOGGER.info(userDto);
         User user = userService.addOrUpdateUser(userDto);
 
-        UserDesignationDto userDesignationDto=userDto.getUserDesignationDto();
-        userDesignationDto.setUserId(user.getId());
-        userDesignationService.addOrUpdateUserDesignation(userDesignationDto);
-
         return user;
     }
 
@@ -63,8 +56,6 @@ public class UserController {
         userService.delete(userId);
         return Status.SUCCESS;
     }
-
-
 }
 
 

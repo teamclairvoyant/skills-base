@@ -1,12 +1,10 @@
 package com.clairvoyant.clarise.service.impl;
 
-import com.clairvoyant.clarise.dto.UserCategoryDto;
-import com.clairvoyant.clarise.dto.UserDto;
-import com.clairvoyant.clarise.dto.UserResponseDto;
-import com.clairvoyant.clarise.dto.UserRoleDto;
+import com.clairvoyant.clarise.dto.*;
 import com.clairvoyant.clarise.model.*;
 import com.clairvoyant.clarise.repository.UserRepository;
 import com.clairvoyant.clarise.service.UserCategoryService;
+import com.clairvoyant.clarise.service.UserDesignationService;
 import com.clairvoyant.clarise.service.UserRoleService;
 import com.clairvoyant.clarise.service.UserService;
 import com.clairvoyant.clarise.util.PasswordUtil;
@@ -29,11 +27,14 @@ public class UserServiceImpl implements UserService {
 
     private UserCategoryService userCategoryService;
 
+    private UserDesignationService userDesignationService;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService, UserCategoryService userCategoryService) {
+    public UserServiceImpl(UserRepository userRepository,UserDesignationService userDesignationService,UserRoleService userRoleService, UserCategoryService userCategoryService) {
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.userCategoryService = userCategoryService;
+        this.userDesignationService=userDesignationService;
     }
 
     @Override
@@ -61,12 +62,21 @@ public class UserServiceImpl implements UserService {
             user.setActive(true);
             user.setPassword(PasswordUtil.encode(user.getPassword()));
             User savedUser = userRepository.save(user);
+
+            UserDesignationDto userDesignationDto = new UserDesignationDto();
+            String userDesignationId=userDto.getUserDesignationId();
+            userDesignationDto.setUserId(savedUser.getId());
+            userDesignationDto.setDesignationId(userDesignationId);
+
             UserRoleDto userRoleDto = new UserRoleDto();
-            UserCategoryDto userCategoryDto = new UserCategoryDto();
             userRoleDto.setUserId(savedUser.getId());
-            userCategoryDto.setUserId(savedUser.getId());
             userRoleDto.setRoleIds(userDto.getUserRoleIds());
+
+            UserCategoryDto userCategoryDto = new UserCategoryDto();
+            userCategoryDto.setUserId(savedUser.getId());
             userCategoryDto.setCategoryIds(userDto.getUserCategoryIds());
+
+            userDesignationService.addOrUpdateUserDesignation(userDesignationDto);
             userRoleService.addOrUpdateUserRole(userRoleDto);
             userCategoryService.addOrUpdateUserCategory(userCategoryDto);
         }
@@ -74,15 +84,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findById(String id) {
+    public UserResponseDto findById(String id) {
         Optional<User> result = userRepository.findByIdAndIsActive(id, true);
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(result.get(), userDto);
-        List<String> userRoleIds = userRoleService.findRoleIdByUserId(id);
-        userDto.setUserRoleIds(userRoleIds);
-        List<String> userCategoryIds = userCategoryService.findCategoryIdByUserId(id);
-        userDto.setUserCategoryIds(userCategoryIds);
-        return userDto;
+        UserResponseDto userResponseDto = new UserResponseDto();
+        BeanUtils.copyProperties(result.get(), userResponseDto);
+        UserDesignationMapping userDesignationMapping = userDesignationService.findUserDesignationMappingByUserId(id);
+        Designation designation = userDesignationMapping.getDesignation();
+        userResponseDto.setDesignation(designation);
+        Optional<List<UserRoleMapping>> userRoles = userRoleService.findUserRoleMappingByUserId(id);
+        List<Role> roles = new ArrayList<>();
+        for (UserRoleMapping userRoleMapping : userRoles.get()){
+            Role role = userRoleMapping.getRoles();
+            roles.add(role);
+        }
+        userResponseDto.setUserRoles(roles);
+
+        Optional<List<UserCategoryMapping>> userCategories = userCategoryService.findUserCategoryMappingByUserId(id);
+        List<Category> categories = new ArrayList<>();
+        for (UserCategoryMapping userCategoryMapping : userCategories.get()){
+            Category category = userCategoryMapping.getCategory();
+            categories.add(category);
+        }
+        userResponseDto.setUserCategories(categories);
+        return userResponseDto;
     }
 
     @Override
@@ -100,11 +124,20 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseDto> findAll() {
         List<User> users = userRepository.findByIsActive(true);
         List<UserResponseDto> userResponse = new ArrayList<>();
+        List<UserDesignationMapping> userDesignationMappings = userDesignationService.findAllUserDesignationMappings();
         List<UserRoleMapping> userRoleMappings = userRoleService.findAllUserRoleMapping();
         List<UserCategoryMapping> userCategoryMappings = userCategoryService.findAllUserCategoryMapping();
         for (User user : users) {
             UserResponseDto userResponseDto = new UserResponseDto();
             BeanUtils.copyProperties(user, userResponseDto);
+
+            Designation designation = new Designation();
+            for (UserDesignationMapping userDesignationMapping:userDesignationMappings) {
+                if (user.getId().equals(userDesignationMapping.getUser().getId())){
+                    designation = userDesignationMapping.getDesignation();
+                }
+            }
+
             List<Role> roles = new ArrayList<>();
             for (UserRoleMapping userRoleMapping : userRoleMappings) {
                 if (user.getId().equals(userRoleMapping.getUser().getId())) {
@@ -119,6 +152,7 @@ public class UserServiceImpl implements UserService {
                     categories.add(category);
                 }
             }
+            userResponseDto.setDesignation(designation);
             userResponseDto.setUserRoles(roles);
             userResponseDto.setUserCategories(categories);
             userResponse.add(userResponseDto);

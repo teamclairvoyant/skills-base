@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +49,17 @@ public class UserDesignationServiceImpl implements UserDesignationService {
 
         return userDesignationMappings.stream().map(userDesignationMapping -> userDesignationMapping.getUser()).collect(Collectors.toList());
     }
+
+    @Override
+    public List<UserDesignationMapping> findAllUserDesignationMappings(){
+        return designationRepository.findAll();
+    }
+
+    @Override
+    public UserDesignationMapping findUserDesignationMappingByUserId(String userId) {
+        return designationRepository.findByUserId(userId);
+    }
+
 
 }
 

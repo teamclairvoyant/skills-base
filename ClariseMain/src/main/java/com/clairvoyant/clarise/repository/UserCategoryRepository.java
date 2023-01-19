@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserCategoryRepository extends JpaRepository<UserCategoryMapping,String> {
 
-    Optional<UserCategoryMapping> findByUserId(String userId);
+    Optional<List<UserCategoryMapping>> findByUserId(String userId);
 
     @Query(value = "SELECT category_id FROM USER_CATEGORY_MAPPING WHERE user_id = ?1",  nativeQuery = true)
     List<String> getCategoryIdByUserId(String userId);

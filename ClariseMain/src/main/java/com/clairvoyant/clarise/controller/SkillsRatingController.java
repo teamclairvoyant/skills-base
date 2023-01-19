@@ -48,7 +48,7 @@ public class SkillsRatingController {
 	@ApiOperation(value = "Deletes the skill rating by id", response = String.class)
 	public String deleteRating(@PathVariable String id) {
 		SkillsRating rating = new SkillsRating();
-		rating.setId(id);
+		//rating.setId(id);
 		service.delete(rating);
 		return "Record Deleted";
 	}

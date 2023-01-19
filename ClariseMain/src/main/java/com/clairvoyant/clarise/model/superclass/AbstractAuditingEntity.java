@@ -60,14 +60,14 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @PrePersist
     void onCreate() throws Exception {
         SecurityContext context = SecurityContextHolder.getContext();
-        this.setCreatedDate(getUTCZonedDateTime());
-        this.setModifiedDate(getUTCZonedDateTime());
+        //this.setCreatedDate(getUTCZonedDateTime());
+        //this.setModifiedDate(getUTCZonedDateTime());
 
         // TODO : Set proper condition for checking if SecurityContext is having the required auth data.
         if (Objects.nonNull(context.getAuthentication())) {
             // TODO : Set proper data after implementing SecurityContext and having auth user in it.
-            this.setCreatedBy(context.getAuthentication().getName());
-            this.setModifiedBy(context.getAuthentication().getName());
+            //this.setCreatedBy(context.getAuthentication().getName());
+            //this.setModifiedBy(context.getAuthentication().getName());
         } else {
             throw new Exception(CommonConstants.AUDIT_TRAIL_EXCEPTION);
         }
@@ -76,10 +76,10 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @PreUpdate
     void onPersist() throws Exception {
         SecurityContext context = SecurityContextHolder.getContext();
-        this.setModifiedDate(getUTCZonedDateTime());
+        //this.setModifiedDate(getUTCZonedDateTime());
         if (Objects.nonNull(context.getAuthentication())) {
             // TODO : Set proper data after implementing SecurityContext and having auth user in it.
-            this.setModifiedBy(context.getAuthentication().getName());
+            //this.setModifiedBy(context.getAuthentication().getName());
         } else {
             throw new Exception(CommonConstants.AUDIT_TRAIL_EXCEPTION);
         }

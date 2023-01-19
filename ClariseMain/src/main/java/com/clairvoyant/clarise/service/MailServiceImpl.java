@@ -29,16 +29,16 @@ public class MailServiceImpl implements MailService{
 
         MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-        helper.setTo(employee.getEmail());
+       // helper.setTo(employee.getEmail());
 
-        String url = baseurl + employee.getEmpId();
+        //String url = baseurl + employee.getEmpId();
 
         helper.setSubject(subject);
 
         helper.setText("<html>" +
                 "<body>" +
                 "Invitation Link : "+
-                "<a href='"+url+"'>"+url+"</a></body>" +
+               // "<a href='"+url+"'>"+url+"</a></body>" +
                 "</html>", true);
         
         javaMailSender.send(mail);

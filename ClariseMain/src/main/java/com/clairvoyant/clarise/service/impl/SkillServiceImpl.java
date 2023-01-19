@@ -36,7 +36,7 @@ public class SkillServiceImpl implements SkillService {
         Optional<Skill> optSkill = skillRepository.findById(skillId);
         if (optSkill.isPresent()) {
             Skill skill = optSkill.get();
-            skill.setActive(false);
+            //skill.setActive(false);
             skillRepository.save(skill);
         }
     }

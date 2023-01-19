@@ -3,6 +3,7 @@ package com.clairvoyant.clarise.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.clairvoyant.clarise.security.AuthorizationFilter;
 import com.clairvoyant.clarise.service.impl.CustomUserDetailsService;
 
 @Configuration
@@ -58,7 +60,19 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
+        http
+            //HTTP Basic authentication
+            .httpBasic()
+            .and()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/v1/**").hasAnyRole("USER","ADMIN")
+            .antMatchers(HttpMethod.POST, "/graphql/**").hasAnyRole("USER","ADMIN")
+            .antMatchers(HttpMethod.POST, "/v1/**").hasRole("ADMIN")
+            .antMatchers(HttpMethod.PUT, "/v1/**").hasRole("ADMIN")
+            .antMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
+            .and()
+            .csrf().disable()
+            .formLogin().disable();;
     }
 
 }

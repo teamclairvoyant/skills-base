@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> optCategory = categoryRepository.findById(categoryId);
         if (optCategory.isPresent()) {
             Category category = optCategory.get();
-            category.setActive(false);
+            //category.setActive(false);
             categoryRepository.save(category);
         }
     }

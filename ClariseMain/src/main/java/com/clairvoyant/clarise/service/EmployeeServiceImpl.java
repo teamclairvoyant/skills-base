@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(String employeeId, Employee employeeDetails) {
        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(()-> new RuntimeException("Employee not exist with empId: "+employeeId));
-        employee.setRole(employeeDetails.getRole());
+        //employee.setRole(employeeDetails.getRole());
 
         employeeRepository.save(employee);
     }

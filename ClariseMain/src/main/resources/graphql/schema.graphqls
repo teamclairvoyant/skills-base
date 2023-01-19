@@ -1,0 +1,52 @@
+type Category{
+    id: String!
+    catName: String!
+    description:String
+    isActive:Boolean!
+}
+
+type Skill{
+    id: String!
+    skillName: String!
+    description:String
+    isActive:Boolean!
+}
+
+type Query{
+    getCategories: [Category]!
+    findCategoryById(categoryId:String!):Category!
+
+    getSkills: [Skill]!
+    findSkillById(skillId:String!):Skill!
+
+    getSkills(categoryId: String!): [Skill]!
+}
+
+type Mutation{
+    addOrUpdateCategory(catName: String!, description :String, isActive:Boolean!): Category!
+    deleteCategory( categoryId: String!):Status
+
+    addOrUpdateSkill(skillName:String!,description:String,isActive: Boolean!):  Skill!
+    deleteSkill( skillId: String!):Status
+
+    addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
+}
+
+enum Status{
+    SUCCESS
+    USER_ALREADY_EXISTS
+    FAILURE
+    MESSAGE_SENT
+
+}
+
+type SkillCategory{
+    skill:Skill!
+    category:Category!
+    isActive:Boolean!
+
+}
+input SkillCategoryDto{
+    categoryId:String!
+    skillIds:[String]!
+}

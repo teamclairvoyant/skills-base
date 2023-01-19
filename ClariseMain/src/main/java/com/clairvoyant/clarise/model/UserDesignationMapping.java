@@ -4,10 +4,9 @@ import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+
 
 @Entity
 @Data
@@ -18,15 +17,13 @@ import javax.persistence.*;
 public class UserDesignationMapping extends Persistable {
 
     //relationship with User model
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
-//    @Fetch(FetchMode.JOIN)
     private User user;
 
     //relationship with Designation model
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "designation_id" , referencedColumnName = "id")
-//    @Fetch(FetchMode.JOIN)
     private Designation designation;
 
     private boolean isActive;

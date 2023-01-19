@@ -18,14 +18,27 @@ public class UserDesignationServiceImpl implements UserDesignationService {
     private UserDesignationRepository designationRepository;
 
     @Override
-    public List<UserDesignationMapping> addOrUpdateUserDesignation(UserDesignationDto userDesignationDto) {
+    public void addOrUpdateUserDesignation(UserDesignationDto userDesignationDto) {
 
-        List<UserDesignationMapping> userDesignationMapping= designationRepository.findByUserId(userDesignationDto.getUserId());
+        UserDesignationMapping userDesignationMapping= designationRepository.findByUserId(userDesignationDto.getUserId());
 
-        if(Objects.isNull(userDesignationMapping) || userDesignationMapping.size()==0)
-            newUserDesignationMapping(userDesignationDto.getUserId() , userDesignationDto.getDesignationId());
 
-        return designationRepository.findAll();
+        if(Objects.isNull(userDesignationMapping))
+        {
+            UserDesignationMapping newMapping=new UserDesignationMapping();
+            User user=new User();
+            Designation designation=new Designation();
+
+            user.setId(userDesignationDto.getUserId());
+            designation.setId(userDesignationDto.getDesignationId());
+
+            newMapping.setUser(user);
+            newMapping.setDesignation(designation);
+            newMapping.setActive(true);
+            designationRepository.save(newMapping);
+        }
+
+
     }
 
     @Override
@@ -35,27 +48,6 @@ public class UserDesignationServiceImpl implements UserDesignationService {
 
         return userDesignationMappings.stream().map(userDesignationMapping -> userDesignationMapping.getUser()).collect(Collectors.toList());
     }
-
-
-
-    public void newUserDesignationMapping(String userId , String designationId)
-    {
-        UserDesignationMapping userDesignationMapping=new UserDesignationMapping();
-        User user=new User();
-        Designation designation=new Designation();
-
-        user.setId(userId);
-        designation.setId(designationId);
-
-        userDesignationMapping.setUser(user);
-        userDesignationMapping.setDesignation(designation);
-
-        designationRepository.save(userDesignationMapping);
-
-    }
-
-
-
 
 }
 

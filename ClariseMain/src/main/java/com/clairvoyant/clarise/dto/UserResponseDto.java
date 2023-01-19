@@ -16,7 +16,7 @@ public class UserResponseDto {
     private String password;
     private String reportingManager;
     private boolean isActive;
-//    private UserDesignationDto userDesignationDto;
+    private UserDesignationDto userDesignationDto;
     private List<Role> userRoles;
     private List<Category> userCategories;
 }

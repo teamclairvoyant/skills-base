@@ -49,12 +49,4 @@ public class UserRoleServiceImpl implements UserRoleService {
             userRoleRepository.save(userRoleMapping);
         }
     }
-
-//    @Override
-//    public List<User> allUsers(String roleId) {
-//        List<UserRoleMapping> userRoleMappings = userRoleRepository.findByRoleIdAndIsActive(roleId,true);
-//
-//        return userRoleMappings.stream().map(userRoleMapping -> userRoleMapping.getUser()).collect(Collectors.toList());
-//
-//    }
 }

@@ -1,10 +1,13 @@
 package com.clairvoyant.clarise.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRoleDto {
 
    private String userId;

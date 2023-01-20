@@ -3,11 +3,14 @@ package com.clairvoyant.clarise.dto;
 import com.clairvoyant.clarise.model.Category;
 import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.model.Role;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserResponseDto {
 
     private String id;

@@ -3,7 +3,10 @@ package com.clairvoyant.clarise.dto;
 import com.clairvoyant.clarise.model.Category;
 import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.model.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 

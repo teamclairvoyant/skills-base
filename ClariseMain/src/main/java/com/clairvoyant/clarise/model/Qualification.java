@@ -3,7 +3,10 @@ package com.clairvoyant.clarise.model;
 import com.clairvoyant.clarise.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +14,10 @@ import javax.persistence.Table;
 
 //qualification model
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "qualification")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,

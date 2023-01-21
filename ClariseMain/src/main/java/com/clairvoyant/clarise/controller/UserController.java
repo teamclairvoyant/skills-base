@@ -42,10 +42,10 @@ public class UserController {
     }
 
     @PostMapping
-    public User addOrUpdateUser(@RequestBody UserDto userDto) {
+    public UserResponseDto addOrUpdateUser(@RequestBody UserDto userDto) {
 
         LOGGER.info(userDto);
-        User user = userService.addOrUpdateUser(userDto);
+        UserResponseDto user = userService.addOrUpdateUser(userDto);
 
         return user;
     }
@@ -53,8 +53,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public Status delete(@PathVariable String userId)
     {
-        userService.delete(userId);
-        return Status.SUCCESS;
+        return userService.delete(userId);
     }
 }
 

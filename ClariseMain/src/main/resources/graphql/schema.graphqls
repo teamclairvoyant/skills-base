@@ -12,25 +12,6 @@ type Skill{
     isActive:Boolean!
 }
 
-type Query{
-    getCategories: [Category]!
-    findCategoryById(categoryId:String!):Category!
-
-    getSkills: [Skill]!
-    findSkillById(skillId:String!):Skill!
-
-    getSkills(categoryId: String!): [Skill]!
-}
-
-type Mutation{
-    addOrUpdateCategory(catName: String!, description :String, isActive:Boolean!): Category!
-    deleteCategory( categoryId: String!):Status
-
-    addOrUpdateSkill(skillName:String!,description:String,isActive: Boolean!):  Skill!
-    deleteSkill( skillId: String!):Status
-
-    addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
-}
 
 enum Status{
     SUCCESS
@@ -50,3 +31,26 @@ input SkillCategoryDto{
     categoryId:String!
     skillIds:[String]!
 }
+
+type Query{
+    #Category Related Queries
+    getCategories: [Category]!
+    findCategoryById(categoryId:String!):Category!
+
+    #Skills Related Queries
+    getSkills: [Skill]!
+    findSkillById(skillId:String!):Skill!
+    getSkills(categoryId: String!): [Skill]!
+}
+
+type Mutation {
+    #Category related Mutations
+    addOrUpdateCategory(catName: String!, description :String): Category!
+    deleteCategory( categoryId: String!):Status
+
+    #Skills related Mutations
+    addOrUpdateSkill(skillName:String!,description:String,isActive: Boolean!):  Skill!
+    deleteSkill( skillId: String!):Status
+    addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
+}
+

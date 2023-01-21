@@ -29,15 +29,10 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 
 				if (StringUtils.hasLength(skillsRating.getDescription()))
 					result.get().setDescription(skillsRating.getDescription());
-
-				result.get().setUpdatedBy("");
-				result.get().setUpdatedOn(Instant.now());
 				skillsRating = result.get();
 			}
 
 		} else {
-			skillsRating.setCreatedOn(Instant.now());
-			skillsRating.setCreatedBy("");
 			skillsRating.setActive(true);
 		}
 		return ratingRepository.save(skillsRating); 

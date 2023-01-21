@@ -17,11 +17,10 @@ public class CategoryMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private CategoryService categoryService;
 
-    public Category addOrUpdateCategory(String catName, String description, Boolean isActive) {
+    public Category addOrUpdateCategory(String catName, String description) {
         Category category = Category.builder()
                 .catName(catName)
                 .description(description)
-                .isActive(isActive)
                 .build();
 
         return categoryService.addOrUpdateCategory(category);

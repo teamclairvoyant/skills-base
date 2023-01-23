@@ -1,12 +1,15 @@
+
 package com.clairvoyant.clarise.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.clairvoyant.clarise.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.List;
+import java.util.Optional;
 
-	User findByUserName(String username);
+public interface UserRepository extends JpaRepository<User,String> {
+    List<User> findByIsActive(Boolean b);
+
+    Optional<User> findByIdAndIsActive(String id, boolean b);
 }
+

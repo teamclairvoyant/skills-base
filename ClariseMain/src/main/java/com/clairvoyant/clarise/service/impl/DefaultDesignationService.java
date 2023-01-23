@@ -41,7 +41,7 @@ public class DefaultDesignationService implements DesignationService {
 
 	@Override
 	public Designation findById(String id) {
-		Optional<Designation> result = repository.findById(id);
+		Optional<Designation> result = repository.findByIdAndIsActive(id,true);
 		if (result.isEmpty()) {
 			throw new ResourceNotFoundException("Designation Not Found");
 		}
@@ -57,8 +57,8 @@ public class DefaultDesignationService implements DesignationService {
 
 	@Override
 	public List<Designation> findAll() {
-		List<Designation> result = repository.findAll();
-		return result;
+		Optional<List<Designation>> result = repository.findByIsActive(true);
+		return result.get();
 	}
 
 }

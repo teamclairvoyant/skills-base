@@ -29,15 +29,10 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 
 				if (StringUtils.hasLength(skillsRating.getDescription()))
 					result.get().setDescription(skillsRating.getDescription());
-
-				result.get().setUpdatedBy("");
-				result.get().setUpdatedOn(Instant.now());
 				skillsRating = result.get();
 			}
 
 		} else {
-			skillsRating.setCreatedOn(Instant.now());
-			skillsRating.setCreatedBy("");
 			skillsRating.setActive(true);
 		}
 		return ratingRepository.save(skillsRating); 
@@ -45,7 +40,7 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 
 	@Override
 	public SkillsRating findById(String id) {
-		Optional<SkillsRating> result = ratingRepository.findById(id);
+		Optional<SkillsRating> result = ratingRepository.findByIdAndIsActive(id,true);
 		System.out.println("the result of findby id is:" + result);
 		if (result.isEmpty()) {
 			throw new ResourceNotFoundException("Skill Rating Not Found");
@@ -56,13 +51,14 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 	@Override
 	public void delete(SkillsRating rating) {
 		SkillsRating result = findById(rating.getId());
+
 		result.setActive(false);
 		ratingRepository.save(result);
 	}
 
 	@Override
 	public List<SkillsRating> findAll() {
-		List<SkillsRating> result = ratingRepository.findAll();
+		List<SkillsRating> result = ratingRepository.findByIsActive(true);
 		return result;
 	}
 

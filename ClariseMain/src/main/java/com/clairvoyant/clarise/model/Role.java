@@ -8,11 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +17,7 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name="role")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,

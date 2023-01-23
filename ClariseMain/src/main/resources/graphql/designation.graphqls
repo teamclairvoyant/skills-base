@@ -1,4 +1,4 @@
-input DesignationInput{
+input DesignationDto{
 
     id:ID
     name:String
@@ -14,7 +14,7 @@ type Designation{
 }
 
 extend type Mutation {
-    addOrUpdateDesignation(input:DesignationInput!):Designation!
+    addOrUpdateDesignation(input:DesignationDto!):Designation!
     deleteDesignation(designationId:ID!):String!
 }
 

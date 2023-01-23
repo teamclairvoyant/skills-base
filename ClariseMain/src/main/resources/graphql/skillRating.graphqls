@@ -1,4 +1,4 @@
-input SkillRatingInput{
+input SkillRatingDto{
     id:String
     name:String!
     description:String
@@ -14,7 +14,7 @@ type SkillsRating{
 
 extend type Mutation {
     #SkillRating related Mutations
-    addOrUpdateSkillRating(skillRatingInput:SkillRatingInput!):SkillsRating!
+    addOrUpdateSkillRating(skillRatingInput:SkillRatingDto!):SkillsRating!
     deleteSkillRating(skillRatingId:ID!):String!
 }
 

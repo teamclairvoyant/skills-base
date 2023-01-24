@@ -2,11 +2,9 @@ package com.clairvoyant.clarise.controller;
 
 import com.clairvoyant.clarise.dto.QualificationDto;
 import com.clairvoyant.clarise.enums.Status;
-import com.clairvoyant.clarise.model.Qualification;
 import com.clairvoyant.clarise.service.QualificationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 //qualification controller
 @RestController
@@ -31,14 +28,11 @@ public class QualificationController {
     @Autowired
     private QualificationService qualificationService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     //get all qualifications
     @GetMapping
     public List<QualificationDto> findAll(){
 
-        return qualificationService.findAll().stream().map(qualification -> modelMapper.map(qualification, QualificationDto.class)).collect(Collectors.toList());
+        return qualificationService.findAll();
     }
 
     //add or update qualification to qualification table
@@ -47,14 +41,14 @@ public class QualificationController {
 
         LOGGER.info(qualificationDto);
 
-        return modelMapper.map(qualificationService.addOrUpdateQualification(modelMapper.map(qualificationDto, Qualification.class)), QualificationDto.class);
+        return qualificationService.addOrUpdateQualification(qualificationDto);
     }
 
     //get qualification
     @GetMapping("/{qualificationId}")
     public QualificationDto find(@PathVariable String qualificationId){
 
-        return modelMapper.map(qualificationService.findQualification(qualificationId), QualificationDto.class);
+        return qualificationService.findQualification(qualificationId);
     }
 
     //delete qualification

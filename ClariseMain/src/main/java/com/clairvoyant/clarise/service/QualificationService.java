@@ -1,16 +1,16 @@
 package com.clairvoyant.clarise.service;
 
-import com.clairvoyant.clarise.model.Qualification;
+import com.clairvoyant.clarise.dto.QualificationDto;
 
 import java.util.List;
 
 public interface QualificationService {
 
-    public List<Qualification> findAll();
+    public List<QualificationDto> findAll();
 
-    public Qualification addOrUpdateQualification(Qualification qualification);
+    public QualificationDto addOrUpdateQualification(QualificationDto qualificationDto);
 
-    public Qualification findQualification(String qualificationId);
+    public QualificationDto findQualification(String qualificationId);
 
     public void deleteQualification(String qualificationId);
 }

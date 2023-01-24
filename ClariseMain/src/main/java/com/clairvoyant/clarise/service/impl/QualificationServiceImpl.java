@@ -1,14 +1,18 @@
 package com.clairvoyant.clarise.service.impl;
 
+import com.clairvoyant.clarise.dto.QualificationDto;
 import com.clairvoyant.clarise.model.Qualification;
 import com.clairvoyant.clarise.repository.QualificationRepository;
 import com.clairvoyant.clarise.service.QualificationService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class QualificationServiceImpl implements QualificationService {
@@ -16,35 +20,45 @@ public class QualificationServiceImpl implements QualificationService {
     @Autowired
     private QualificationRepository qualificationRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     @Override
-    public List<Qualification> findAll() {
-        return qualificationRepository.findAll();
+    public List<QualificationDto> findAll() {
+        return qualificationRepository.findAll().stream().map(qualification -> modelMapper.map(qualification, QualificationDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public Qualification addOrUpdateQualification(Qualification qualification) {
-        if (StringUtils.hasText(qualification.getId())) {
-            Optional<Qualification> dbQualification = qualificationRepository.findById(qualification.getId());
+    public QualificationDto addOrUpdateQualification(QualificationDto qualificationDto) {
+        Qualification qualification = null;
+        if (StringUtils.hasText(qualificationDto.getId())) {
+            Optional<Qualification> dbQualification = qualificationRepository.findById(qualificationDto.getId());
             if (dbQualification.isPresent()) {
-                if (StringUtils.hasLength(qualification.getName()))
-                    dbQualification.get().setName(qualification.getName());
+                if (StringUtils.hasLength(qualificationDto.getName()))
+                    dbQualification.get().setName(qualificationDto.getName());
 
-                if (StringUtils.hasLength(qualification.getDescription()))
-                    dbQualification.get().setDescription(qualification.getDescription());
+                if (StringUtils.hasLength(qualificationDto.getDescription()))
+                    dbQualification.get().setDescription(qualificationDto.getDescription());
 
                 qualification = dbQualification.get();
             }
         }
         else {
+            qualification = modelMapper.map(qualificationDto, Qualification.class);
             qualification.setActive(true);
         }
-        return qualificationRepository.save(qualification);
+
+        if (Objects.nonNull(qualification)) {
+            qualification = qualificationRepository.save(qualification);
+        }
+
+        return modelMapper.map(qualification, QualificationDto.class);
     }
 
     @Override
-    public Qualification findQualification(String qualificationId) {
-        return qualificationRepository.findById(qualificationId).get();
+    public QualificationDto findQualification(String qualificationId) {
+        return modelMapper.map(qualificationRepository.findById(qualificationId).get(), QualificationDto.class);
     }
 
     @Override

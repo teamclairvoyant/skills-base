@@ -20,6 +20,9 @@ type Query{
     findSkillById(skillId:String!):Skill!
 
     getSkills(categoryId: String!): [Skill]!
+
+    getQualifications: [QualificationDto]!
+    getQualificationById(qualificationId:String!):QualificationDto!
 }
 
 type Mutation{
@@ -30,6 +33,9 @@ type Mutation{
     deleteSkill( skillId: String!):Status
 
     addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
+
+    addOrUpdateQualification(qualificationDto: QualificationDto): QualificationDto!
+    deleteQualification(qualificationId: String!):Status
 }
 
 enum Status{
@@ -49,4 +55,12 @@ type SkillCategory{
 input SkillCategoryDto{
     categoryId:String!
     skillIds:[String]!
+}
+
+input QualificationDto{
+    id:String!
+    name:String!
+    description:String!
+    isActive:Boolean!
+
 }

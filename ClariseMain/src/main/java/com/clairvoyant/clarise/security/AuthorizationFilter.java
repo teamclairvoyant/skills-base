@@ -1,8 +1,9 @@
-package com.clairvoyant.clarise.configuration;
+package com.clairvoyant.clarise.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+@Slf4j
 public class AuthorizationFilter extends OncePerRequestFilter {
 
 	@Value("${app.googleApi}")
@@ -25,10 +27,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		// System.out.println("response authToken --> " +
-		// httpRequest.getHeader("Authorization"));
+		HttpServletRequest httpRequest = request;
+		HttpServletResponse httpResponse = response;
+		log.info("response authToken --> " +
+			httpRequest.getHeader("Authorization"));
 
 		String authToken = httpRequest.getHeader("Authorization");
 		// TODO: sometime token is coming as null

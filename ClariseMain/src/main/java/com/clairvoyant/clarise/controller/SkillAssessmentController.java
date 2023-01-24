@@ -20,22 +20,39 @@ public class SkillAssessmentController {
     @Autowired
     private SkillAssessmentService skillAssessmentService;
 
-    //get skills of a category
+    /**
+     * Get SkillAssessment details by category ids.
+     *
+     * @param category_ids List of category_ids
+     * @return SkillCategoryResponse.
+     */
     @GetMapping
     public SkillCategoryResponse getSkillAssessmentDetails(@RequestBody List<String> category_ids) {
         return skillAssessmentService.getSkillAssessmentDetails(category_ids);
     }
 
-    @PostMapping("/saveSkillAssesementdetails")
-    public Status saveSkillAssesementdetails(@RequestBody AssessmentDto assessmentDto){
-        skillAssessmentService.saveSkillAssessmentdetails(assessmentDto);
+    /**
+     * Save or Update Skill Assessment details.
+     *
+     * @param assessmentDto assessmentDto
+     * @return Status.
+     */
+    @PostMapping("/saveSkillAssessmentDetails")
+    public Status saveSkillAssessmentDetails(@RequestBody AssessmentDto assessmentDto){
+        skillAssessmentService.saveSkillAssessmentDetails(assessmentDto);
 
         return Status.SUCCESS;
     }
 
-    @GetMapping("/getSavedSkillAssessmentdetails/{assessmentId}")
-    public AssessmentDto getSavedSkillAssessmentdetails(@PathVariable String assessmentId) {
-        return skillAssessmentService.getSavedSkillAssessmentdetails(assessmentId);
+    /**
+     * Get saved SkillAssessment details by assessmentId.
+     *
+     * @param assessmentId assessmentId
+     * @return AssessmentDto object.
+     */
+    @GetMapping("/getSavedSkillAssessmentDetails/{assessmentId}")
+    public AssessmentDto getSavedSkillAssessmentDetails(@PathVariable String assessmentId) {
+        return skillAssessmentService.getSavedSkillAssessmentDetails(assessmentId);
 
     }
 }

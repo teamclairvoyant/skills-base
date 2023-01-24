@@ -76,7 +76,7 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
      * @param assessmentDto input assessmentDto object from UI.
      */
     @Override
-    public void saveSkillAssessmentdetails(AssessmentDto assessmentDto) {
+    public void saveSkillAssessmentDetails(AssessmentDto assessmentDto) {
         //For now creating AssessmentType with Completed
         AssessmentType newAssessmentType = new AssessmentType();
         newAssessmentType.setName(ASSESSMENT_TYPE_COMPLETED);
@@ -117,13 +117,13 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
     }
 
     /**
-     * Get saved skill assesssment details based on assessmentId.
+     * Get saved skill assessment details based on assessmentId.
      *
      * @param assessmentId assessmentId for which we are trying to get SkillAssessmentdetails.
      * @return AssessmentDto with skill,category,skill assessment details.
      */
     @Override
-    public AssessmentDto getSavedSkillAssessmentdetails(String assessmentId) {
+    public AssessmentDto getSavedSkillAssessmentDetails(String assessmentId) {
         List<SkillAssessment> skillssessmentList = skillAssessmentRepository.findByAssessmentId(assessmentId);
 
         AssessmentDto assessmentDto = new AssessmentDto();

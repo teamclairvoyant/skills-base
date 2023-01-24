@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SkillAssessmentService {
     SkillCategoryResponse getSkillAssessmentDetails(List<String> categoryIds);
-    void saveSkillAssessmentdetails(AssessmentDto assessmentDto);
+    void saveSkillAssessmentDetails(AssessmentDto assessmentDto);
 
-    AssessmentDto getSavedSkillAssessmentdetails(String assessmentId);
+    AssessmentDto getSavedSkillAssessmentDetails(String assessmentId);
 }

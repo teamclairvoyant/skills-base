@@ -21,8 +21,8 @@ type Query{
 
     getSkills(categoryId: String!): [Skill]!
 
-    getQualifications: [QualificationDto]!
-    getQualificationById(qualificationId:String!):QualificationDto!
+    getQualifications: [QualificationDtoReturnType]!
+    getQualificationById(qualificationId:String!):QualificationDtoReturnType!
 }
 
 type Mutation{
@@ -34,7 +34,7 @@ type Mutation{
 
     addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
 
-    addOrUpdateQualification(qualificationDto: QualificationDto): QualificationDto!
+    addOrUpdateQualification(qualificationDto: QualificationDto): QualificationDtoReturnType!
     deleteQualification(qualificationId: String!):Status
 }
 
@@ -57,10 +57,18 @@ input SkillCategoryDto{
     skillIds:[String]!
 }
 
-input QualificationDto{
+type QualificationDtoReturnType{
     id:String!
     name:String!
     description:String!
     isActive:Boolean!
+
+}
+
+input QualificationDto{
+    id:String
+    name:String!
+    description:String
+    isActive:Boolean
 
 }

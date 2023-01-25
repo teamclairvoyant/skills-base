@@ -17,10 +17,17 @@ public class CategoryQueryResolver implements GraphQLQueryResolver {
     @Autowired
     private CategoryService categoryService;
 
+
+    /**
+     * getCategories is used to get all the categories
+     */
     public List<Category> getCategories() {
         return categoryService.findAll();
     }
 
+    /**
+     * findCategoryById is used to get the category based on the passed categoryId
+     */
     public Category findCategoryById(String categoryId) {
         return categoryService.findCategory(categoryId);
     }

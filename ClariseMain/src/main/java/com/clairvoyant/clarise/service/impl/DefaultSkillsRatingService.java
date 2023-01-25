@@ -1,9 +1,10 @@
 package com.clairvoyant.clarise.service.impl;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+import com.clairvoyant.clarise.enums.Status;
+import com.clairvoyant.clarise.model.Designation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -29,40 +30,55 @@ public class DefaultSkillsRatingService implements SkillsRatingService {
 
 				if (StringUtils.hasLength(skillsRating.getDescription()))
 					result.get().setDescription(skillsRating.getDescription());
-
-				result.get().setUpdatedBy("");
-				result.get().setUpdatedOn(Instant.now());
 				skillsRating = result.get();
 			}
 
 		} else {
-			skillsRating.setCreatedOn(Instant.now());
-			skillsRating.setCreatedBy("");
 			skillsRating.setActive(true);
 		}
 		return ratingRepository.save(skillsRating); 
 	}
 
 	@Override
-	public SkillsRating findById(String id) {
-		Optional<SkillsRating> result = ratingRepository.findById(id);
-		System.out.println("the result of findby id is:" + result);
+	public SkillsRating findById(String id, Optional<Boolean> isActive) {
+		Optional<SkillsRating> result;
+		if (isActive.isPresent()) {
+			result = ratingRepository.findByIdAndIsActive(id, isActive.get());
+		}else {
+			result = ratingRepository.findByIdAndIsActive(id, true);
+		}
 		if (result.isEmpty()) {
-			throw new ResourceNotFoundException("Skill Rating Not Found");
+			throw new ResourceNotFoundException("SkillsRating Not Found");
 		}
 		return result.get();
 	}
 
 	@Override
-	public void delete(SkillsRating rating) {
-		SkillsRating result = findById(rating.getId());
-		result.setActive(false);
-		ratingRepository.save(result);
+	public Status delete(SkillsRating rating) {
+		Optional<SkillsRating> result = ratingRepository.findById(rating.getId());
+		if (result.isPresent()){
+			try {
+				result.get().setActive(false);
+				ratingRepository.save(result.get());
+				return Status.SUCCESS;
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+		}else
+		{
+			throw new ResourceNotFoundException("SkillRating not found");
+		}
+		return Status.FAILURE;
 	}
 
 	@Override
-	public List<SkillsRating> findAll() {
-		List<SkillsRating> result = ratingRepository.findAll();
+	public List<SkillsRating> findAll(Optional<Boolean> isActive) {
+		List<SkillsRating> result;
+		if (isActive.isPresent()) {
+			result = ratingRepository.findByIsActive(isActive.get());
+		}else {
+			result = ratingRepository.findByIsActive(true);
+		}
 		return result;
 	}
 

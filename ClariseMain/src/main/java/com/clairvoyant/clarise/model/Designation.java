@@ -6,11 +6,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
 @Table(name = "designations")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Designation extends Persistable {
 
 	@Column(name = "name")

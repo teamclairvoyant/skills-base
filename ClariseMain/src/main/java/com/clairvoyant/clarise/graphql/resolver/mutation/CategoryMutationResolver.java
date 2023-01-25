@@ -17,15 +17,21 @@ public class CategoryMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private CategoryService categoryService;
 
-    public Category addOrUpdateCategory(String catName, String description, Boolean isActive) {
+    /**
+     * addOrUpdateCategory is used to add or update the Category
+     */
+    public Category addOrUpdateCategory(String catName, String description) {
         Category category = Category.builder()
                 .catName(catName)
                 .description(description)
-                .isActive(isActive)
                 .build();
 
         return categoryService.addOrUpdateCategory(category);
     }
+
+    /**
+     * deleteCategory is used to delete the Category
+     */
     public Status deleteCategory(String categoryId) {
         categoryService.deleteCategory(categoryId);
         return Status.SUCCESS;

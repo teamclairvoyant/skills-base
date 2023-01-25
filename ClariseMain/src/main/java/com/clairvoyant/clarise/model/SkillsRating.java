@@ -8,6 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.clairvoyant.clarise.model.superclass.Persistable;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,27 +22,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "skills_rating")
-public class SkillsRating {
+public class SkillsRating extends Persistable {
 
-	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	@Column(name = "id")
-	private String id;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "description")
 	private String description;
-	@Column(name = "created_by")
-	private String createdBy;
-	@Column(name = "created_on")
-	private Instant createdOn;
-	@Column(name = "updated_by")
-	private String updatedBy;
-	@Column(name = "updated_on")
-	private Instant updatedOn;
 	@Column(name = "is_active")
 	private boolean isActive;
 }

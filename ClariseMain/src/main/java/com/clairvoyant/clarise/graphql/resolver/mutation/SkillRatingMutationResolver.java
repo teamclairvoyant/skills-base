@@ -16,12 +16,20 @@ public class SkillRatingMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private SkillsRatingService service;
 
+
+    /**
+     * addOrUpdateSkillRating is used to add or update the SkillRating
+     */
     public SkillsRating addOrUpdateSkillRating(SkillRatingDto skillRatingDto){
         SkillsRating skillsRating = new SkillsRating();
         BeanUtils.copyProperties(skillRatingDto,skillsRating);
         return service.save(skillsRating);
     }
 
+
+    /**
+     * deleteSkillRating is used to delete the SkillRating
+     */
     public String deleteSkillRating(String skillRatingId){
         SkillsRating rating = new SkillsRating();
         rating.setId(skillRatingId);

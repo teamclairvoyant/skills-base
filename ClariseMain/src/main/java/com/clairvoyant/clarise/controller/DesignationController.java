@@ -1,6 +1,7 @@
 package com.clairvoyant.clarise.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clairvoyant.clarise.configuration.SwaggerConfig;
@@ -33,15 +35,15 @@ public class DesignationController {
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "Get gesignation by id", response = Designation.class)
-	public Designation findById(@PathVariable String id) {
-		return service.findById(id);
+	@ApiOperation(value = "Get designation by id", response = Designation.class)
+	public Designation findById(@PathVariable String id, @RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive) {
+		return service.findById(id, isActive);
 	}
 
 	@GetMapping
 	@ApiOperation(value = "Get all designations", response = List.class)
-	public List<Designation> findAll() {
-		return service.findAll();
+	public List<Designation> findAll(@RequestParam(name = "isActive",defaultValue = "true")Boolean isActive) {
+		return service.findAll(Optional.ofNullable(isActive));
 	}
 
 	@DeleteMapping("/{id}")

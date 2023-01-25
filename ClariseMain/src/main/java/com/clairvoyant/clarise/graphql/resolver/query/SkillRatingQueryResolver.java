@@ -6,7 +6,10 @@ import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -15,11 +18,17 @@ public class SkillRatingQueryResolver implements GraphQLQueryResolver {
     @Autowired
     private SkillsRatingService service;
 
-    public List<SkillsRating> getAllSkillRatings(){
-        return service.findAll();
+    /**
+     * getAllSkillRatings is used to get all the SkillRatings
+     */
+    public List<SkillsRating> getAllSkillRatings(Optional<Boolean> isActive){
+        return service.findAll(isActive);
     }
 
-    public SkillsRating getSkillRatingById(String skillRatingId){
-        return service.findById(skillRatingId);
+    /**
+     * getSkillRatingById is used to get the SkillRating based on the passed skillRatingId
+     */
+    public SkillsRating getSkillRatingById(String skillRatingId,Optional<Boolean> isActive){
+        return service.findById(skillRatingId,isActive);
     }
 }

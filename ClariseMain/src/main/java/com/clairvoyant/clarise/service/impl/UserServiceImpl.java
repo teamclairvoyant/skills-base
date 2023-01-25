@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto addOrUpdateUser(UserDto userDto) {
+    public Status addOrUpdateUser(UserDto userDto) {
         User user = new User();
         if (StringUtils.hasText(userDto.getId())) {
             Optional<User> result = userRepository.findById(userDto.getId());
@@ -58,43 +57,57 @@ public class UserServiceImpl implements UserService {
                 if (StringUtils.hasLength(userDto.getReportingManager()))
                     result.get().setReportingManager(userDto.getReportingManager());
             }
-            user = result.get();
-            userRepository.save(user);
+           try {
+               user = result.get();
+               userRepository.save(user);
+               return Status.SUCCESS;
+           }catch (Exception e){
+               e.printStackTrace();
+           }
 
         } else {
-            BeanUtils.copyProperties(userDto, user);
-            user.setActive(true);
-            user.setPassword(PasswordUtil.encode(user.getPassword()));
-            User savedUser = userRepository.save(user);
-            userDesignationService.addOrUpdateUserDesignation(
-                    UserDesignationDto
-                            .builder()
-                            .userId(savedUser.getId())
-                            .designationId(userDto.getUserDesignationId())
-                            .build()
-            );
-            userRoleService.addOrUpdateUserRole(
-                    UserRoleDto
-                            .builder()
-                            .userId(savedUser.getId())
-                            .roleIds(userDto.getUserRoleIds())
-                            .build()
-            );
-            userCategoryService.addOrUpdateUserCategory(
-                    UserCategoryDto
-                            .builder()
-                            .userId(savedUser.getId())
-                            .categoryIds(userDto.getUserCategoryIds())
-                            .build()
-            );
+            try {
+                BeanUtils.copyProperties(userDto, user);
+                user.setActive(true);
+                user.setPassword(PasswordUtil.encode(user.getPassword()));
+                User savedUser = userRepository.save(user);
+                userDesignationService.addOrUpdateUserDesignation(
+                        UserDesignationDto
+                                .builder()
+                                .userId(savedUser.getId())
+                                .designationId(userDto.getUserDesignationId())
+                                .build()
+                );
+                userRoleService.addOrUpdateUserRole(
+                        UserRoleDto
+                                .builder()
+                                .userId(savedUser.getId())
+                                .roleIds(userDto.getUserRoleIds())
+                                .build()
+                );
+                userCategoryService.addOrUpdateUserCategory(
+                        UserCategoryDto
+                                .builder()
+                                .userId(savedUser.getId())
+                                .categoryIds(userDto.getUserCategoryIds())
+                                .build()
+                );
+                return Status.SUCCESS;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
-        UserResponseDto userResponseDto = findById(user.getId());
-        return userResponseDto;
+        return Status.SOMETHING_WENT_WRONG;
     }
 
     @Override
-    public UserResponseDto findById(String id) {
-        Optional<User> result = userRepository.findByIdAndIsActive(id, true);
+    public UserResponseDto findById(String id,Optional<Boolean> isActive) {
+        Optional<User> result;
+        if (isActive.isPresent()){
+           result = userRepository.findByIdAndIsActive(id, isActive.get());
+        }else {
+            result = userRepository.findByIdAndIsActive(id, true);
+        }
         if (result.isEmpty()){
             throw new ResourceNotFoundException("User not found");
         }
@@ -123,21 +136,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Status delete(String userId) {
-
         Optional<User> optUser = userRepository.findById(userId);
         if (optUser.isPresent()) {
-            User user = optUser.get();
-            user.setActive(false);
-            userRepository.save(user);
-            return Status.SUCCESS;
+           try {
+               User user = optUser.get();
+               user.setActive(false);
+               userRepository.save(user);
+               return Status.SUCCESS;
+           }catch (Exception e){
+               e.printStackTrace();
+           }
         }else {
             throw new ResourceNotFoundException("User not found");
         }
+        return Status.SOMETHING_WENT_WRONG;
     }
 
     @Override
-    public List<UserResponseDto> findAll() {
-        List<User> users = userRepository.findByIsActive(true);
+    public List<UserResponseDto> findAll(Optional<Boolean> isActive) {
+        List<User> users;
+        if (isActive.isPresent()){
+            users = userRepository.findByIsActive(isActive.get());
+        }else {
+            users = userRepository.findByIsActive(true);
+        }
         List<UserResponseDto> userResponse = new ArrayList<>();
         List<UserDesignationMapping> userDesignationMappings = userDesignationService.findAllUserDesignationMappings();
         List<UserRoleMapping> userRoleMappings = userRoleService.findAllUserRoleMapping();

@@ -25,11 +25,11 @@ input UserDto{
 }
 
 extend type Query {
-    getUserById(userId : String):UserResponseDto!
-    getAllUsers:[UserResponseDto]!
+    getUserById(userId : String!,isActive:Boolean):UserResponseDto!
+    getAllUsers(isActive:Boolean):[UserResponseDto]!
 }
 
 extend type Mutation {
-    addOrUpdateUser(userDto:UserDto):UserResponseDto!
-    deleteUser(userId:String):Status
+    addOrUpdateUser(userDto:UserDto!):Status!
+    deleteUser(userId:String!):Status
 }

@@ -20,6 +20,6 @@ extend type Mutation {
 
 extend type Query {
     #SkillRatings Related Queries
-    getAllSkillRatings:[SkillsRating]
-    getSkillRatingById(skillRatingId:ID!):SkillsRating!
+    getAllSkillRatings(isActive:Boolean):[SkillsRating]
+    getSkillRatingById(skillRatingId:ID!,isActive:Boolean):SkillsRating!
 }

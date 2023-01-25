@@ -15,6 +15,10 @@ public class DesignationMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private DesignationService service;
 
+
+    /**
+     * addOrUpdateDesignation is used to add or update the designation
+     */
     public Designation addOrUpdateDesignation(DesignationDto input){
         log.info("Adding Designation {} ",input);
         Designation designation = new Designation();
@@ -22,6 +26,9 @@ public class DesignationMutationResolver implements GraphQLMutationResolver {
         return service.save(designation);
     }
 
+    /**
+     * deleteDesignation is used to delete the designation
+     */
     public String deleteDesignation(String designationId){
         Designation designation = new Designation();
         designation.setId(designationId);

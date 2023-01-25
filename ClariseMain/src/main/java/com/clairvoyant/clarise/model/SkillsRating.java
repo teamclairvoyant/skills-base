@@ -27,9 +27,6 @@ import lombok.Data;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "skills_rating")
-@JsonIdentityInfo(
-		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "id")
 public class SkillsRating extends Persistable {
 
 	@Column(name = "name")

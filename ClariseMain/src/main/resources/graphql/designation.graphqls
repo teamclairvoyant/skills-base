@@ -1,0 +1,25 @@
+input DesignationDto{
+
+    id:ID
+    name:String
+    description:String
+    isActive:Boolean
+}
+
+type Designation{
+    id:ID
+    name:String
+    description:String
+    isActive:Boolean
+}
+
+extend type Mutation {
+    addOrUpdateDesignation(input:DesignationDto!):Designation!
+    deleteDesignation(designationId:ID!):String!
+}
+
+extend type Query {
+    #Designation Related Queries
+    getAllDesignations(isActive:Boolean):[Designation]
+    getDesignationById(designationId:ID!,isActive:Boolean):Designation!
+}

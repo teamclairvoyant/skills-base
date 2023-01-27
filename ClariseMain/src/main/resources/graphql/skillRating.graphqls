@@ -1,0 +1,25 @@
+input SkillRatingDto{
+    id:String
+    name:String!
+    description:String
+    isActive:Boolean
+}
+
+type SkillsRating{
+    id:ID
+    name:String
+    description:String
+    isActive:Boolean
+}
+
+extend type Mutation {
+    #SkillRating related Mutations
+    addOrUpdateSkillRating(skillRatingInput:SkillRatingDto!):SkillsRating!
+    deleteSkillRating(skillRatingId:ID!):String!
+}
+
+extend type Query {
+    #SkillRatings Related Queries
+    getAllSkillRatings(isActive:Boolean):[SkillsRating]
+    getSkillRatingById(skillRatingId:ID!,isActive:Boolean):SkillsRating!
+}

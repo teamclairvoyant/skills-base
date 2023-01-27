@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.security;
 
-import com.clairvoyant.clarise.service.impl.CustomUserDetailsService;
+import com.clairvoyant.clarise.service.impl.UserDetailsServiceDefault;
 import com.clairvoyant.clarise.util.JWTUtility;
 
 
@@ -23,17 +23,15 @@ import java.util.Map;
 
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter {
-
+	
 	@Autowired
 	private JWTUtility jwtUtility;
 
 	@Autowired
-	private CustomUserDetailsService userDetailsService;
+	private UserDetailsServiceDefault userDetailsService;
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationFilter.class);
 
-	@Value("${app.googleApi}")
-	private String googleApi;
 
 	 @Override
 	    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -42,7 +40,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 	        String userName = null;
 
 	        if(null != authorization && authorization.startsWith("Bearer ")) {
-	            token = authorization.substring(7);
+	            token = authorization.replace("Bearer","").trim();
 	            userName = jwtUtility.getUsernameFromToken(token);
 	            
 	        }
@@ -66,4 +64,5 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 	        }
 	        filterChain.doFilter(httpServletRequest, httpServletResponse);
 	    }
+
 }

@@ -6,12 +6,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.clairvoyant.clarise.model.CustomUserDetails;
 import com.clairvoyant.clarise.model.User;
 import com.clairvoyant.clarise.repository.UserRepository;
+import com.clairvoyant.clarise.service.UserDetailsImpl;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceDefault implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("UserNotFound");
 		}
-		return new CustomUserDetails(user);
+		return new UserDetailsImpl(user);
 	}
 
 }

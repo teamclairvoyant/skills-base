@@ -1,15 +1,17 @@
-package com.clairvoyant.clarise.model;
+package com.clairvoyant.clarise.service;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class CustomUserDetails implements UserDetails {
+import com.clairvoyant.clarise.model.User;
+
+public class UserDetailsImpl implements UserDetails {
 	
 	private User user;
 	
-	public CustomUserDetails(User user) {
+	public UserDetailsImpl(User user) {
 		super();
 		this.user = user;
 

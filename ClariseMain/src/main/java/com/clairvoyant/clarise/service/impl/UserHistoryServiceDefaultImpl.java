@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import com.clairvoyant.clarise.model.User;
 import com.clairvoyant.clarise.model.UserHistory;
 import com.clairvoyant.clarise.repository.UserHistoryRepository;
-import com.clairvoyant.clarise.service.UserHistoryService;
+import com.clairvoyant.clarise.service.UserHistoryServiceDefault;
 
 @Service
-public class UserHistoryServiceImpl implements  UserHistoryService {
+public class UserHistoryServiceDefaultImpl implements  UserHistoryServiceDefault {
 	
 	@Autowired
 	private UserHistoryRepository userHistoryRepository;

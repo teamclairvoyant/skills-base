@@ -12,31 +12,6 @@ type Skill{
     isActive:Boolean!
 }
 
-type Query{
-    getCategories: [Category]!
-    findCategoryById(categoryId:String!):Category!
-
-    getSkills: [Skill]!
-    findSkillById(skillId:String!):Skill!
-
-    getSkills(categoryId: String!): [Skill]!
-
-    getQualifications: [QualificationDtoReturnType]!
-    getQualificationById(qualificationId:String!):QualificationDtoReturnType!
-}
-
-type Mutation{
-    addOrUpdateCategory(catName: String!, description :String, isActive:Boolean!): Category!
-    deleteCategory( categoryId: String!):Status
-
-    addOrUpdateSkill(skillName:String!,description:String,isActive: Boolean!):  Skill!
-    deleteSkill( skillId: String!):Status
-
-    addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
-
-    addOrUpdateQualification(qualificationDto: QualificationDto): QualificationDtoReturnType!
-    deleteQualification(qualificationId: String!):Status
-}
 
 enum Status{
     SUCCESS
@@ -72,3 +47,34 @@ input QualificationDto{
     isActive:Boolean
 
 }
+
+type Query{
+    #Category Related Queries
+    getCategories: [Category]!
+    findCategoryById(categoryId:String!):Category!
+
+    #Skills Related Queries
+    getSkills: [Skill]!
+    findSkillById(skillId:String!):Skill!
+    getSkills(categoryId: String!): [Skill]!
+
+    #Qualification Related Queries
+    getQualifications: [QualificationDtoReturnType]!
+    getQualificationById(qualificationId:String!):QualificationDtoReturnType!
+}
+
+type Mutation {
+    #Category related Mutations
+    addOrUpdateCategory(catName: String!, description :String): Category!
+    deleteCategory( categoryId: String!):Status
+
+    #Skills related Mutations
+    addOrUpdateSkill(skillName:String!,description:String,isActive: Boolean!):  Skill!
+    deleteSkill( skillId: String!):Status
+    addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
+
+    #Qualification related Mutations
+    addOrUpdateQualification(qualificationDto: QualificationDto): QualificationDtoReturnType!
+    deleteQualification(qualificationId: String!):Status
+}
+

@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User,String> {
     List<User> findByIsActive(Boolean b);
 
     Optional<User> findByIdAndIsActive(String id, boolean b);
+    
+    User findByEmailAddress(String userName);
 }

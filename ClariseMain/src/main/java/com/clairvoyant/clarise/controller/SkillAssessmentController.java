@@ -2,7 +2,7 @@ package com.clairvoyant.clarise.controller;
 
 import com.clairvoyant.clarise.dto.AssessmentDto;
 import com.clairvoyant.clarise.dto.SkillCategoryResponse;
-import com.clairvoyant.clarise.enums.Status;
+import com.clairvoyant.clarise.model.SkillAssessment;
 import com.clairvoyant.clarise.service.SkillAssessmentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,10 +38,8 @@ public class SkillAssessmentController {
      * @return Status.
      */
     @PostMapping("/saveSkillAssessmentDetails")
-    public Status saveSkillAssessmentDetails(@RequestBody AssessmentDto assessmentDto){
-        skillAssessmentService.saveSkillAssessmentDetails(assessmentDto);
-
-        return Status.SUCCESS;
+    public List<SkillAssessment> saveSkillAssessmentDetails(@RequestBody AssessmentDto assessmentDto){
+        return skillAssessmentService.saveSkillAssessmentDetails(assessmentDto);
     }
 
     /**

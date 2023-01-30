@@ -4,11 +4,11 @@ import com.clairvoyant.clarise.dto.*;
 import com.clairvoyant.clarise.model.*;
 import com.clairvoyant.clarise.repository.*;
 import com.clairvoyant.clarise.service.SkillAssessmentService;
-import liquibase.pro.packaged.S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SkillAssessmentServiceImpl implements SkillAssessmentService {
@@ -76,7 +76,7 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
      * @param assessmentDto input assessmentDto object from UI.
      */
     @Override
-    public void saveSkillAssessmentDetails(AssessmentDto assessmentDto) {
+    public List<SkillAssessment> saveSkillAssessmentDetails(AssessmentDto assessmentDto) {
         //For now creating AssessmentType with Completed
         AssessmentType newAssessmentType = new AssessmentType();
         newAssessmentType.setName(ASSESSMENT_TYPE_COMPLETED);
@@ -87,8 +87,13 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
         newAssessmentStatus.setName(ASSESSMENT_STATUS_SELFASSESSMENT);
         AssessmentStatus assessmentStatus = assessmentStatusRepository.save(newAssessmentStatus);
 
-        User user = new User();
-        user.setId(assessmentDto.getUserId());
+        User user = userRepository.findById(assessmentDto.getUserId()).get();
+
+        // If user not exists.
+        if(Objects.isNull(user)) {
+            user = new User();
+            user.setId(assessmentDto.getUserId());
+        }
 
         Assessment assessment = new Assessment();
         assessment.setAssessmentStatus(assessmentStatus);
@@ -97,10 +102,14 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
         assessment.setComments(assessmentDto.getComments());
 
         Assessment assessmentResponse = assessmentRepository.save(assessment);
+        List<SkillAssessment> skillAssessmentList = new ArrayList<>();
+        List<SkillAssessment> savedSkillAssessment = new ArrayList<>();
 
         for (AssessmentCategoryList assessmentCategoryList : assessmentDto.getAssessmentCategoryList()) {
             for (SkillCategorySelected skllCategorySelected : assessmentCategoryList.getSkillCategorySelected()) {
+
                 SkillAssessment skillAssessment = new SkillAssessment();
+                skillAssessment.setId(UUID.randomUUID().toString());
                 skillAssessment.setAssessment(assessmentResponse);
 
                 SkillsRating skillsRating = new SkillsRating();
@@ -111,10 +120,19 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
                 skillCategory.setId(skllCategorySelected.getSkillCategoryId());
                 skillAssessment.setSkillCategory(skillCategory);
 
-                skillAssessmentRepository.save(skillAssessment);
+                skillAssessmentList.add(skillAssessment);
             }
         }
+        if (Objects.nonNull(skillAssessmentList) && skillAssessmentList.size() > 0) {
+            savedSkillAssessment.addAll(skillAssessmentRepository.saveAll(skillAssessmentList));
+        }
+
+        Set<String> skillAssessmentIds = savedSkillAssessment.stream().map(skillAssessment -> skillAssessment.getId()).collect(Collectors.toSet());
+
+        return skillAssessmentRepository.findAllById(skillAssessmentIds);
     }
+
+
 
     /**
      * Get saved skill assessment details based on assessmentId.
@@ -164,7 +182,7 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
         }
 
         // Trying to fetch List of skillCategorySelected from map based on categoryId and setting to AssessmentCategoryList.
-        for(AssessmentCategoryList assessmentCategoryListObject: categoryListHashSet) {
+        for (AssessmentCategoryList assessmentCategoryListObject : categoryListHashSet) {
             if (skillCategorySelectedMap.containsKey(assessmentCategoryListObject.getCategoryId())) {
                 assessmentCategoryListObject.setSkillCategorySelected(skillCategorySelectedMap
                         .get(assessmentCategoryListObject.getCategoryId()));

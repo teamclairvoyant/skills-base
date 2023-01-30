@@ -1,12 +1,16 @@
 package com.clairvoyant.clarise.dto;
 
-import com.clairvoyant.clarise.model.SkillCategory;
-import com.clairvoyant.clarise.model.SkillsRating;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SkillCategoryResponse {
 
     private List<CategoryList> categoryList;

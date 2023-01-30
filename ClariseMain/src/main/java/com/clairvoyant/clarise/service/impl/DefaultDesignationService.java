@@ -40,25 +40,40 @@ public class DefaultDesignationService implements DesignationService {
 	}
 
 	@Override
-	public Designation findById(String id) {
-		Optional<Designation> result = repository.findById(id);
+	public Designation findById(String id, Optional<Boolean> isActive) {
+		Optional<Designation> result;
+		if (isActive.isPresent()) {
+			result = repository.findByIdAndIsActive(id, isActive.get());
+		}else {
+			result = repository.findByIdAndIsActive(id, true);
+		}
 		if (result.isEmpty()) {
 			throw new ResourceNotFoundException("Designation Not Found");
 		}
 		return result.get();
+
 	}
 
 	@Override
 	public void delete(Designation designation) {
-		Designation result = findById(designation.getId());
-		result.setActive(false);
-		repository.save(result);
+		Optional<Designation> result = repository.findById(designation.getId());
+		if (result.isPresent()) {
+			result.get().setActive(false);
+			repository.save(result.get());
+		} else {
+			throw new ResourceNotFoundException("Designation not found");
+		}
 	}
 
 	@Override
-	public List<Designation> findAll() {
-		List<Designation> result = repository.findAll();
-		return result;
+	public List<Designation> findAll(Optional<Boolean>  isActive) {
+		Optional<List<Designation>> result;
+		if (isActive.isPresent()) {
+			result = repository.findByIsActive(isActive.get());
+		}else {
+			result = repository.findByIsActive(true);
+		}
+		return result.get();
 	}
 
 }

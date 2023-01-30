@@ -1,6 +1,7 @@
 package com.clairvoyant.clarise.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clairvoyant.clarise.configuration.SwaggerConfig;
@@ -34,14 +36,14 @@ public class SkillsRatingController {
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Gets Skills rating by id", response = SkillsRating.class)
-	public SkillsRating findById(@PathVariable String id) {
-		return service.findById(id);
+	public SkillsRating findById(@PathVariable String id,@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive) {
+		return service.findById(id,isActive);
 	}
 
 	@GetMapping
 	@ApiOperation(value = "Get all skills rating", response = List.class)
-	public List<SkillsRating> findAll() {
-		return service.findAll();
+	public List<SkillsRating> findAll(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive) {
+		return service.findAll(isActive);
 	}
 
 	@DeleteMapping("/{id}")

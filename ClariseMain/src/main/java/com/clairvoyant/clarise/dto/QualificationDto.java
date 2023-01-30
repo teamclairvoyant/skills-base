@@ -1,8 +1,14 @@
 package com.clairvoyant.clarise.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class QualificationDto {
 
     private String id;

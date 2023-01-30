@@ -39,7 +39,7 @@ public class QualificationController {
     @PutMapping
     public QualificationDto addOrUpdateQualification(@RequestBody QualificationDto qualificationDto) {
 
-        LOGGER.info(qualificationDto);
+        LOGGER.info("addOrUpdateQualification request: " + qualificationDto);
 
         return qualificationService.addOrUpdateQualification(qualificationDto);
     }

@@ -1,7 +1,7 @@
 package com.clairvoyant.clarise.service;
 
 
-import com.clairvoyant.clarise.model.Employee;
+import com.clairvoyant.clarise.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -24,14 +24,17 @@ public class MailServiceImpl implements MailService{
     @Value("${mail.invitation.subject}")
     private String subject;
 
-    public void sendEmail(Employee employee) throws MessagingException {
+    /**
+     *This functionality is not in use
+     */
+    public void sendEmail(User user) throws MessagingException {
 
 
         MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-        helper.setTo(employee.getEmail());
+        helper.setTo(user.getEmailAddress());
 
-        String url = baseurl + employee.getEmpId();
+        String url = baseurl + user.getId();
 
         helper.setSubject(subject);
 

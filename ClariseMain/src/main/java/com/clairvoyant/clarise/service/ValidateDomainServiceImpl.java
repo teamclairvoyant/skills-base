@@ -2,8 +2,8 @@ package com.clairvoyant.clarise.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.clairvoyant.clarise.model.Employee;
-import com.clairvoyant.clarise.repository.EmployeeRepository;
+import com.clairvoyant.clarise.model.User;
+import com.clairvoyant.clarise.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,12 +38,14 @@ public class ValidateDomainServiceImpl implements ValidateDomainService {
     private String insertQuery;
 
     @Autowired
-    EmployeeRepository employeeRepository;
-
-    @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private UserRepository userRepository;
 
 
+    /**
+     *This functionality is not in use
+     */
     @Override
     public void checkDomain(OidcIdToken idToken, HttpServletResponse httpResponse) throws IOException {
 
@@ -68,8 +70,8 @@ public class ValidateDomainServiceImpl implements ValidateDomainService {
             JwtUtil customToken = new JwtUtil();
             String token=customToken.generateToken(idToken.getTokenValue(),role);
             //System.out.println("Custom token---------------------"+token + " Custom token end");
-            Employee employee = employeeRepository.findByEmail(idToken.getEmail());
-            if(employee ==null){
+            User user = userRepository.findByEmailAddress(idToken.getEmail());
+            if(user ==null){
                 String query = insertQuery;
                 jdbcTemplate.update(query, uuidAsString,idToken.getEmail(),idToken.getFullName(),role);
             }

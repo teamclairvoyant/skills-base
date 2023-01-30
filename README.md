@@ -19,7 +19,7 @@ Wiki pages to know more about the Skill Matrix Application
 - Maven
 - MySQL DB
 
-### Steps how to run servvice locally using IntelliJ IDE. 
+### Steps how to run service locally using IntelliJ IDE. 
 To run the application locally follow the below steps:
 1) Open intelliJ Idea
 2) Go to file >> New >> Project from Version Control

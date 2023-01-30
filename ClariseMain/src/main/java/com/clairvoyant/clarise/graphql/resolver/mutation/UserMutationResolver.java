@@ -6,8 +6,12 @@ import com.clairvoyant.clarise.service.UserService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 
 @Component
+@Validated
 public class UserMutationResolver implements GraphQLMutationResolver {
     @Autowired
     private UserService userService;
@@ -16,7 +20,7 @@ public class UserMutationResolver implements GraphQLMutationResolver {
     /**
      * addOrUpdateUser is used to save or update the user
      */
-    public Status addOrUpdateUser(UserDto userDto) {
+    public Status addOrUpdateUser(@Valid UserDto userDto) {
         return userService.addOrUpdateUser(userDto);
     }
 

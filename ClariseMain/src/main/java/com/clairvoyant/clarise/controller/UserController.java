@@ -3,7 +3,7 @@ package com.clairvoyant.clarise.controller;
 import com.clairvoyant.clarise.dto.UserDto;
 import com.clairvoyant.clarise.dto.UserResponseDto;
 import com.clairvoyant.clarise.enums.Status;
-import com.clairvoyant.clarise.repository.UserRepository;
+
 import com.clairvoyant.clarise.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,15 +17,8 @@ import java.util.Optional;
 @RequestMapping("user")
 public class UserController {
     private static final Logger LOGGER = LogManager.getLogger(SkillController.class);
-    private UserService userService;
-
-
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-
-    }
-
+    private UserService userService;
 
     @GetMapping
     public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive)

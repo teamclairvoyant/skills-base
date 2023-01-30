@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.springframework.http.HttpHeaders;
 
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter {
@@ -34,12 +35,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
 	 @Override
 	    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-	        String authorization = httpServletRequest.getHeader(CommonConstants.HEADER_STRING);
+	        String authorization = httpServletRequest.getHeader(org.springframework.http.HttpHeaders.AUTHORIZATION);
 	        String token = null;
 	        String userName = null;
 
 	        if(null != authorization && authorization.startsWith(CommonConstants.TOKEN_PREFIX)) {
-	            token = authorization.replace("Bearer","").trim();
+	            token = authorization.replace(CommonConstants.TOKEN_PREFIX,"").trim();
 	            userName = jwtUtility.getUsernameFromToken(token);
 	            
 	        }

@@ -6,6 +6,5 @@ public class CommonConstants {
    
     public static final long JWT_TOKEN_VALIDITY = 2 * 60 * 60;
     public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String HEADER_STRING = "Authorization";
 
 }

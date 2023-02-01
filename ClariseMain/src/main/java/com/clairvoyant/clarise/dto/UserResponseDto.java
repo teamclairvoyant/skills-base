@@ -3,6 +3,7 @@ package com.clairvoyant.clarise.dto;
 import com.clairvoyant.clarise.model.Category;
 import com.clairvoyant.clarise.model.Designation;
 import com.clairvoyant.clarise.model.Role;
+import com.clairvoyant.clarise.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class UserResponseDto {
     private String name;
     private String emailAddress;
     private String grade;
-    private String reportingManager;
+    private User reportingManager;
     private boolean isActive;
     private Designation designation;
     private List<Role> userRoles;

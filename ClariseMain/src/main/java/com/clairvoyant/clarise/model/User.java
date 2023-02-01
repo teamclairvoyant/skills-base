@@ -11,10 +11,15 @@ import lombok.Setter;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,8 +48,9 @@ public class User extends Persistable {
     @Column(name = "password", length = 45)
     private String password;
 
-    @Column(name = "reporting_to", length = 45)
-    private String reportingManager;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "reporting_to")
+    private User reportingManager;
 
     @Column(name="is_active", length = 45)
     private boolean isActive;

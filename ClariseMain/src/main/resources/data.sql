@@ -248,16 +248,16 @@ INSERT IGNORE INTO skillbasedb.role (id,created_by,created_date,modified_by,modi
 
 -- User Table  -  Admin(Default User)  - Password = "password"  - Stored in DB using BCrypt encoded
 
-INSERT IGNORE INTO skillbasedb.user (id,created_by,created_date,modified_by,modified_date,
-			email,grade,is_active,name,password,reporting_to)
-            VALUES("user_002","ADMIN","2023-01-23 18:27:12","ADMIN","2023-01-23 18:27:12",
-            "admin123@gmail.com","A",1,"admin123","$2a$12$xk9DAOuPsUDjwPviIyC3jOsazTb6jfNrB5SFTZEl8pFNFJVAOoini","Manager");
+INSERT IGNORE INTO skillbasedb.user(id,created_by,created_date,modified_by,modified_date,
+         email,grade,is_active,name,password)
+            VALUES("user_001","ADMIN","2023-01-23 18:27:12","ADMIN","2023-01-23 18:27:12",
+            "admin@gmail.com","A",1,"admin","$2a$12$M0VLsn41dIcobhRZWmXw7uWoMpYdeckODn6db1CVXCI5Fv95pD/Ru");
 
 -- User Designation Mapping
 
 INSERT IGNORE INTO skillbasedb.user_designation_mapping (id,created_by,created_date,modified_by,modified_date,
             is_active,designation_id,user_id)
-            VALUES("user_desig_001" ,"ADMIN","2023-01-23 18:27:12","ADMIN","2023-01-23 18:27:12",1,
+            VALUES("user_desig_002" ,"ADMIN","2023-01-30 14:27:12","ADMIN","2023-01-30 14:27:12",1,
             "desigId_006","user_001");
 
 -- User Role Mapping
@@ -266,6 +266,12 @@ INSERT IGNORE INTO skillbasedb.user_role_mapping (id,created_by,created_date,mod
             role_id,user_id)
             VALUES("user_role_008" ,"ADMIN","2023-01-23 18:27:12","ADMIN","2023-01-23 18:27:12",
             "role_001","user_001");
+
+-- User category Mapping
+INSERT IGNORE INTO skillbasedb.user_category_mapping (id,created_by,created_date,modified_by,modified_date,
+            category_id,user_id)
+            VALUES("user_cat_001" ,"ADMIN","2023-01-23 18:27:12","ADMIN","2023-01-23 18:27:12",
+            "cat_001","user_001");
 
 -- Skill Category Mapping details .
 

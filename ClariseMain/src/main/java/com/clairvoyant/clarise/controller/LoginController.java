@@ -69,7 +69,11 @@ public class LoginController {
 		if(userObj!=null && token!=null) {
 			userHistoryServie.saveUserHistory(userObj);
 		}
-		return new LoginResponseDto(userObj.getName(),userObj.getEmailAddress(),userObj.getReportingManager(),userObj.getGrade(),token);
+		return new LoginResponseDto(userObj.getName(),
+				userObj.getEmailAddress(),
+				userObj.getReportingManager(),
+				userObj.getGrade(),
+				token);
 	}
 
 }

@@ -5,12 +5,16 @@ import com.clairvoyant.clarise.dto.UserResponseDto;
 import com.clairvoyant.clarise.repository.UserRepository;
 import com.clairvoyant.clarise.service.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
+import graphql.schema.DataFetchingEnvironment;
+import graphql.schema.SelectedField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class UserQueryResolver implements GraphQLQueryResolver {

@@ -1,5 +1,6 @@
 package com.clairvoyant.clarise.dto;
 
+import com.clairvoyant.clarise.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ public class LoginResponseDto {
 
 	private String name;
 	private String emailAddress;
-	private String reportingManager;
+	private User reportingManager;
 	private String grade;
 	private String token;
 }

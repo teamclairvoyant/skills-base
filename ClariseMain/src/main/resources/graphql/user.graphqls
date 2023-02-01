@@ -3,13 +3,21 @@ type UserResponseDto{
     name:String
     emailAddress:String
     grade:String
-    reportingManager:String
+    reportingManager:User
     designation:Designation
     userRoles:[Role]
     userCategories:[Category]
 }
 
-
+type User{
+    id:ID
+    name:String
+    emailAddress:String
+    grade:String
+    password:String
+    reportingManager:User
+    isActive:Boolean
+}
 
 input UserDto{
     id:ID

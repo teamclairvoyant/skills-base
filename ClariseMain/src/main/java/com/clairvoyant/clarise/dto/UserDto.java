@@ -3,6 +3,7 @@ package com.clairvoyant.clarise.dto;
 
 
 
+import com.clairvoyant.clarise.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

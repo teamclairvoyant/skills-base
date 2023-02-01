@@ -54,8 +54,6 @@ public class UserServiceImpl implements UserService {
                     result.get().setPassword(PasswordUtil.encode(userDto.getPassword()));
                 if (StringUtils.hasLength(userDto.getGrade()))
                     result.get().setGrade(userDto.getGrade());
-                if (StringUtils.hasLength(userDto.getReportingManager()))
-                    result.get().setReportingManager(userDto.getReportingManager());
             }
            try {
                user = result.get();
@@ -68,6 +66,14 @@ public class UserServiceImpl implements UserService {
         } else {
             try {
                 BeanUtils.copyProperties(userDto, user);
+                    if (StringUtils.hasText(userDto.getReportingManager())){
+                        Optional<User> reportingManager = userRepository.findById(userDto.getReportingManager());
+                    if (reportingManager.isPresent()){
+                        user.setReportingManager(reportingManager.get());
+                    }else{
+                        throw new ResourceNotFoundException("Reporting Manager with ID : "+userDto.getReportingManager()+" is not present.");
+                    }
+                }
                 user.setActive(true);
                 user.setPassword(PasswordUtil.encode(user.getPassword()));
                 User savedUser = userRepository.save(user);

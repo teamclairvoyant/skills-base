@@ -54,8 +54,6 @@ public class UserServiceImpl implements UserService {
                     result.get().setPassword(PasswordUtil.encode(userDto.getPassword()));
                 if (StringUtils.hasLength(userDto.getGrade()))
                     result.get().setGrade(userDto.getGrade());
-//                if (StringUtils.hasLength(userDto.getReportingManager()))
-//                    result.get().setReportingManager(userDto.getReportingManager());
             }
            try {
                user = result.get();

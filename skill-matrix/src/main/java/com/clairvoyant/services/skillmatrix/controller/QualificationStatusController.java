@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/v1/qualificationstatus")
+@RequestMapping("/v1/qualificationStatus")
 @Api(tags = SwaggerConfig.QUALIFICATION_STATUS)
 public class QualificationStatusController {
 
@@ -28,7 +28,7 @@ public class QualificationStatusController {
 
 	@PostMapping
 	@ApiOperation(value = "Create and update qualification status", response = QualificationStatus.class)
-	public QualificationStatus addqualificationStatus(@RequestBody QualificationStatus qualificationStatus) {
+	public QualificationStatus addQualificationStatus(@RequestBody QualificationStatus qualificationStatus) {
 		return service.save(qualificationStatus);
 	}
 

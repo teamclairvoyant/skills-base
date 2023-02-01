@@ -1,15 +1,16 @@
 package com.clairvoyant.services.skillmatrix.service;
-/*
+
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.clairvoyant.clarise.model.User;
-import com.clairvoyant.clarise.repository.UserRepository;
+import com.clairvoyant.services.skillmatrix.model.User;
+import com.clairvoyant.services.skillmatrix.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
@@ -44,10 +45,10 @@ public class ValidateDomainServiceImpl implements ValidateDomainService {
     private UserRepository userRepository;
 
 
-    */
-/**
+
+    /**
      *This functionality is not in use
-     *//*
+     */
 
     @Override
     public void checkDomain(OidcIdToken idToken, HttpServletResponse httpResponse) throws IOException {
@@ -79,11 +80,11 @@ public class ValidateDomainServiceImpl implements ValidateDomainService {
                 jdbcTemplate.update(query, uuidAsString,idToken.getEmail(),idToken.getFullName(),role);
             }
             //httpResponse.sendRedirect(authorizedUrl + idToken.getTokenValue()+"&role="+role);
-            httpResponse.sendRedirect(authorizedUrl + token);
+            //httpResponse.sendRedirect(authorizedUrl + token);
         }
         else{
             //if domain is unauthorized redirect to login page again
-            httpResponse.sendRedirect(unAuthorizedUrl + 1001);
+            //httpResponse.sendRedirect(unAuthorizedUrl + 1001);
         }
     }
-}*/
+}

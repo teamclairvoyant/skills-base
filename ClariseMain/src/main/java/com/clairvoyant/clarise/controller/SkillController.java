@@ -1,8 +1,8 @@
 package com.clairvoyant.clarise.controller;
 
 
+import com.clairvoyant.clarise.dto.SkillDto;
 import com.clairvoyant.clarise.enums.Status;
-import com.clairvoyant.clarise.model.Skill;
 import com.clairvoyant.clarise.service.SkillService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,23 +30,23 @@ public class SkillController {
 
     //get all skills
     @GetMapping
-    public List<Skill> findAll(){
+    public List<SkillDto> findAll(){
 
         return skillService.findAll();
     }
 
     //add or update skill to skills table
     @PutMapping
-    public Skill addOrUpdateSkill(@RequestBody Skill skill) {
+    public SkillDto addOrUpdateSkill(@RequestBody SkillDto skillDto) {
 
-        LOGGER.info(skill);
+        LOGGER.info("addOrUpdateSkill request: " + skillDto);
 
-        return skillService.addOrUpdateSkill(skill);
+        return skillService.addOrUpdateSkill(skillDto);
     }
 
     //get skill
     @GetMapping("/{skillId}")
-    public Skill find(@PathVariable String skillId){
+    public SkillDto find(@PathVariable String skillId){
 
         return skillService.findSkill(skillId);
     }

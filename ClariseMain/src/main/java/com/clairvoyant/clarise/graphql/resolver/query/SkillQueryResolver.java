@@ -1,6 +1,6 @@
 package com.clairvoyant.clarise.graphql.resolver.query;
 
-import com.clairvoyant.clarise.model.Skill;
+import com.clairvoyant.clarise.dto.SkillDto;
 import com.clairvoyant.clarise.service.SkillService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +10,15 @@ import java.util.List;
 
 @Component
 public class SkillQueryResolver implements GraphQLQueryResolver {
+
     @Autowired
     private SkillService skillService;
 
-    public List<Skill> getSkills() {
+    public List<SkillDto> getAllSkills() {
         return skillService.findAll();
     }
 
-    public Skill findSkillById( String skillId) {
+    public SkillDto findSkillById( String skillId) {
         return skillService.findSkill(skillId);
     }
 }

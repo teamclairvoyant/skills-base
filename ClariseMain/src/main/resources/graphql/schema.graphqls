@@ -5,11 +5,18 @@ type Category{
     isActive:Boolean!
 }
 
-type Skill{
+type SkillDtoReturnType{
     id: String!
     skillName: String!
-    description:String
+    description:String!
     isActive:Boolean!
+}
+
+input SkillDto{
+    id: String
+    skillName: String!
+    description:String
+    isActive:Boolean
 }
 
 
@@ -38,18 +45,18 @@ type Query{
     findCategoryById(categoryId:String!):Category!
 
     #Skills Related Queries
-    getSkills: [Skill]!
-    findSkillById(skillId:String!):Skill!
+    getAllSkills: [SkillDtoReturnType]!
+    findSkillById(skillId:String!):SkillDtoReturnType!
     getSkills(categoryId: String!): [Skill]!
 }
 
 type Mutation {
     #Category related Mutations
-    addOrUpdateCategory(catName: String!, description :String): Category!
+    addOrUpdateCategory(id: String, catName: String!, description :String): Category!
     deleteCategory( categoryId: String!):Status
 
     #Skills related Mutations
-    addOrUpdateSkill(skillName:String!,description:String,isActive: Boolean!):  Skill!
+    addOrUpdateSkill(skillDto: SkillDto):  SkillDtoReturnType!
     deleteSkill( skillId: String!):Status
     addOrUpdateSkillCategory(skillCategoryDto:SkillCategoryDto):[SkillCategory]
 }

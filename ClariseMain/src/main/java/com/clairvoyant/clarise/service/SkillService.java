@@ -1,15 +1,15 @@
 package com.clairvoyant.clarise.service;
 
-import com.clairvoyant.clarise.model.Skill;
+import com.clairvoyant.clarise.dto.SkillDto;
 import java.util.List;
 
 public interface SkillService {
 
-   public List<Skill> findAll();
+   public List<SkillDto> findAll();
 
-   public Skill addOrUpdateSkill(Skill skill);
+   public SkillDto addOrUpdateSkill(SkillDto skillDto);
 
-   public Skill findSkill(String skillId);
+   public SkillDto findSkill(String skillId);
 
    public void deleteSkill(String skillId);
 

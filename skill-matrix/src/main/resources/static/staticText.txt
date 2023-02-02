@@ -1,4 +1,0 @@
-This File is added for maintaining the project Structure.
-You Can delete it once a static UI file is added in this dir.
-
-This Folder is used to add Static files such as HTML, CSS

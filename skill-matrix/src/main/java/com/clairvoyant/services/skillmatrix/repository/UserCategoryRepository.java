@@ -1,12 +1,12 @@
 package com.clairvoyant.services.skillmatrix.repository;
 
 import com.clairvoyant.services.skillmatrix.model.UserCategoryMapping;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-import java.util.Optional;
 
 public interface UserCategoryRepository extends JpaRepository<UserCategoryMapping,String> {
 

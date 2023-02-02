@@ -4,7 +4,7 @@ import com.clairvoyant.services.skillmatrix.model.User;
 import com.clairvoyant.services.skillmatrix.model.UserHistory;
 
 public interface UserHistoryServiceDefault {
-	
-	UserHistory saveUserHistory(User userObj);
+
+    UserHistory saveUserHistory(User userObj);
 
 }

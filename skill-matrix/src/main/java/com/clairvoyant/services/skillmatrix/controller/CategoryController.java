@@ -3,17 +3,17 @@ package com.clairvoyant.services.skillmatrix.controller;
 import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.model.Category;
 import com.clairvoyant.services.skillmatrix.service.CategoryService;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import java.util.List;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/category")
@@ -26,7 +26,7 @@ public class CategoryController {
 
     //get all categories
     @GetMapping
-    public List<Category> findAll(){
+    public List<Category> findAll() {
         return categoryService.findAll();
     }
 
@@ -41,7 +41,7 @@ public class CategoryController {
 
     //get category
     @GetMapping("/{categoryId}")
-    public Category find(@PathVariable String categoryId){
+    public Category find(@PathVariable String categoryId) {
 
         return categoryService.findCategory(categoryId);
     }

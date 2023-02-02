@@ -5,13 +5,13 @@ import java.util.List;
 
 public interface SkillService {
 
-   public List<Skill> findAll();
+    List<Skill> findAll();
 
-   public Skill addOrUpdateSkill(Skill skill);
+    Skill addOrUpdateSkill(Skill skill);
 
-   public Skill findSkill(String skillId);
+    Skill findSkill(String skillId);
 
-   public void deleteSkill(String skillId);
+    void deleteSkill(String skillId);
 
 }
 

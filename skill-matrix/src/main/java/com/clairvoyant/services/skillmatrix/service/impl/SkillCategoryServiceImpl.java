@@ -7,13 +7,12 @@ import com.clairvoyant.services.skillmatrix.model.SkillCategory;
 import com.clairvoyant.services.skillmatrix.repository.SkillCategoryRepository;
 import com.clairvoyant.services.skillmatrix.service.SkillCategoryService;
 import com.google.common.collect.Sets;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SkillCategoryServiceImpl implements SkillCategoryService {
@@ -26,14 +25,13 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
         List<SkillCategory> skillCategories = skillCategoryRepository.findByCategoryId(skillCategoryDto.getCategoryId());
 
         List<SkillCategory> skillCategoryList = new ArrayList<>();
-        if (Objects.isNull(skillCategories) || skillCategories.size() == 0 ) {
+        if (Objects.isNull(skillCategories) || skillCategories.size() == 0) {
             //Insert skills for the first time
             newSkillMapping(skillCategoryDto.getCategoryId(), skillCategoryDto.getSkillIds(), skillCategoryList);
-        }
-        else {
+        } else {
             List<String> dbSkillIds = skillCategories.stream().map(skillCategory -> skillCategory.getSkill().getId()).collect(Collectors.toList());
             List<String> dbActiveSkillIds = skillCategories.stream().filter(skillCategory -> skillCategory.isActive())
-                    .map(skillCategory -> skillCategory.getSkill().getId()).collect(Collectors.toList());
+                .map(skillCategory -> skillCategory.getSkill().getId()).collect(Collectors.toList());
 
             //Insert new Skill for the category -- create
             List<String> newSkillIds = new ArrayList<>(Sets.difference(Sets.newHashSet(skillCategoryDto.getSkillIds()), Sets.newHashSet(dbSkillIds)));
@@ -46,7 +44,8 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
             //update to inactive for existing mappings -- delete
             List<String> deletedSkillIds = new ArrayList<>(Sets.difference(Sets.newHashSet(dbActiveSkillIds), Sets.newHashSet(skillCategoryDto.getSkillIds())));
             for (String skillId : deletedSkillIds) {
-                SkillCategory skillCategory = skillCategories.stream().filter(dbSkillCategory -> skillId.equals(dbSkillCategory.getSkill().getId())).findFirst().get();
+                SkillCategory skillCategory =
+                    skillCategories.stream().filter(dbSkillCategory -> skillId.equals(dbSkillCategory.getSkill().getId())).findFirst().get();
                 skillCategory.setActive(false);
                 skillCategoryList.add(skillCategory);
             }
@@ -54,7 +53,8 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
             //update existing inactive mapping to true -- update
             List<String> updateSkillIds = new ArrayList<>(Sets.difference(Sets.newHashSet(skillCategoryDto.getSkillIds()), Sets.newHashSet(dbActiveSkillIds)));
             for (String skillId : updateSkillIds) {
-                SkillCategory skillCategory = skillCategories.stream().filter(dbSkillCategory -> skillId.equals(dbSkillCategory.getSkill().getId())).findFirst().get();
+                SkillCategory skillCategory =
+                    skillCategories.stream().filter(dbSkillCategory -> skillId.equals(dbSkillCategory.getSkill().getId())).findFirst().get();
                 skillCategory.setActive(true);
                 skillCategoryList.add(skillCategory);
             }

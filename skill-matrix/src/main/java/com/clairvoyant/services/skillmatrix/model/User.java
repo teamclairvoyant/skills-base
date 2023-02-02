@@ -3,12 +3,6 @@ package com.clairvoyant.services.skillmatrix.model;
 import com.clairvoyant.services.skillmatrix.model.superclass.Persistable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,16 +10,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="user")
+@Table(name = "user")
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class User extends Persistable {
 
 
@@ -46,7 +44,7 @@ public class User extends Persistable {
     @JoinColumn(name = "reporting_to")
     private User reportingManager;
 
-    @Column(name="is_active", length = 45)
+    @Column(name = "is_active", length = 45)
     private boolean isActive;
 
 }

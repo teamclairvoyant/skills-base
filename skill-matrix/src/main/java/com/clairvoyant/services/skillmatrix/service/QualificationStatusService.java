@@ -1,17 +1,16 @@
 package com.clairvoyant.services.skillmatrix.service;
 
-import java.util.List;
-
 import com.clairvoyant.services.skillmatrix.model.QualificationStatus;
+import java.util.List;
 
 
 public interface QualificationStatusService {
 
-	public QualificationStatus save(QualificationStatus qualificationStatus);
+    QualificationStatus save(QualificationStatus qualificationStatus);
 
-	public QualificationStatus findById(String id);
+    QualificationStatus findById(String id);
 
-	public void delete(QualificationStatus qualificationStatus);
+    void delete(QualificationStatus qualificationStatus);
 
-	public List<QualificationStatus> findAll();
+    List<QualificationStatus> findAll();
 }

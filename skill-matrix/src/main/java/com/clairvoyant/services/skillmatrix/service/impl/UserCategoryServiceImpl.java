@@ -6,11 +6,10 @@ import com.clairvoyant.services.skillmatrix.model.User;
 import com.clairvoyant.services.skillmatrix.model.UserCategoryMapping;
 import com.clairvoyant.services.skillmatrix.repository.UserCategoryRepository;
 import com.clairvoyant.services.skillmatrix.service.UserCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserCategoryServiceImpl implements UserCategoryService {
@@ -22,8 +21,9 @@ public class UserCategoryServiceImpl implements UserCategoryService {
     public List<UserCategoryMapping> addOrUpdateUserCategory(UserCategoryDto userCategoryDto) {
         Optional<List<UserCategoryMapping>> userCategoryMapping = userCategoryRepository.findByUserId(userCategoryDto.getUserId());
 
-        if (userCategoryMapping.get().isEmpty())
+        if (userCategoryMapping.get().isEmpty()) {
             newUserCategoryMapping(userCategoryDto.getUserId(), userCategoryDto.getCategoryIds());
+        }
 
         return userCategoryRepository.findAll();
     }

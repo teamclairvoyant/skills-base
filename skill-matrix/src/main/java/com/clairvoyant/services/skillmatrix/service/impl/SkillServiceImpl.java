@@ -3,11 +3,10 @@ package com.clairvoyant.services.skillmatrix.service.impl;
 import com.clairvoyant.services.skillmatrix.model.Skill;
 import com.clairvoyant.services.skillmatrix.repository.SkillRepository;
 import com.clairvoyant.services.skillmatrix.service.SkillService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SkillServiceImpl implements SkillService {

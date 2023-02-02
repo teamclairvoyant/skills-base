@@ -1,18 +1,17 @@
 package com.clairvoyant.services.skillmatrix.service;
 
+import com.clairvoyant.services.skillmatrix.model.Designation;
 import java.util.List;
 import java.util.Optional;
-
-import com.clairvoyant.services.skillmatrix.model.Designation;
 
 
 public interface DesignationService {
 
-	public Designation save(Designation designation);
+    Designation save(Designation designation);
 
-	public Designation findById(String id, Optional<Boolean> isActive);
+    Designation findById(String id, Optional<Boolean> isActive);
 
-	public void delete(Designation designation);
+    void delete(Designation designation);
 
-	public List<Designation> findAll(Optional<Boolean>  isActive);
+    List<Designation> findAll(Optional<Boolean> isActive);
 }

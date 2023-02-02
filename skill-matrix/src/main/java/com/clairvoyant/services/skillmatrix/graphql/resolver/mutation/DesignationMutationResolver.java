@@ -19,17 +19,17 @@ public class DesignationMutationResolver implements GraphQLMutationResolver {
     /**
      * addOrUpdateDesignation is used to add or update the designation
      */
-    public Designation addOrUpdateDesignation(DesignationDto input){
-        log.info("Adding Designation {} ",input);
+    public Designation addOrUpdateDesignation(DesignationDto input) {
+        log.info("Adding Designation {} ", input);
         Designation designation = new Designation();
-        BeanUtils.copyProperties(input,designation);
+        BeanUtils.copyProperties(input, designation);
         return service.save(designation);
     }
 
     /**
      * deleteDesignation is used to delete the designation
      */
-    public String deleteDesignation(String designationId){
+    public String deleteDesignation(String designationId) {
         Designation designation = new Designation();
         designation.setId(designationId);
         service.delete(designation);

@@ -2,7 +2,6 @@ package com.clairvoyant.services.skillmatrix.service;
 
 import com.clairvoyant.services.skillmatrix.dto.UserCategoryDto;
 import com.clairvoyant.services.skillmatrix.model.UserCategoryMapping;
-
 import java.util.List;
 import java.util.Optional;
 

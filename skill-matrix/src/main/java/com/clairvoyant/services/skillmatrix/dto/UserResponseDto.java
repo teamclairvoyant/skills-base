@@ -4,12 +4,11 @@ import com.clairvoyant.services.skillmatrix.model.Category;
 import com.clairvoyant.services.skillmatrix.model.Designation;
 import com.clairvoyant.services.skillmatrix.model.Role;
 import com.clairvoyant.services.skillmatrix.model.User;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter

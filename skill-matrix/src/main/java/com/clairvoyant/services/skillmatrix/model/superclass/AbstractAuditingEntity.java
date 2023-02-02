@@ -12,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -60,8 +59,8 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @PrePersist
     void onCreate() throws Exception {
         SecurityContext context = SecurityContextHolder.getContext();
-        this.setCreatedDate(getUTCZonedDateTime());
-        this.setModifiedDate(getUTCZonedDateTime());
+        this.setCreatedDate(getUtcZonedDateTime());
+        this.setModifiedDate(getUtcZonedDateTime());
 
         // TODO : Set proper condition for checking if SecurityContext is having the required auth data.
         if (Objects.nonNull(context.getAuthentication())) {
@@ -73,20 +72,20 @@ public abstract class AbstractAuditingEntity implements Serializable {
         }
     }
 
+    public static ZonedDateTime getUtcZonedDateTime() {
+        return ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("UTC"));
+    }
+
     @PreUpdate
     void onPersist() throws Exception {
         SecurityContext context = SecurityContextHolder.getContext();
-        this.setModifiedDate(getUTCZonedDateTime());
+        this.setModifiedDate(getUtcZonedDateTime());
         if (Objects.nonNull(context.getAuthentication())) {
             // TODO : Set proper data after implementing SecurityContext and having auth user in it.
             this.setModifiedBy(context.getAuthentication().getName());
         } else {
             throw new Exception(CommonConstants.AUDIT_TRAIL_EXCEPTION);
         }
-    }
-
-    public static ZonedDateTime getUTCZonedDateTime() {
-        return ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("UTC"));
     }
 }
 

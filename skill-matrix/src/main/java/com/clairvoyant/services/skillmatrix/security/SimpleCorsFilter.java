@@ -14,10 +14,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class SimpleCORSFilter implements Filter {
-    public SimpleCORSFilter() {
+public class SimpleCorsFilter implements Filter {
+    public SimpleCorsFilter() {
         log.info("SimpleCORSFilter init");
     }
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+    }
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
@@ -29,14 +34,12 @@ public class SimpleCORSFilter implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Authorization");
         if (request.getMethod().equals("OPTIONS")) {
-        	response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
             return;
         }
         chain.doFilter(req, res);
     }
-    @Override
-    public void init(FilterConfig filterConfig) {
-    }
+
     @Override
     public void destroy() {
     }

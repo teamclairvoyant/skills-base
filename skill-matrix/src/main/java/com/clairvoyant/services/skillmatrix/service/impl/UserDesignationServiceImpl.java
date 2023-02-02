@@ -6,12 +6,11 @@ import com.clairvoyant.services.skillmatrix.model.User;
 import com.clairvoyant.services.skillmatrix.model.UserDesignationMapping;
 import com.clairvoyant.services.skillmatrix.repository.UserDesignationRepository;
 import com.clairvoyant.services.skillmatrix.service.UserDesignationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserDesignationServiceImpl implements UserDesignationService {
@@ -22,14 +21,13 @@ public class UserDesignationServiceImpl implements UserDesignationService {
     @Override
     public void addOrUpdateUserDesignation(UserDesignationDto userDesignationDto) {
 
-        UserDesignationMapping userDesignationMapping= designationRepository.findByUserId(userDesignationDto.getUserId());
+        UserDesignationMapping userDesignationMapping = designationRepository.findByUserId(userDesignationDto.getUserId());
 
 
-        if(Objects.isNull(userDesignationMapping))
-        {
-            UserDesignationMapping newMapping=new UserDesignationMapping();
-            User user=new User();
-            Designation designation=new Designation();
+        if (Objects.isNull(userDesignationMapping)) {
+            UserDesignationMapping newMapping = new UserDesignationMapping();
+            User user = new User();
+            Designation designation = new Designation();
 
             user.setId(userDesignationDto.getUserId());
             designation.setId(userDesignationDto.getDesignationId());
@@ -46,13 +44,13 @@ public class UserDesignationServiceImpl implements UserDesignationService {
     @Override
     public List<User> allUsers(String designationId) {
 
-        List<UserDesignationMapping> userDesignationMappings = designationRepository.findByDesignationIdAndIsActive(designationId,false);
+        List<UserDesignationMapping> userDesignationMappings = designationRepository.findByDesignationIdAndIsActive(designationId, false);
 
         return userDesignationMappings.stream().map(userDesignationMapping -> userDesignationMapping.getUser()).collect(Collectors.toList());
     }
 
     @Override
-    public List<UserDesignationMapping> findAllUserDesignationMappings(){
+    public List<UserDesignationMapping> findAllUserDesignationMappings() {
         return designationRepository.findAll();
     }
 

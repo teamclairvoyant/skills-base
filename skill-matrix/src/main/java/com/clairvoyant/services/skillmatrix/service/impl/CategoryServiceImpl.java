@@ -3,11 +3,10 @@ package com.clairvoyant.services.skillmatrix.service.impl;
 import com.clairvoyant.services.skillmatrix.model.Category;
 import com.clairvoyant.services.skillmatrix.repository.CategoryRepository;
 import com.clairvoyant.services.skillmatrix.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {

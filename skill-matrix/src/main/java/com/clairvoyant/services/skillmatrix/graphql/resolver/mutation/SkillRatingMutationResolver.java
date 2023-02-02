@@ -20,9 +20,9 @@ public class SkillRatingMutationResolver implements GraphQLMutationResolver {
     /**
      * addOrUpdateSkillRating is used to add or update the SkillRating
      */
-    public SkillsRating addOrUpdateSkillRating(SkillRatingDto skillRatingDto){
+    public SkillsRating addOrUpdateSkillRating(SkillRatingDto skillRatingDto) {
         SkillsRating skillsRating = new SkillsRating();
-        BeanUtils.copyProperties(skillRatingDto,skillsRating);
+        BeanUtils.copyProperties(skillRatingDto, skillsRating);
         return service.save(skillsRating);
     }
 
@@ -30,7 +30,7 @@ public class SkillRatingMutationResolver implements GraphQLMutationResolver {
     /**
      * deleteSkillRating is used to delete the SkillRating
      */
-    public String deleteSkillRating(String skillRatingId){
+    public String deleteSkillRating(String skillRatingId) {
         SkillsRating rating = new SkillsRating();
         rating.setId(skillRatingId);
         service.delete(rating);

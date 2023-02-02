@@ -1,13 +1,11 @@
 package com.clairvoyant.services.skillmatrix.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.clairvoyant.services.skillmatrix.model.SkillsRating;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SkillsRatingRepository extends JpaRepository<SkillsRating, String>{
+public interface SkillsRatingRepository extends JpaRepository<SkillsRating, String> {
 
     List<SkillsRating> findByIsActive(boolean b);
 

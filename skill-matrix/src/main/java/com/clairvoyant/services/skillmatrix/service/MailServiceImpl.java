@@ -2,18 +2,16 @@ package com.clairvoyant.services.skillmatrix.service;
 
 
 import com.clairvoyant.services.skillmatrix.model.User;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
 @Service
-public class MailServiceImpl implements MailService{
+public class MailServiceImpl implements MailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -25,7 +23,7 @@ public class MailServiceImpl implements MailService{
     private String subject;
 
     /**
-     *This functionality is not in use
+     * This functionality is not in use
      */
     public void sendEmail(User user) throws MessagingException {
 
@@ -38,12 +36,13 @@ public class MailServiceImpl implements MailService{
 
         helper.setSubject(subject);
 
-        helper.setText("<html>" +
-                "<body>" +
-                "Invitation Link : "+
-                "<a href='"+url+"'>"+url+"</a></body>" +
-                "</html>", true);
-        
+        helper.setText("<html>"
+            + "<body>"
+            + "Invitation Link : "
+            + "<a href='" + url + "'>"
+            + url + "</a></body>"
+            + "</html>", true);
+
         javaMailSender.send(mail);
     }
 }

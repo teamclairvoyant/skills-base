@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.clairvoyant.clarise.dto.AuthenticationEntryPointJwt;
 import com.clairvoyant.clarise.security.AuthorizationFilter;
 import com.clairvoyant.clarise.service.impl.UserDetailsServiceDefault;
 
@@ -25,17 +26,14 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsServiceDefault userDetailsService;
+	
+	@Autowired
+	private AuthenticationEntryPointJwt authenticationEntryPoint;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
-	}
-
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-				"/configuration/security", "/swagger-ui/**", "/swagger-ui", "/webjars/**", "/skillbase/login");
 	}
 
 	@Bean
@@ -51,8 +49,11 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/skillbase/login", "/swagger-ui.html").permitAll()
-				.anyRequest().authenticated().and().sessionManagement()
+		http.csrf().disable().authorizeRequests()
+				.antMatchers("/skillbase/login", "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
+						"/configuration/security", "/swagger-ui/**", "/swagger-ui", "/webjars/**", "/swagger-ui.html")
+				.permitAll().anyRequest().authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
 	}

@@ -58,13 +58,13 @@ public class LoginController {
 		Authentication authentication = null;
 		try {
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					loginRequest.getEmailAdress(), loginRequest.getPassword()));
+					loginRequest.getEmailAddress(), loginRequest.getPassword()));
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		final UserDetails userDetails = userService.loadUserByUsername(loginRequest.getEmailAdress());
-		User userObj = userRepository.findByEmailAddress(loginRequest.getEmailAdress());
+		final UserDetails userDetails = userService.loadUserByUsername(loginRequest.getEmailAddress());
+		User userObj = userRepository.findByEmailAddress(loginRequest.getEmailAddress());
 		final String token = jwtUtility.generateToken(userDetails);
 		if(userObj!=null && token!=null) {
 			userHistoryServie.saveUserHistory(userObj);

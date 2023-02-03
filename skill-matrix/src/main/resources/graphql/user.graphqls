@@ -1,0 +1,43 @@
+type UserResponseDto{
+    id:ID
+    name:String
+    emailAddress:String
+    grade:String
+    reportingManager:User
+    designation:Designation
+    userRoles:[Role]
+    userCategories:[Category]
+}
+
+type User{
+    id:ID
+    name:String
+    emailAddress:String
+    grade:String
+    password:String
+    reportingManager:User
+    isActive:Boolean
+}
+
+input UserDto{
+    id:ID
+    name:String
+    emailAddress:String
+    grade:String
+    password:String
+    reportingManager:String
+    isActive:Boolean
+    userDesignationId:String
+    userRoleIds:[String]
+    userCategoryIds:[String]
+}
+
+extend type Query {
+    getUserById(userId : String!,isActive:Boolean):UserResponseDto!
+    getAllUsers(isActive:Boolean):[UserResponseDto]!
+}
+
+extend type Mutation {
+    addOrUpdateUser(userDto:UserDto!):Status!
+    deleteUser(userId:String!):Status
+}

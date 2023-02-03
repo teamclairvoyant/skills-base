@@ -3,6 +3,8 @@ package com.clairvoyant.services.skillmatrix.controller;
 import com.clairvoyant.services.skillmatrix.dto.SkillDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.service.SkillService;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SkillControllerTest {
@@ -26,11 +25,7 @@ public class SkillControllerTest {
     @Test
     public void getSkills() {
         List<SkillDto> skillDtoList = new ArrayList<>();
-        SkillDto skillDto = new SkillDto();
-        skillDto.setId("any-id");
-        skillDto.setSkillName("any-name");
-        skillDto.setDescription("any-desc");
-        skillDto.setActive(true);
+        SkillDto skillDto = new SkillDto("any-id", "any-name", "any-desc", true);
         skillDtoList.add(skillDto);
         Mockito.when(skillService.findAll()).thenReturn(skillDtoList);
         Assert.assertEquals(skillDtoList, skillController.findAll());

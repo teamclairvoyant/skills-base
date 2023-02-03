@@ -29,7 +29,7 @@ public class SkillController {
 
     //get all skills
     @GetMapping
-    public List<SkillDto> findAll(){
+    public List<SkillDto> findAll() {
         return skillService.findAll();
     }
 
@@ -44,7 +44,7 @@ public class SkillController {
 
     //get skill
     @GetMapping("/{skillId}")
-    public SkillDto find(@PathVariable String skillId){
+    public SkillDto find(@PathVariable String skillId) {
         return skillService.findSkill(skillId);
     }
 

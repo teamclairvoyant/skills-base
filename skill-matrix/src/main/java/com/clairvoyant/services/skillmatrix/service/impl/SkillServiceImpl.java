@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,16 +34,17 @@ public class SkillServiceImpl implements SkillService {
         if (StringUtils.hasText(skillDto.getId())) {
             Optional<Skill> dbSkill = skillRepository.findById(skillDto.getId());
             if (dbSkill.isPresent()) {
-                if (StringUtils.hasLength(skillDto.getSkillName()))
+                if (StringUtils.hasLength(skillDto.getSkillName())) {
                     dbSkill.get().setSkillName(skillDto.getSkillName());
+                }
 
-                if (StringUtils.hasLength(skillDto.getDescription()))
+                if (StringUtils.hasLength(skillDto.getDescription())) {
                     dbSkill.get().setDescription(skillDto.getDescription());
+                }
 
                 skill = dbSkill.get();
             }
-        }
-        else {
+        } else {
             skill = modelMapper.map(skillDto, Skill.class);
             skill.setActive(true);
         }

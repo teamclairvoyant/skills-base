@@ -37,4 +37,6 @@ public class UserRoleMapping extends Persistable {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @Fetch(FetchMode.JOIN)
     private Role roles;
+
+    private boolean isActive;
 }

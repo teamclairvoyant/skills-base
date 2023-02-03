@@ -2,4 +2,5 @@ type Role{
     id:ID
     roleName:String
     description:String
+    isActive:Boolean
 }

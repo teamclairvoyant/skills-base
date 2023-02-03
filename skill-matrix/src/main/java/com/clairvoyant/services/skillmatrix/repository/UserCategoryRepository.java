@@ -14,4 +14,8 @@ public interface UserCategoryRepository extends JpaRepository<UserCategoryMappin
 
     @Query(value = "SELECT category_id FROM USER_CATEGORY_MAPPING WHERE user_id = :userId",  nativeQuery = true)
     List<String> getCategoryIdByUserId(@Param("userId") String userId);
+
+    Optional<List<UserCategoryMapping>> findByUserIdAndIsActive(String id, boolean b);
+
+    List<UserCategoryMapping> findByIsActive(boolean b);
 }

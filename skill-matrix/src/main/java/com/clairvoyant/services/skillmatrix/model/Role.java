@@ -28,4 +28,7 @@ public class Role extends Persistable {
     private String roleName;
 
     private String description;
+
+    @Column(name = "is_active")
+    private boolean isActive;
 }

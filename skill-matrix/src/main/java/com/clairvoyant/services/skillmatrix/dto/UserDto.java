@@ -1,16 +1,14 @@
-package com.clairvoyant.clarise.dto;
+package com.clairvoyant.services.skillmatrix.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Getter
@@ -21,6 +19,7 @@ public class UserDto {
     private String id;
 
     @NotBlank(message = "Name is Required")
+    @Pattern(regexp = "[a-zA-Z][a-zA-Z ]*")
     private String name;
 
     @NotBlank(message = "Email Address is Required")

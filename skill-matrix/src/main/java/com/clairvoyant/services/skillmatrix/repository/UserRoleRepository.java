@@ -13,4 +13,7 @@ public interface UserRoleRepository extends JpaRepository<UserRoleMapping, Strin
     @Query(value = "SELECT role_id FROM user_role_mapping WHERE user_id = :userId",  nativeQuery = true)
     List<String> getRoleIdByUserId(@Param("userId") String userId);
 
+    Optional<List<UserRoleMapping>> findByUserIdAndIsActive(String id, boolean b);
+
+    List<UserRoleMapping> findByIsActive(boolean b);
 }

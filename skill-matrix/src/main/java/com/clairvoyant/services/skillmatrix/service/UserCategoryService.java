@@ -12,4 +12,6 @@ public interface UserCategoryService {
     List<UserCategoryMapping> findAllUserCategoryMapping();
 
     Optional<List<UserCategoryMapping>> findUserCategoryMappingByUserId(String id);
+
+    Optional<List<UserCategoryMapping>> findUserCategoryMappingByUserIdAndIsActive(String id, boolean b);
 }

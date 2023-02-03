@@ -40,4 +40,5 @@ public class UserCategoryMapping extends Persistable {
     @Fetch(FetchMode.JOIN)
     private Category category;
 
+    private boolean isActive;
 }

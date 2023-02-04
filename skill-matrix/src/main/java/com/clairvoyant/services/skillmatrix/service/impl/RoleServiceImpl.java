@@ -6,6 +6,8 @@ import com.clairvoyant.services.skillmatrix.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -15,5 +17,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role addOrUpdateRole(Role role) {
         return roleRepository.save(role);
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return roleRepository.findAll();
     }
 }

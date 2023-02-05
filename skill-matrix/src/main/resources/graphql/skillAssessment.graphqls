@@ -1,0 +1,88 @@
+type SkillCategoryResponse{
+    categoryList:[CategoryList]!
+
+}
+type CategoryList{
+    categoryId:String!
+    categoryName: String!
+    skillCategoryList:[SkillCategoryList]!
+}
+type SkillCategoryList{
+    skillCategoryId:String!
+    skillName: String!
+
+}
+input AssessmentDtoInput{
+    userId:String!
+    comments:String!
+    assessmentCategoryList:[AssessmentCategoryListInput]!
+
+}
+input AssessmentCategoryListInput{
+    categoryId:String!
+    categoryName:String!
+    skillCategorySelected:[SkillCategorySelectedInput]!
+}
+input SkillCategorySelectedInput{
+    skillCategoryId:String!
+    skillName:String!
+    selectedSkillRatingId:String!
+}
+type AssessmentDto{
+    userId:String!
+    comments:String!
+    assessmentCategoryList:[AssessmentCategoryList]!
+
+}
+type AssessmentCategoryList{
+    categoryId:String!
+    categoryName:String!
+    skillCategorySelected:[SkillCategorySelected]!
+}
+type SkillCategorySelected{
+    skillCategoryId:String!
+    skillName:String!
+    selectedSkillRatingId:String!
+}
+type SkillAssessment{
+    id: String!
+    assessment: Assessment!
+    skillCategory: SkillCategory!
+    skillsRating: SkillsRating!
+}
+
+type Assessment {
+    id: String!
+    user: User!
+    assessmentStatus: AssessmentStatus!
+    assessmentType: AssessmentType!
+    comments: String!
+}
+
+type User {
+    id: String!
+    name:String!
+    emailAddress:String!
+    grade:String!
+    password:String!
+    reportingManager:String!
+    isActive:Boolean!
+}
+type AssessmentStatus{
+    id:String!
+    name:String!
+}
+type AssessmentType{
+    id:String!
+    name:String!
+}
+
+extend type Query{
+    getSkillAssessmentDetails(categoryIds:[String]!):SkillCategoryResponse!
+    getSavedSkillAssessmentDetails(assessmentId:String!):AssessmentDto!
+}
+
+extend type Mutation {
+    saveSkillAssessmentDetails(assessmentDto:AssessmentDtoInput): [SkillAssessment]!
+}
+

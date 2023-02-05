@@ -4,10 +4,7 @@ import com.clairvoyant.services.skillmatrix.model.Role;
 import com.clairvoyant.services.skillmatrix.model.Skill;
 import com.clairvoyant.services.skillmatrix.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,11 @@ public class RoleController {
     public List<Role> findAll() {
 
         return roleService.findAll();
+    }
+
+    @PutMapping("/role/{roleId}")
+    public Role addOrUpdateSkill(@RequestBody Role role) {
+        return roleService.addOrUpdateRole(role);
     }
 
 }

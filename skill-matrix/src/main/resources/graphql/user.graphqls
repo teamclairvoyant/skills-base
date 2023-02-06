@@ -21,15 +21,15 @@ type User{
 
 input UserDto{
     id:ID
-    name:String
-    emailAddress:String
+    name:String!
+    emailAddress:String!
     grade:String
     password:String
     reportingManager:String
     isActive:Boolean
-    userDesignationId:String
-    userRoleIds:[String]
-    userCategoryIds:[String]
+    userDesignationId:String!
+    userRoleIds:[String]!
+    userCategoryIds:[String]!
 }
 
 extend type Query {

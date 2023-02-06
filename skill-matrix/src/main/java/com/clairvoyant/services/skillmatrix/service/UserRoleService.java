@@ -12,4 +12,6 @@ public interface UserRoleService {
     List<UserRoleMapping> findAllUserRoleMapping();
 
     Optional<List<UserRoleMapping>> findUserRoleMappingByUserId(String userId);
+
+    Optional<List<UserRoleMapping>> findUserRoleMappingByUserIdAndIsActive(String id, boolean b);
 }

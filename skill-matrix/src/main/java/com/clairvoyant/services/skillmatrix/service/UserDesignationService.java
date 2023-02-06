@@ -8,13 +8,14 @@ import java.util.List;
 
 public interface UserDesignationService {
 
-    void addOrUpdateUserDesignation(UserDesignationDto userDesignationDto);
+    List<UserDesignationMapping> addOrUpdateUserDesignation(UserDesignationDto userDesignationDto);
 
     List<User> allUsers(String designationId);
 
     List<UserDesignationMapping> findAllUserDesignationMappings();
 
-    UserDesignationMapping findUserDesignationMappingByUserId(String userId);
+    List<UserDesignationMapping> findUserDesignationMappingByUserId(String userId);
 
+    UserDesignationMapping findUserDesignationMappingByUserIdAndIsActive(String id, boolean b);
 }
 

@@ -263,15 +263,15 @@ INSERT IGNORE INTO skillbasedb.user_designation_mapping (id,created_by,created_d
 -- User Role Mapping
 
 INSERT IGNORE INTO skillbasedb.user_role_mapping (id,created_by,created_date,modified_by,modified_date,
-            role_id,user_id)
+            role_id,is_active,user_id)
             VALUES("user_role_008" ,"ADMIN","2023-01-23 18:27:12","ADMIN","2023-01-23 18:27:12",
-            "role_001","user_001");
+            "role_001",1,"user_001");
 
 -- User category Mapping
 INSERT IGNORE INTO skillbasedb.user_category_mapping (id,created_by,created_date,modified_by,modified_date,
-            category_id,user_id)
+            category_id,is_active,user_id)
             VALUES("user_cat_001" ,"ADMIN","2023-01-23 18:27:12","ADMIN","2023-01-23 18:27:12",
-            "cat_001","user_001");
+            "cat_001",1,"user_001");
 
 -- Skill Category Mapping details .
 

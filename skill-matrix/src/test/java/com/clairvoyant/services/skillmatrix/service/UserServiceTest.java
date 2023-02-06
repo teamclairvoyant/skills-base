@@ -111,18 +111,18 @@ public class UserServiceTest {
         userResponseDtoMock.setEmailAddress(returnedUser.getEmailAddress());
 
 
-        when(userDesignationServiceMock.findUserDesignationMappingByUserId("101")).thenReturn(userDesignationMappingMock);
-        UserDesignationMapping userDesignationMapping = userDesignationServiceMock.findUserDesignationMappingByUserId("101");
+        when(userDesignationServiceMock.findUserDesignationMappingByUserIdAndIsActive("101",true)).thenReturn( userDesignationMappingMock);
+        UserDesignationMapping userDesignationMapping =  userDesignationServiceMock.findUserDesignationMappingByUserIdAndIsActive("101",true);
 
         Designation designation = userDesignationMapping.getDesignation();
         userResponseDtoMock.setDesignation(designation);
 
-        when(userRoleServiceMock.findUserRoleMappingByUserId("101")).thenReturn(Optional.of(List.of(userRoleMappingMock)));
-        List<UserRoleMapping> userRoleMappingList = userRoleServiceMock.findUserRoleMappingByUserId("101").get();
+        when(userRoleServiceMock.findUserRoleMappingByUserIdAndIsActive("101",true)).thenReturn(Optional.of(List.of(userRoleMappingMock)));
+        List<UserRoleMapping> userRoleMappingList = userRoleServiceMock.findUserRoleMappingByUserIdAndIsActive("101",true).get();
         userResponseDtoMock.setUserRoles(userRoleMappingList.stream().map(role -> role.getRoles()).collect(Collectors.toList()));
 
-        when(userCategoryServiceMock.findUserCategoryMappingByUserId("101")).thenReturn(Optional.of(List.of(userCategoryMappingMock)));
-        List<UserCategoryMapping> userCategoryMappingList = userCategoryServiceMock.findUserCategoryMappingByUserId("101").get();
+        when(userCategoryServiceMock.findUserCategoryMappingByUserIdAndIsActive("101",true)).thenReturn(Optional.of(List.of(userCategoryMappingMock)));
+        List<UserCategoryMapping> userCategoryMappingList = userCategoryServiceMock.findUserCategoryMappingByUserIdAndIsActive("101",true).get();
         userResponseDtoMock.setUserCategories(userCategoryMappingList.stream().map(category -> category.getCategory()).collect(Collectors.toList()));
 
         when(userService.findById("101",Optional.of(true))).thenReturn(userResponseDtoMock);

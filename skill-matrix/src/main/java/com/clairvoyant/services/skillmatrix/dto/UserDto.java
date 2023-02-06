@@ -19,7 +19,7 @@ public class UserDto {
     private String id;
 
     @NotBlank(message = "Name is Required")
-    @Pattern(regexp = "[a-zA-Z][a-zA-Z ]*")
+    @Pattern(regexp = "[a-zA-Z][a-zA-Z ]*",message = "Enter valid name")
     private String name;
 
     @NotBlank(message = "Email Address is Required")

@@ -30,7 +30,7 @@ public class SwaggerConfig {
         params.add(parameter.name("Authorization").modelRef(new ModelRef("string")).parameterType("header")
             .required(false).build());
         return new Docket(DocumentationType.SWAGGER_2).select()
-            .apis(RequestHandlerSelectors.basePackage("com.clairvoyant.clarise")).paths(PathSelectors.any()).build()
+            .apis(RequestHandlerSelectors.basePackage("com.clairvoyant.services.skillmatrix")).paths(PathSelectors.any()).build()
             .tags(new Tag(SKILLS_RATING, "The Skills Rating Apis"),
                 new Tag(QUALIFICATION_STATUS, "The Qualification Status Apis"),
                 new Tag(DESIGNATION, "The Designation Apis"))

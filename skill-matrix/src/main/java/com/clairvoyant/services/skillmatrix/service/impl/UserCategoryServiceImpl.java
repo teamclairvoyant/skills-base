@@ -6,16 +6,15 @@ import com.clairvoyant.services.skillmatrix.model.User;
 import com.clairvoyant.services.skillmatrix.model.UserCategoryMapping;
 import com.clairvoyant.services.skillmatrix.repository.UserCategoryRepository;
 import com.clairvoyant.services.skillmatrix.service.UserCategoryService;
-
+import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserCategoryServiceImpl implements UserCategoryService {
@@ -32,7 +31,8 @@ public class UserCategoryServiceImpl implements UserCategoryService {
             //Insert Categorys for the first time
             newUserCategoryMapping(userCategoryDto.getUserId(), userCategoryDto.getCategoryIds(), userCategoryMappings);
         } else {
-            List<String> dbCategoryIds = userCategoryMapping.get().stream().map(userCategory -> userCategory.getCategory().getId()).collect(Collectors.toList());
+            List<String> dbCategoryIds = userCategoryMapping.get().stream()
+                    .map(userCategory -> userCategory.getCategory().getId()).collect(Collectors.toList());
             List<String> dbActiveCategoryIds = userCategoryMapping.get().stream().filter(UserCategoryMapping::isActive)
                     .map(userCategory -> userCategory.getCategory().getId()).collect(Collectors.toList());
 
@@ -45,21 +45,25 @@ public class UserCategoryServiceImpl implements UserCategoryService {
 
 
             //update to inactive for existing mappings -- delete
-            List<String> deletedCategoryIds = new ArrayList<>(Sets.difference(Sets.newHashSet(dbActiveCategoryIds), Sets.newHashSet(userCategoryDto.getCategoryIds())));
-            for (String CategoryId : deletedCategoryIds) {
-                UserCategoryMapping CategoryMapping =
-                        userCategoryMapping.get().stream().filter(urm -> CategoryId.equals(urm.getCategory().getId())).findFirst().get();
-                CategoryMapping.setActive(false);
-                userCategoryMappings.add(CategoryMapping);
+            List<String> deletedCategoryIds = new ArrayList<>(
+                    Sets.difference(Sets.newHashSet(dbActiveCategoryIds), Sets.newHashSet(userCategoryDto.getCategoryIds())));
+            for (String categoryId : deletedCategoryIds) {
+                UserCategoryMapping categoryMapping =
+                        userCategoryMapping.get().stream().filter(urm -> categoryId.equals(urm.getCategory().getId())).findFirst().get();
+                categoryMapping.setActive(false);
+                userCategoryMappings.add(categoryMapping);
             }
 
             //update existing inactive mapping to true -- update
-            List<String> updateCategoryIds = new ArrayList<>(Sets.difference(Sets.newHashSet(userCategoryDto.getCategoryIds()), Sets.newHashSet(dbActiveCategoryIds)));
-            for (String CategoryId : updateCategoryIds) {
-                UserCategoryMapping CategoryMapping =
-                        userCategoryMapping.get().stream().filter(urm -> CategoryId.equals(urm.getCategory().getId())).findFirst().get();
-                CategoryMapping.setActive(true);
-                userCategoryMappings.add(CategoryMapping);
+            List<String> updateCategoryIds = new ArrayList<>(Sets.difference(
+                    Sets.newHashSet(userCategoryDto.getCategoryIds()),
+                    Sets.newHashSet(dbActiveCategoryIds))
+            );
+            for (String categoryId : updateCategoryIds) {
+                UserCategoryMapping categoryMapping =
+                        userCategoryMapping.get().stream().filter(urm -> categoryId.equals(urm.getCategory().getId())).findFirst().get();
+                categoryMapping.setActive(true);
+                userCategoryMappings.add(categoryMapping);
             }
 
         }

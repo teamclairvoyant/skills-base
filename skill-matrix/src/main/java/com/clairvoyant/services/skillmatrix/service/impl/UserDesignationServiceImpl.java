@@ -6,14 +6,12 @@ import com.clairvoyant.services.skillmatrix.model.User;
 import com.clairvoyant.services.skillmatrix.model.UserDesignationMapping;
 import com.clairvoyant.services.skillmatrix.repository.UserDesignationRepository;
 import com.clairvoyant.services.skillmatrix.service.UserDesignationService;
-
+import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +20,19 @@ public class UserDesignationServiceImpl implements UserDesignationService {
 
     @Autowired
     private UserDesignationRepository designationRepository;
+
     @Override
     public List<UserDesignationMapping> addOrUpdateUserDesignation(UserDesignationDto userDesignationDto) {
         ArrayList<String> designationId = new ArrayList<>(Arrays.asList(userDesignationDto.getDesignationId()));
         List<UserDesignationMapping> userDesignationMapping =  designationRepository.findByUserId(userDesignationDto.getUserId());
 
         List<UserDesignationMapping> userDesignationMappings = new ArrayList<>();
-        if(userDesignationMapping.isEmpty()) {
+        if (userDesignationMapping.isEmpty()) {
             //Insert Designation for the first time
             newDesignationMapping(userDesignationDto.getUserId(), designationId, userDesignationMappings);
         } else {
-            List<String> dbDesignationIds = userDesignationMapping.stream().map(userDesignation -> userDesignation.getDesignation().getId()).collect(Collectors.toList());
+            List<String> dbDesignationIds = userDesignationMapping.stream()
+                    .map(userDesignation -> userDesignation.getDesignation().getId()).collect(Collectors.toList());
             List<String> dbActiveDesignationIds = userDesignationMapping.stream().filter(UserDesignationMapping::isActive)
                     .map(userDesignation -> userDesignation.getDesignation().getId()).collect(Collectors.toList());
 

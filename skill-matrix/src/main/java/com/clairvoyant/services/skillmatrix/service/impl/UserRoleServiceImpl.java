@@ -6,16 +6,15 @@ import com.clairvoyant.services.skillmatrix.model.User;
 import com.clairvoyant.services.skillmatrix.model.UserRoleMapping;
 import com.clairvoyant.services.skillmatrix.repository.UserRoleRepository;
 import com.clairvoyant.services.skillmatrix.service.UserRoleService;
-
+import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
@@ -81,7 +80,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public Optional<List<UserRoleMapping>> findUserRoleMappingByUserIdAndIsActive(String id, boolean b) {
-        return userRoleRepository.findByUserIdAndIsActive(id,b);
+        return userRoleRepository.findByUserIdAndIsActive(id, b);
     }
 
     private void newUserRoleMapping(String userId, List<String> roleIds, List<UserRoleMapping> userRoleMappings) {

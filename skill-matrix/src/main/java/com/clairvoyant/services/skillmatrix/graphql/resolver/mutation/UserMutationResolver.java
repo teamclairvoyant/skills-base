@@ -4,11 +4,11 @@ import com.clairvoyant.services.skillmatrix.dto.UserDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.service.UserService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 
 @Component
 @Validated

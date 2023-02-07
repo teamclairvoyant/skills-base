@@ -36,8 +36,3 @@ public class SkillAssessment extends Persistable {
     @Fetch(FetchMode.JOIN)
     private SkillsRating skillsRating;
 }
-
-
-
-
-

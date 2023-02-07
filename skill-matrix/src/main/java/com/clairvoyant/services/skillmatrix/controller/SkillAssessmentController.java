@@ -5,8 +5,6 @@ import com.clairvoyant.services.skillmatrix.dto.SkillCategoryResponse;
 import com.clairvoyant.services.skillmatrix.model.SkillAssessment;
 import com.clairvoyant.services.skillmatrix.service.SkillAssessmentService;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/skillassessment")
 public class SkillAssessmentController {
-
-    private static final Logger LOGGER = LogManager.getLogger(SkillAssessmentController.class);
 
     @Autowired
     private SkillAssessmentService skillAssessmentService;

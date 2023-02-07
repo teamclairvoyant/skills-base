@@ -1,6 +1,5 @@
 package com.clairvoyant.services.skillmatrix.service.impl;
 
-import com.clairvoyant.services.skillmatrix.dto.AssessmentCategoryList;
 import com.clairvoyant.services.skillmatrix.dto.AssessmentDto;
 import com.clairvoyant.services.skillmatrix.dto.CategoryList;
 import com.clairvoyant.services.skillmatrix.dto.SkillCategoryList;
@@ -28,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +34,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SkillAssessmentServiceImpl implements SkillAssessmentService {
 
-    public static final String ASSESSMENT_TYPE_COMPLETED = "completed";
+    public static final String ASSESSMENT_TYPE_COMPLETED = "Completed";
 
     public static final String ASSESSMENT_STATUS_SELFASSESSMENT = "Self Assessment";
 
@@ -73,23 +71,22 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
         skillCategoryResponse.setCategoryList(new ArrayList<>());
         for (String categoryId : categoryIds) {
             List<SkillCategory> skillCategoryList = skillCategoryRepository.findByCategoryIdAndIsActive(categoryId, true);
-            if (skillCategoryList == null) {
-                return null;
+
+            if (Objects.nonNull(skillCategoryList)) {
+                CategoryList categoryList = new CategoryList();
+                categoryList.setCategoryId(skillCategoryList.get(0).getCategory().getId());
+                categoryList.setCategoryName(skillCategoryList.get(0).getCategory().getCatName());
+                categoryList.setSkillCategoryList(new ArrayList<>());
+
+                for (SkillCategory skillCategoryObject : skillCategoryList) {
+                    SkillCategoryList skillCategory = new SkillCategoryList();
+                    skillCategory.setSkillCategoryId(skillCategoryObject.getId());
+                    skillCategory.setSkillName(skillCategoryObject.getSkill().getSkillName());
+                    categoryList.getSkillCategoryList().add(skillCategory);
+
+                }
+                skillCategoryResponse.getCategoryList().add(categoryList);
             }
-
-            CategoryList categoryList = new CategoryList();
-            categoryList.setCategoryId(skillCategoryList.get(0).getCategory().getId());
-            categoryList.setCategoryName(skillCategoryList.get(0).getCategory().getCatName());
-            categoryList.setSkillCategoryList(new ArrayList<>());
-
-            for (SkillCategory skillCategoryObject : skillCategoryList) {
-                SkillCategoryList skillCategory = new SkillCategoryList();
-                skillCategory.setSkillCategoryId(skillCategoryObject.getId());
-                skillCategory.setSkillName(skillCategoryObject.getSkill().getSkillName());
-                categoryList.getSkillCategoryList().add(skillCategory);
-
-            }
-            skillCategoryResponse.getCategoryList().add(categoryList);
         }
 
         return skillCategoryResponse;
@@ -102,6 +99,13 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
      */
     @Override
     public List<SkillAssessment> saveSkillAssessmentDetails(AssessmentDto assessmentDto) {
+        Assessment assessment = new Assessment();
+
+        AssessmentStatus assessmentStatus = assessmentStatusRepository.findByName(ASSESSMENT_TYPE_COMPLETED);
+        assessment.setAssessmentStatus(assessmentStatus);
+
+        AssessmentType assessmentType = assessmentTypeRepository.findByName(ASSESSMENT_STATUS_SELFASSESSMENT);
+        assessment.setAssessmentType(assessmentType);
 
         User user = userRepository.findById(assessmentDto.getUserId()).get();
 
@@ -110,21 +114,6 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
             user = new User();
             user.setId(assessmentDto.getUserId());
         }
-
-        Assessment assessment = new Assessment();
-
-        //For now creating AssessmentStatus with SelfAssessment
-        AssessmentStatus newAssessmentStatus = new AssessmentStatus();
-        newAssessmentStatus.setName(ASSESSMENT_STATUS_SELFASSESSMENT);
-        AssessmentStatus assessmentStatus = assessmentStatusRepository.save(newAssessmentStatus);
-        assessment.setAssessmentStatus(assessmentStatus);
-
-        //For now creating AssessmentType with Completed
-        AssessmentType newAssessmentType = new AssessmentType();
-        newAssessmentType.setName(ASSESSMENT_TYPE_COMPLETED);
-        AssessmentType assessmentType = assessmentTypeRepository.save(newAssessmentType);
-        assessment.setAssessmentType(assessmentType);
-
         assessment.setUser(user);
         assessment.setComments(assessmentDto.getComments());
 
@@ -132,11 +121,10 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
         List<SkillAssessment> skillAssessmentList = new ArrayList<>();
         List<SkillAssessment> savedSkillAssessment = new ArrayList<>();
 
-        for (AssessmentCategoryList assessmentCategoryList : assessmentDto.getAssessmentCategoryList()) {
-            for (SkillCategorySelected skllCategorySelected : assessmentCategoryList.getSkillCategorySelected()) {
+        for (CategoryList categoryList : assessmentDto.getCategoryList()) {
+            for (SkillCategorySelected skllCategorySelected : categoryList.getSkillCategorySelected()) {
 
                 SkillAssessment skillAssessment = new SkillAssessment();
-                skillAssessment.setId(UUID.randomUUID().toString());
                 skillAssessment.setAssessment(assessmentResponse);
 
                 SkillsRating skillsRating = new SkillsRating();
@@ -168,90 +156,58 @@ public class SkillAssessmentServiceImpl implements SkillAssessmentService {
      */
     @Override
     public AssessmentDto getSavedSkillAssessmentDetails(String assessmentId) {
-        List<SkillAssessment> skillssessmentList = skillAssessmentRepository.findByAssessmentId(assessmentId);
-
         AssessmentDto assessmentDto = new AssessmentDto();
-        assessmentDto.setUserId(skillssessmentList.get(0).getAssessment().getUser().getId());
-        assessmentDto.setComments(skillssessmentList.get(0).getAssessment().getComments());
 
-        //Storing categoryId with List of SkillCategorySelected in a map
-        Map<String, List<SkillCategorySelected>> skillCategorySelectedMap = new HashMap<>();
-        for (SkillAssessment skillAssessmentObject : skillssessmentList) {
-            SkillCategorySelected skillCategorySelected = new SkillCategorySelected();
-            skillCategorySelected.setSkillCategoryId(skillAssessmentObject.getSkillCategory().getId());
-            skillCategorySelected.setSelectedSkillRatingId(skillAssessmentObject.getSkillsRating().getId());
-            skillCategorySelected.setSkillName(skillAssessmentObject.getSkillCategory().getSkill().getSkillName());
+        List<SkillAssessment> skillssessmentList = skillAssessmentRepository.findByAssessmentId(assessmentId);
+        if (Objects.nonNull(skillssessmentList)) {
 
-            String categoryId = skillAssessmentObject.getSkillCategory().getCategory().getId();
+            assessmentDto.setUserId(skillssessmentList.get(0).getAssessment().getUser().getId());
+            assessmentDto.setComments(skillssessmentList.get(0).getAssessment().getComments());
 
-            if (skillCategorySelectedMap.containsKey(categoryId)) {
-                List<SkillCategorySelected> skillCategorySelectedList = skillCategorySelectedMap.get(categoryId);
-                skillCategorySelectedList.add(skillCategorySelected);
-                skillCategorySelectedMap.put(categoryId, skillCategorySelectedList);
-            } else {
-                List<SkillCategorySelected> skillCategorySelectedList = new ArrayList<>();
-                skillCategorySelectedList.add(skillCategorySelected);
-                skillCategorySelectedMap.put(categoryId, skillCategorySelectedList);
+            //Storing categoryId with List of SkillCategorySelected in a map
+            Map<String, List<SkillCategorySelected>> skillCategorySelectedMap = new HashMap<>();
+            for (SkillAssessment skillAssessmentObject : skillssessmentList) {
+                SkillCategorySelected skillCategorySelected = new SkillCategorySelected();
+                skillCategorySelected.setSkillCategoryId(skillAssessmentObject.getSkillCategory().getId());
+                skillCategorySelected.setSelectedSkillRatingId(skillAssessmentObject.getSkillsRating().getId());
+                skillCategorySelected.setSkillName(skillAssessmentObject.getSkillCategory().getSkill().getSkillName());
+
+                String categoryId = skillAssessmentObject.getSkillCategory().getCategory().getId();
+
+                if (skillCategorySelectedMap.containsKey(categoryId)) {
+                    List<SkillCategorySelected> skillCategorySelectedList = skillCategorySelectedMap.get(categoryId);
+                    skillCategorySelectedList.add(skillCategorySelected);
+                    skillCategorySelectedMap.put(categoryId, skillCategorySelectedList);
+                } else {
+                    List<SkillCategorySelected> skillCategorySelectedList = new ArrayList<>();
+                    skillCategorySelectedList.add(skillCategorySelected);
+                    skillCategorySelectedMap.put(categoryId, skillCategorySelectedList);
+                }
             }
-        }
 
-        // Trying to fetch category details from SkillAssessment and storing in Set inorder to avoid duplicate categories
-        Set<AssessmentCategoryList> categoryListHashSet = new HashSet<>();
-        for (SkillAssessment skillAssessment : skillssessmentList) {
+            // Trying to fetch category details from SkillAssessment and storing in Set inorder to avoid duplicate categories
+            Set<CategoryList> categoryListHashSet = new HashSet<>();
+            for (SkillAssessment skillAssessment : skillssessmentList) {
 
-            AssessmentCategoryList assessmentCategoryListObject = new AssessmentCategoryList();
-            String categoryId = skillAssessment.getSkillCategory().getCategory().getId();
-            assessmentCategoryListObject.setCategoryId(categoryId);
-            assessmentCategoryListObject.setCategoryName(skillAssessment.getSkillCategory().getCategory().getCatName());
+                CategoryList categoryListObject = new CategoryList();
+                String categoryId = skillAssessment.getSkillCategory().getCategory().getId();
+                categoryListObject.setCategoryId(categoryId);
+                categoryListObject.setCategoryName(skillAssessment.getSkillCategory().getCategory().getCatName());
 
-            categoryListHashSet.add(assessmentCategoryListObject);
-        }
-
-        // Trying to fetch List of skillCategorySelected from map based on categoryId and setting to AssessmentCategoryList.
-        for (AssessmentCategoryList assessmentCategoryListObject : categoryListHashSet) {
-            if (skillCategorySelectedMap.containsKey(assessmentCategoryListObject.getCategoryId())) {
-                assessmentCategoryListObject.setSkillCategorySelected(skillCategorySelectedMap
-                        .get(assessmentCategoryListObject.getCategoryId()));
+                categoryListHashSet.add(categoryListObject);
             }
-        }
 
-        assessmentDto.setAssessmentCategoryList(new ArrayList<>(categoryListHashSet));
+            // Trying to fetch List of skillCategorySelected from map based on categoryId and setting to AssessmentCategoryList.
+            for (CategoryList categoryListObject : categoryListHashSet) {
+                if (skillCategorySelectedMap.containsKey(categoryListObject.getCategoryId())) {
+                    categoryListObject.setSkillCategorySelected(skillCategorySelectedMap
+                        .get(categoryListObject.getCategoryId()));
+                }
+            }
+
+            assessmentDto.setCategoryList(new ArrayList<>(categoryListHashSet));
+        }
 
         return assessmentDto;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

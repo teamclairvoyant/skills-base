@@ -14,5 +14,5 @@ public class AssessmentDto {
 
     private  String userId;
     private String comments;
-    private List<AssessmentCategoryList> assessmentCategoryList;
+    private List<CategoryList> categoryList;
 }

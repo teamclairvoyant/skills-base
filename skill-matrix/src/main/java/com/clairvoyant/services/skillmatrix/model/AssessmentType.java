@@ -16,8 +16,3 @@ public class AssessmentType extends Persistable {
     @Column(name = "status")
     private String name;
 }
-
-
-
-
-

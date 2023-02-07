@@ -265,31 +265,31 @@ class SkillAssessmentServiceImplTest {
         assessment.setAssessmentStatus(new AssessmentStatus());
         assessment.setAssessmentType(new AssessmentType());
         assessment.setComments("Comments");
-        assessment.setId("42");
+        assessment.setId("assessmentId");
         assessment.setUser(new User());
 
         Category category = new Category();
         category.setActive(true);
         category.setCatName("Cat Name");
-        category.setId("42");
+        category.setId("categoryId");
 
         Skill skill = new Skill();
         skill.setActive(true);
-        skill.setId("42");
+        skill.setId("skillId");
         skill.setSkillName("Skill Name");
 
         SkillCategory skillCategory = new SkillCategory();
         skillCategory.setCategory(category);
-        skillCategory.setId("42");
+        skillCategory.setId("skillCategoryId");
         skillCategory.setSkill(skill);
 
         SkillsRating skillsRating = new SkillsRating();
-        skillsRating.setId("42");
+        skillsRating.setId("skillsRatingId");
         skillsRating.setName("Name");
 
         SkillAssessment skillAssessment = new SkillAssessment();
         skillAssessment.setAssessment(assessment);
-        skillAssessment.setId("42");
+        skillAssessment.setId("skillAssessmentId");
         skillAssessment.setSkillCategory(skillCategory);
         skillAssessment.setSkillsRating(skillsRating);
 
@@ -297,57 +297,63 @@ class SkillAssessmentServiceImplTest {
         assessment1.setAssessmentStatus(new AssessmentStatus());
         assessment1.setAssessmentType(new AssessmentType());
         assessment1.setComments("Comments");
-        assessment1.setId("42");
+        assessment1.setId("assessmentId_01");
         assessment1.setUser(new User());
 
         Category category1 = new Category();
         category1.setActive(true);
         category1.setCatName("Cat Name");
-        category1.setId("42");
+        category1.setId("categoryId_01");
 
         Skill skill1 = new Skill();
         skill1.setActive(true);
-        skill1.setId("42");
+        skill1.setId("skillId_01");
         skill1.setSkillName("Skill Name");
 
         SkillCategory skillCategory1 = new SkillCategory();
         skillCategory1.setActive(true);
         skillCategory1.setCategory(category1);
-        skillCategory1.setId("42");
+        skillCategory1.setId("skillCategoryId_01");
         skillCategory1.setSkill(skill1);
 
         SkillsRating skillsRating1 = new SkillsRating();
         skillsRating1.setActive(true);
-        skillsRating1.setId("42");
+        skillsRating1.setId("skillsRatingId_01");
         skillsRating1.setName("Name");
 
         SkillAssessment skillAssessment1 = new SkillAssessment();
         skillAssessment1.setAssessment(assessment1);
-        skillAssessment1.setId("42");
+        skillAssessment1.setId("skillAssessmentId_01");
         skillAssessment1.setSkillCategory(skillCategory1);
         skillAssessment1.setSkillsRating(skillsRating1);
 
         ArrayList<SkillAssessment> skillAssessmentList = new ArrayList<>();
-        skillAssessmentList.add(skillAssessment1);
         skillAssessmentList.add(skillAssessment);
+        skillAssessmentList.add(skillAssessment1);
         when(skillAssessmentRepository.findByAssessmentId((String) any())).thenReturn(skillAssessmentList);
         AssessmentDto actualSavedSkillAssessmentDetails = skillAssessmentServiceImpl.getSavedSkillAssessmentDetails("42");
         List<CategoryList> categoryList = actualSavedSkillAssessmentDetails.getCategoryList();
-        assertEquals(1, categoryList.size());
+        assertEquals(2, categoryList.size());
         assertEquals("Comments", actualSavedSkillAssessmentDetails.getComments());
         CategoryList getResult = categoryList.get(0);
-        assertEquals("42", getResult.getCategoryId());
+        assertEquals("categoryId_01", getResult.getCategoryId());
         List<SkillCategorySelected> skillCategorySelected = getResult.getSkillCategorySelected();
-        assertEquals(2, skillCategorySelected.size());
+        assertEquals(1, skillCategorySelected.size());
         assertEquals("Cat Name", getResult.getCategoryName());
         SkillCategorySelected getResult1 = skillCategorySelected.get(0);
         assertEquals("Skill Name", getResult1.getSkillName());
-        SkillCategorySelected getResult2 = skillCategorySelected.get(1);
-        assertEquals("Skill Name", getResult2.getSkillName());
-        assertEquals("42", getResult2.getSkillCategoryId());
-        assertEquals("42", getResult2.getSelectedSkillRatingId());
-        assertEquals("42", getResult1.getSkillCategoryId());
-        assertEquals("42", getResult1.getSelectedSkillRatingId());
+        assertEquals("skillCategoryId_01", getResult1.getSkillCategoryId());
+        assertEquals("skillsRatingId_01", getResult1.getSelectedSkillRatingId());
+
+        CategoryList result1 = categoryList.get(1);
+        assertEquals("categoryId", result1.getCategoryId());
+        List<SkillCategorySelected> skillCategorySelectedList = result1.getSkillCategorySelected();
+        assertEquals(1, skillCategorySelectedList.size());
+        assertEquals("Cat Name", result1.getCategoryName());
+        SkillCategorySelected skillCategorySelectedResult1 = skillCategorySelectedList.get(0);
+        assertEquals("Skill Name", skillCategorySelectedResult1.getSkillName());
+        assertEquals("skillCategoryId", skillCategorySelectedResult1.getSkillCategoryId());
+        assertEquals("skillsRatingId", skillCategorySelectedResult1.getSelectedSkillRatingId());
         verify(skillAssessmentRepository).findByAssessmentId((String) any());
     }
 }

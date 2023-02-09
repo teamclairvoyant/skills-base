@@ -7,6 +7,8 @@ public interface SkillService {
 
     List<Skill> findAll();
 
+    List<Skill> findAllByIsActive(Boolean isActive);
+
     Skill addOrUpdateSkill(Skill skill);
 
     Skill findSkill(String skillId);

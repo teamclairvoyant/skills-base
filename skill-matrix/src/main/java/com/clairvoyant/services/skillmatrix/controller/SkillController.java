@@ -32,7 +32,7 @@ public class SkillController {
     @GetMapping
     public List<Skill> findAll() {
 
-        return skillService.findAll();
+        return skillService.findAllByIsActive(true);
     }
 
     //add or update skill to skills table

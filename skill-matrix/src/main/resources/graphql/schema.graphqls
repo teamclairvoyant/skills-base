@@ -12,6 +12,20 @@ type Skill{
     isActive:Boolean!
 }
 
+type CategoryDtoReturnType{
+    id: String!
+    catName: String!
+    description:String
+    isActive:Boolean!
+}
+
+input CategoryDto{
+    id: String
+    catName: String!
+    description:String
+    isActive:Boolean
+}
+
 
 enum Status{
     SUCCESS
@@ -50,8 +64,8 @@ input QualificationDto{
 
 type Query{
     #Category Related Queries
-    getCategories: [Category]!
-    findCategoryById(categoryId:String!):Category!
+    getCategories: [CategoryDtoReturnType]!
+    findCategoryById(categoryId:String!):CategoryDtoReturnType!
 
     #Skills Related Queries
     getSkills: [Skill]!
@@ -65,7 +79,7 @@ type Query{
 
 type Mutation {
     #Category related Mutations
-    addOrUpdateCategory(catName: String!, description :String): Category!
+    addOrUpdateCategory(categoryDto: CategoryDto): CategoryDtoReturnType!
     deleteCategory( categoryId: String!):Status
 
     #Skills related Mutations

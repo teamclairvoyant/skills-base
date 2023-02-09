@@ -1,9 +1,7 @@
-
 package com.clairvoyant.services.skillmatrix.graphql.resolver.mutation;
 
-
+import com.clairvoyant.services.skillmatrix.dto.CategoryDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
-import com.clairvoyant.services.skillmatrix.model.Category;
 import com.clairvoyant.services.skillmatrix.service.CategoryService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +18,8 @@ public class CategoryMutationResolver implements GraphQLMutationResolver {
     /**
      * addOrUpdateCategory is used to add or update the Category
      */
-    public Category addOrUpdateCategory(String catName, String description) {
-        Category category = Category.builder()
-                .catName(catName)
-                .description(description)
-                .build();
-
-        return categoryService.addOrUpdateCategory(category);
+    public CategoryDto addOrUpdateCategory(CategoryDto categoryDto) {
+        return categoryService.addOrUpdateCategory(categoryDto);
     }
 
     /**

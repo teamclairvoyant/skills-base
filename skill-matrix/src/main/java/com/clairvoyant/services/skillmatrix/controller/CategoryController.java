@@ -1,7 +1,7 @@
 package com.clairvoyant.services.skillmatrix.controller;
 
+import com.clairvoyant.services.skillmatrix.dto.CategoryDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
-import com.clairvoyant.services.skillmatrix.model.Category;
 import com.clairvoyant.services.skillmatrix.service.CategoryService;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -26,22 +26,22 @@ public class CategoryController {
 
     //get all categories
     @GetMapping
-    public List<Category> findAll() {
+    public List<CategoryDto> findAll() {
         return categoryService.findAll();
     }
 
     //add or update category to category table
     @PutMapping
-    public Category addOrUpdateCategory(@RequestBody Category category) {
+    public CategoryDto addOrUpdateCategory(@RequestBody CategoryDto categoryDto) {
 
-        LOGGER.info(category);
+        LOGGER.info("addOrUpdateCategory request: " + categoryDto);
 
-        return categoryService.addOrUpdateCategory(category);
+        return categoryService.addOrUpdateCategory(categoryDto);
     }
 
     //get category
     @GetMapping("/{categoryId}")
-    public Category find(@PathVariable String categoryId) {
+    public CategoryDto find(@PathVariable String categoryId) {
 
         return categoryService.findCategory(categoryId);
     }

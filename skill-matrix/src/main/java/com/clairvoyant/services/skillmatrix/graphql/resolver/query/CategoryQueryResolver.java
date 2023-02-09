@@ -1,6 +1,6 @@
 package com.clairvoyant.services.skillmatrix.graphql.resolver.query;
 
-import com.clairvoyant.services.skillmatrix.model.Category;
+import com.clairvoyant.services.skillmatrix.dto.CategoryDto;
 import com.clairvoyant.services.skillmatrix.service.CategoryService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import java.util.List;
@@ -20,14 +20,14 @@ public class CategoryQueryResolver implements GraphQLQueryResolver {
     /**
      * getCategories is used to get all the categories
      */
-    public List<Category> getCategories() {
+    public List<CategoryDto> getCategories() {
         return categoryService.findAll();
     }
 
     /**
      * findCategoryById is used to get the category based on the passed categoryId
      */
-    public Category findCategoryById(String categoryId) {
+    public CategoryDto findCategoryById(String categoryId) {
         return categoryService.findCategory(categoryId);
     }
 }

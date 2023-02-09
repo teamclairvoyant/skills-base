@@ -24,7 +24,7 @@ import lombok.Setter;
         property = "id")
 public class Category extends Persistable {
 
-    @Column(name = "cat_name")
+    @Column(name = "cat_name", unique = true)
     private String catName;
 
     private String description;

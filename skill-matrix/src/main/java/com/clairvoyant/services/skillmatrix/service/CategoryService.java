@@ -1,15 +1,15 @@
 package com.clairvoyant.services.skillmatrix.service;
 
-import com.clairvoyant.services.skillmatrix.model.Category;
+import com.clairvoyant.services.skillmatrix.dto.CategoryDto;
 import java.util.List;
 
 public interface CategoryService {
 
-    List<Category> findAll();
+    List<CategoryDto> findAll();
 
-    Category addOrUpdateCategory(Category category);
+    CategoryDto addOrUpdateCategory(CategoryDto categoryDto);
 
-    Category findCategory(String categoryId);
+    CategoryDto findCategory(String categoryId);
 
     void deleteCategory(String categoryId);
 }

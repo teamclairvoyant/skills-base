@@ -1,12 +1,10 @@
 package com.clairvoyant.services.skillmatrix.controller;
 
 import com.clairvoyant.services.skillmatrix.model.Role;
-import com.clairvoyant.services.skillmatrix.model.Skill;
 import com.clairvoyant.services.skillmatrix.service.RoleService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class RoleController {

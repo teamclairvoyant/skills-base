@@ -2,6 +2,8 @@ package com.clairvoyant.services.skillmatrix.controller;
 
 import com.clairvoyant.services.skillmatrix.dto.SkillDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
+import com.clairvoyant.services.skillmatrix.exceptions.DuplicateNameException;
+import com.clairvoyant.services.skillmatrix.exceptions.ResourceNotFoundException;
 import com.clairvoyant.services.skillmatrix.service.SkillService;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,32 @@ public class SkillControllerTest {
     }
 
     @Test
+    public void addOrUpdateSkillWithResourceNotFoundException() {
+        SkillDto skillDto = new SkillDto();
+        skillDto.setId("any-id");
+        skillDto.setSkillName("any-name");
+        skillDto.setDescription("any-desc");
+
+        Mockito.when(skillService.addOrUpdateSkill(skillDto)).thenThrow(ResourceNotFoundException.class);
+        Assert.assertThrows(ResourceNotFoundException.class, () -> {
+            skillController.addOrUpdateSkill(skillDto);
+        });
+    }
+
+    @Test
+    public void addOrUpdateSkillWithDuplicateNameException() {
+        SkillDto skillDto = new SkillDto();
+        skillDto.setId("any-id");
+        skillDto.setSkillName("any-name");
+        skillDto.setDescription("any-desc");
+
+        Mockito.when(skillService.addOrUpdateSkill(skillDto)).thenThrow(DuplicateNameException.class);
+        Assert.assertThrows(DuplicateNameException.class, () -> {
+            skillController.addOrUpdateSkill(skillDto);
+        });
+    }
+
+    @Test
     public void findSkillById() {
         SkillDto skillDto = new SkillDto();
         skillDto.setId("any-id");
@@ -71,7 +99,23 @@ public class SkillControllerTest {
     }
 
     @Test
+    public void findSkillByIdWithResourceNotFoundException() {
+        Mockito.when(skillService.findSkill("any-id")).thenThrow(ResourceNotFoundException.class);
+        Assert.assertThrows(ResourceNotFoundException.class, () -> {
+            skillController.find("any-id");
+        });
+    }
+
+    @Test
     public void deleteSkill() {
         Assert.assertEquals(Status.SUCCESS, skillController.deleteSkill("any-id"));
+    }
+
+    @Test
+    public void deleteSkillWithResourceNotFoundException() {
+        Mockito.doThrow(ResourceNotFoundException.class).when(skillService).deleteSkill("any-id");
+        Assert.assertThrows(ResourceNotFoundException.class, () -> {
+            skillController.deleteSkill("any-id");
+        });
     }
 }

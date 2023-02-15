@@ -49,11 +49,11 @@ public class User extends Persistable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", grade='" + grade + '\'' +
-                ", reportingManager=" + reportingManager +
-                ", isActive=" + isActive +
-                '}';
+        return "User{"
+                + "name='" + name + '\''
+                + ", grade='" + grade + '\''
+                + ", reportingManager=" + reportingManager
+                + ", isActive=" + isActive
+                + '}';
     }
 }

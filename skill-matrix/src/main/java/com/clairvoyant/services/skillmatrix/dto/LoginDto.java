@@ -12,9 +12,9 @@ public class LoginDto {
 
     @Override
     public String toString() {
-        return "LoginDto{" +
-                "emailAddress='" + "*****" + '\'' +
-                ", password='" + "*****" + '\'' +
-                '}';
+        return "LoginDto{"
+                + "emailAddress='" + "*****" + '\''
+                + ", password='" + "*****" + '\''
+                + '}';
     }
 }

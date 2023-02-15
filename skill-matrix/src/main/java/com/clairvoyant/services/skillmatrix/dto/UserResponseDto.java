@@ -28,16 +28,16 @@ public class UserResponseDto {
 
     @Override
     public String toString() {
-        return "UserResponseDto{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", emailAddress='" + "**********" + '\'' +
-                ", grade='" + grade + '\'' +
-                ", reportingManager=" + reportingManager +
-                ", isActive=" + isActive +
-                ", designation=" + designation +
-                ", userRoles=" + userRoles +
-                ", userCategories=" + userCategories +
-                '}';
+        return "UserResponseDto{"
+                + "id='" + id + '\''
+                + ", name='" + name + '\''
+                + ", emailAddress='" + "**********" + '\''
+                + ", grade='" + grade + '\''
+                + ", reportingManager=" + reportingManager
+                + ", isActive=" + isActive
+                + ", designation=" + designation
+                + ", userRoles=" + userRoles
+                + ", userCategories=" + userCategories
+                + '}';
     }
 }

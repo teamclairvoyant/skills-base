@@ -1,10 +1,7 @@
 package com.clairvoyant.services.skillmatrix.dto;
 
 import com.clairvoyant.services.skillmatrix.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -16,4 +13,15 @@ public class LoginResponseDto {
     private User reportingManager;
     private String grade;
     private String token;
+
+    @Override
+    public String toString() {
+        return "LoginResponseDto{" +
+                "name='" + name + '\'' +
+                ", emailAddress='" + "********" + '\'' +
+                ", reportingManager=" + reportingManager +
+                ", grade='" + grade + '\'' +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

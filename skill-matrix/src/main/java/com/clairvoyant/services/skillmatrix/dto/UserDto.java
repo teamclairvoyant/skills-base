@@ -21,4 +21,20 @@ public class UserDto {
     private String userDesignationId;
     private List<String> userRoleIds;
     private List<String> userCategoryIds;
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", emailAddress='" + "********" + '\'' +
+                ", grade='" + grade + '\'' +
+                ", password='" + "*********" + '\'' +
+                ", reportingManager='" + reportingManager + '\'' +
+                ", isActive=" + isActive +
+                ", userDesignationId='" + userDesignationId + '\'' +
+                ", userRoleIds=" + userRoleIds +
+                ", userCategoryIds=" + userCategoryIds +
+                '}';
+    }
 }

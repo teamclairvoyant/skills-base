@@ -25,4 +25,19 @@ public class UserResponseDto {
     private Designation designation;
     private List<Role> userRoles;
     private List<Category> userCategories;
+
+    @Override
+    public String toString() {
+        return "UserResponseDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", emailAddress='" + "**********" + '\'' +
+                ", grade='" + grade + '\'' +
+                ", reportingManager=" + reportingManager +
+                ", isActive=" + isActive +
+                ", designation=" + designation +
+                ", userRoles=" + userRoles +
+                ", userCategories=" + userCategories +
+                '}';
+    }
 }

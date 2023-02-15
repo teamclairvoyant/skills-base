@@ -8,11 +8,10 @@ import graphql.execution.instrumentation.parameters.InstrumentationExecutionPara
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
-
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

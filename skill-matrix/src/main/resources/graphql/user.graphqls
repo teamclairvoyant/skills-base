@@ -35,6 +35,7 @@ input UserDto{
 extend type Query {
     getUserById(userId : String!,isActive:Boolean):UserResponseDto!
     getAllUsers(isActive:Boolean):[UserResponseDto]!
+    getAllUsersWithPagination(isActive:Boolean,page:Int,size:Int):[UserResponseDto]!
 }
 
 extend type Mutation {

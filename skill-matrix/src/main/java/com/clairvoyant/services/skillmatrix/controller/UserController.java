@@ -25,9 +25,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping
-    public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive) {
+    public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive ) {
         return userService.findAll(isActive);
+    }
+
+    @GetMapping
+    public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive,
+                                             @RequestParam int page,@RequestParam int size ) {
+        return userService.findAll(isActive, page, size);
     }
 
     @GetMapping("/{userId}")

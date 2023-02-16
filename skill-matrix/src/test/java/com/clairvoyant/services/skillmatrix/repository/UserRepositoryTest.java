@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.data.domain.PageRequest;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(UserRepository.class)

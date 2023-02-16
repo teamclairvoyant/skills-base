@@ -13,5 +13,7 @@ public interface UserService {
 
     Status delete(String userId);
 
+    List<UserResponseDto> findAll(Optional<Boolean> isActive,int page,int size);
+
     List<UserResponseDto> findAll(Optional<Boolean> isActive);
 }

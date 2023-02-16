@@ -7,6 +7,7 @@ import graphql.kickstart.tools.GraphQLQueryResolver;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,9 +27,19 @@ public class UserQueryResolver implements GraphQLQueryResolver {
     }
 
     /**
-     * getAllUsers is used to get all the Users
+     * getAllUsers for pagination
+     */
+    public List<UserResponseDto> getAllUsersWithPagination(Optional<Boolean> isActive,int page,int size) {
+
+        return userService.findAll(isActive,page,size);
+    }
+
+    /**
+     * getAllUsers for all User
      */
     public List<UserResponseDto> getAllUsers(Optional<Boolean> isActive) {
+
         return userService.findAll(isActive);
+
     }
 }

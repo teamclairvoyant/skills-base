@@ -16,6 +16,10 @@ public class SkillQueryResolver implements GraphQLQueryResolver {
         return skillService.findAll();
     }
 
+    public List<Skill> getSkillsWithPage(int page,int size) {
+        return skillService.findAll(page, size).getContent();
+    }
+
     public Skill findSkillById(String skillId) {
         return skillService.findSkill(skillId);
     }

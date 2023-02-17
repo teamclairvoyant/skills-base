@@ -1,5 +1,6 @@
 package com.clairvoyant.services.skillmatrix.graphql.resolver.mutation;
 
+import com.clairvoyant.services.skillmatrix.dto.SkillDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.model.Skill;
 import com.clairvoyant.services.skillmatrix.service.SkillService;
@@ -13,13 +14,13 @@ public class SkillMutationResolver implements GraphQLMutationResolver {
     private SkillService skillService;
 
     public Skill addOrUpdateSkill(String skillName, String description, Boolean isActive) {
-        Skill skill = Skill.builder()
+        var skillDto = SkillDto.builder()
                 .skillName(skillName)
                 .description(description)
                 .isActive(isActive)
                 .build();
 
-        return skillService.addOrUpdateSkill(skill);
+        return skillService.addOrUpdateSkill(skillDto);
     }
     public Status deleteSkill(String skillId) {
         skillService.deleteSkill(skillId);

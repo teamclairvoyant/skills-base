@@ -37,7 +37,6 @@ type QualificationDtoReturnType{
     name:String!
     description:String!
     isActive:Boolean!
-
 }
 
 input QualificationDto{
@@ -55,8 +54,9 @@ type Query{
 
     #Skills Related Queries
     getSkills: [Skill]!
+    getSkillsWithPage(page:Int,size:Int):[Skill]!
     findSkillById(skillId:String!):Skill!
-    getSkills(categoryId: String!): [Skill]!
+    getSkillsByCategory(categoryId: String!): [Skill]!
 
     #Qualification Related Queries
     getQualifications: [QualificationDtoReturnType]!
@@ -76,5 +76,6 @@ type Mutation {
     #Qualification related Mutations
     addOrUpdateQualification(qualificationDto: QualificationDto): QualificationDtoReturnType!
     deleteQualification(qualificationId: String!):Status
+
 }
 

@@ -13,7 +13,7 @@ public class SkillCategoryQueryResolver implements GraphQLQueryResolver {
     @Autowired
     private SkillCategoryService skillCategoryService;
 
-    public List<Skill> getSkills(String categoryId) {
+    public List<Skill> getSkillsByCategory(String categoryId) {
         return skillCategoryService.getSkills(categoryId);
     }
 }

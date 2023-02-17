@@ -1,13 +1,13 @@
 package com.clairvoyant.services.skillmatrix.controller;
 
 
+import com.clairvoyant.services.skillmatrix.dto.SkillDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.model.Skill;
 import com.clairvoyant.services.skillmatrix.service.SkillService;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class SkillController {
 
-    private static final Logger LOGGER = LogManager.getLogger(SkillController.class);
-
     @Autowired
     private SkillService skillService;
 
@@ -35,13 +33,19 @@ public class SkillController {
         return skillService.findAll();
     }
 
+    @GetMapping("/{page}/{size}")
+    public List<Skill> findAll(@PathVariable int page, @PathVariable int size) {
+
+        Page<Skill> all = skillService.findAll(page, size);
+        return all.getContent();
+    }
+
+
     //add or update skill to skills table
     @PutMapping
-    public Skill addOrUpdateSkill(@RequestBody Skill skill) {
+    public Skill addOrUpdateSkill(@RequestBody SkillDto skillDto) {
 
-        LOGGER.info(skill);
-
-        return skillService.addOrUpdateSkill(skill);
+        return skillService.addOrUpdateSkill(skillDto);
     }
 
     //get skill
@@ -54,8 +58,6 @@ public class SkillController {
     //delete skill
     @DeleteMapping("/{skillId}")
     public Status deleteSkill(@PathVariable String skillId) {
-
-        LOGGER.info("deleteSkill of skill Id :" + skillId);
 
         skillService.deleteSkill(skillId);
 

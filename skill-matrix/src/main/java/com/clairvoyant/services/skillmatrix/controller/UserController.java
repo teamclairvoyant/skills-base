@@ -35,9 +35,9 @@ public class UserController {
         return userService.findAll(isActive);
     }
 
-    @GetMapping("/paging")
+    @GetMapping("/{page}/{size}")
     public List<UserResponseDto> getAllUsersWithPagination(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive,
-                                             @RequestParam int page,@RequestParam int size ) {
+                                             @PathVariable int page,@PathVariable int size ) {
         return userService.findAll(isActive, page, size);
     }
 

@@ -18,7 +18,7 @@ enum Status{
     USER_ALREADY_EXISTS
     FAILURE
     MESSAGE_SENT
-
+    SOMETHING_WENT_WRONG
 }
 
 type SkillCategory{

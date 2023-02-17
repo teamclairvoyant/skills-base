@@ -21,18 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("user")
 public class UserController {
-    private static final Logger LOGGER = LogManager.getLogger(SkillController.class);
-    @Autowired
-    private UserService userService;
+    private static final Logger LOGGER = LogManager.getLogger(UserController.class);
 
+    private UserService userService;
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive ) {
         return userService.findAll(isActive);
     }
 
-    @GetMapping
-    public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive,
+    @GetMapping("/paging")
+    public List<UserResponseDto> getAllUsersWithPagination(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive,
                                              @RequestParam int page,@RequestParam int size ) {
         return userService.findAll(isActive, page, size);
     }
@@ -46,9 +49,8 @@ public class UserController {
     public Status addOrUpdateUser(@RequestBody UserDto userDto) {
 
         LOGGER.info(userDto);
-        Status status = userService.addOrUpdateUser(userDto);
+        return userService.addOrUpdateUser(userDto);
 
-        return status;
     }
 
     @DeleteMapping("/{userId}")

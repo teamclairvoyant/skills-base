@@ -54,29 +54,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Status addOrUpdateUser(UserDto userDto) {
-        User user = new User();
+        var user = new User();
         if (StringUtils.hasText(userDto.getId())) {
             Optional<User> result = userRepository.findById(userDto.getId());
             if (result.isPresent()) {
-                if (StringUtils.hasLength(userDto.getName())) {
-                    result.get().setName(userDto.getName());
-                }
-                if (StringUtils.hasLength(userDto.getEmailAddress())) {
-                    result.get().setEmailAddress(userDto.getEmailAddress());
-                }
-                if (StringUtils.hasLength(userDto.getPassword())) {
-                    result.get().setPassword(PasswordUtil.encode(userDto.getPassword()));
-                }
-                if (StringUtils.hasLength(userDto.getGrade())) {
-                    result.get().setGrade(userDto.getGrade());
-                }
-            }
-            try {
+
+                result.get().setName(userDto.getName());
+                result.get().setEmailAddress(userDto.getEmailAddress());
+                result.get().setPassword(PasswordUtil.encode(userDto.getPassword()));
+                result.get().setGrade(userDto.getGrade());
+
                 user = result.get();
                 userRepository.save(user);
                 return Status.SUCCESS;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                throw new ResourceNotFoundException("User does not exist with Id : " + userDto.getId());
             }
 
         } else {
@@ -92,7 +84,7 @@ public class UserServiceImpl implements UserService {
                 }
                 user.setActive(true);
                 user.setPassword(PasswordUtil.encode(user.getPassword()));
-                User savedUser = userRepository.save(user);
+                var savedUser = userRepository.save(user);
                 userDesignationService.addOrUpdateUserDesignation(
                         UserDesignationDto
                                 .builder()
@@ -133,24 +125,35 @@ public class UserServiceImpl implements UserService {
         if (result.isEmpty()) {
             throw new ResourceNotFoundException("User not found");
         }
-        UserResponseDto userResponseDto = new UserResponseDto();
+        var userResponseDto = new UserResponseDto();
         BeanUtils.copyProperties(result.get(), userResponseDto);
-        UserDesignationMapping userDesignationMapping = userDesignationService.findUserDesignationMappingByUserId(id);
-        Designation designation = userDesignationMapping.getDesignation();
+        var userDesignationMapping = userDesignationService.findUserDesignationMappingByUserId(id);
+        var designation = userDesignationMapping.getDesignation();
         userResponseDto.setDesignation(designation);
         Optional<List<UserRoleMapping>> userRoles = userRoleService.findUserRoleMappingByUserId(id);
         List<Role> roles = new ArrayList<>();
-        for (UserRoleMapping userRoleMapping : userRoles.get()) {
-            Role role = userRoleMapping.getRoles();
-            roles.add(role);
+
+        if (userRoles.isPresent()) {
+            for (UserRoleMapping userRoleMapping : userRoles.get()) {
+                var role = userRoleMapping.getRoles();
+                roles.add(role);
+            }
+        } else {
+            throw new ResourceNotFoundException("Roles is not available for user : " + result.get().getId());
         }
+
         userResponseDto.setUserRoles(roles);
 
         Optional<List<UserCategoryMapping>> userCategories = userCategoryService.findUserCategoryMappingByUserId(id);
         List<Category> categories = new ArrayList<>();
-        for (UserCategoryMapping userCategoryMapping : userCategories.get()) {
-            Category category = userCategoryMapping.getCategory();
-            categories.add(category);
+        if (userCategories.isPresent()) {
+
+            for (UserCategoryMapping userCategoryMapping : userCategories.get()) {
+                var category = userCategoryMapping.getCategory();
+                categories.add(category);
+            }
+        } else {
+            throw new ResourceNotFoundException("Categories are not available for user : " + result.get().getId());
         }
         userResponseDto.setUserCategories(categories);
         return userResponseDto;
@@ -161,7 +164,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optUser = userRepository.findById(userId);
         if (optUser.isPresent()) {
             try {
-                User user = optUser.get();
+                var user = optUser.get();
                 user.setActive(false);
                 userRepository.save(user);
                 return Status.SUCCESS;
@@ -186,32 +189,29 @@ public class UserServiceImpl implements UserService {
             users = userRepository.findByIsActive(true);
         }
 
-        List<UserResponseDto> userResponse = addMappings(users);
-
-        return userResponse;
+        return getUserMappings(users);
     }
 
     @Override
     public List<UserResponseDto> findAll(Optional<Boolean> isActive, int page, int size) {
 
-        PageRequest pr = PageRequest.of(page,size);
+        var pageRequest = PageRequest.of(page,size);
         List<User> users;
 
-        Page<User> allUsers = userRepository.findAll(pr);
+        Page<User> allUsers = userRepository.findAll(pageRequest);
 
         if (isActive.isPresent()) {
             users = allUsers.getContent().stream().filter(user -> user.isActive() == isActive.get()).collect(Collectors.toList());
         } else {
-            users = allUsers.getContent().stream().filter(user -> user.isActive() == true).collect(Collectors.toList());
+            users = allUsers.getContent().stream().filter(User::isActive).collect(Collectors.toList());
         }
 
-        List<UserResponseDto> userResponse = addMappings(users);
+        return getUserMappings(users);
 
-        return userResponse;
     }
 
 
-    private List<UserResponseDto> addMappings(List<User> users) {
+    private List<UserResponseDto> getUserMappings(List<User> users) {
 
         List<UserResponseDto> userResponse = new ArrayList<>();
         List<UserDesignationMapping> userDesignationMappings = userDesignationService.findAllUserDesignationMappings();
@@ -220,22 +220,27 @@ public class UserServiceImpl implements UserService {
 
         for (User user : users) {
 
-            UserResponseDto userResponseDto = new UserResponseDto();
+            var userResponseDto = new UserResponseDto();
             BeanUtils.copyProperties(user, userResponseDto);
 
-
-            Designation designation = userDesignationMappings.stream()
+            Designation designation;
+            Optional<Designation> optionalDesignation = userDesignationMappings.stream()
                     .filter(userDesignationMapping -> user.getId().equals(userDesignationMapping.getUser().getId()))
-                    .map(userDesignationMapping -> userDesignationMapping.getDesignation()).findFirst().get();
+                    .map(UserDesignationMapping::getDesignation).findFirst();
+            if (optionalDesignation.isPresent()) {
+                designation = optionalDesignation.get();
+            } else {
+                throw new ResourceNotFoundException("Designation is not available for " + user.getId());
+            }
 
             List<Role> roles = userRoleMappings.stream()
                     .filter(userRoleMapping -> user.getId().equals(userRoleMapping.getUser().getId()))
-                    .map(userRoleMapping -> userRoleMapping.getRoles()).collect(Collectors.toList());
+                    .map(UserRoleMapping::getRoles).collect(Collectors.toList());
 
 
             List<Category> categories = userCategoryMappings.stream()
                     .filter(userCategoryMapping -> user.getId().equals(userCategoryMapping.getUser().getId()))
-                    .map(userCategoryMapping -> userCategoryMapping.getCategory()).collect(Collectors.toList());
+                    .map(UserCategoryMapping::getCategory).collect(Collectors.toList());
 
 
             userResponseDto.setDesignation(designation);

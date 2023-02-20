@@ -6,6 +6,7 @@ import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.service.UserService;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("user")
 public class UserController {
-    private static final Logger LOGGER = LogManager.getLogger(SkillController.class);
+    private static final Logger LOGGER = LogManager.getLogger(UserController.class);
     @Autowired
     private UserService userService;
 
@@ -36,12 +37,11 @@ public class UserController {
     }
 
     @PostMapping
-    public Status addOrUpdateUser(@RequestBody UserDto userDto) {
+    public Status addOrUpdateUser(@Valid @RequestBody UserDto userDto) {
 
         LOGGER.info(userDto);
-        Status status = userService.addOrUpdateUser(userDto);
+        return userService.addOrUpdateUser(userDto);
 
-        return status;
     }
 
     @DeleteMapping("/{userId}")

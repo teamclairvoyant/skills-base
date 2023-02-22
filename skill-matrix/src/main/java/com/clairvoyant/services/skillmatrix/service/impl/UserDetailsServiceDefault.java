@@ -21,7 +21,7 @@ public class UserDetailsServiceDefault implements UserDetailsService {
         User user = userRepository.findByEmailAddress(userName);
         if (user != null && user.isActive()) {
             return new UserDetailsImpl(user);
-        }else {
+        } else {
             throw new UsernameNotFoundException("User not found");
         }
     }

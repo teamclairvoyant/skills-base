@@ -1,5 +1,6 @@
 package com.clairvoyant.services.skillmatrix.advice;
 
+import com.clairvoyant.services.skillmatrix.exceptions.DuplicateNameException;
 import com.clairvoyant.services.skillmatrix.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,5 +13,10 @@ public class ExceptionController {
     @ExceptionHandler(value = ResourceNotFoundException.class)
     public ResponseEntity<String> noResourceFound(ResourceNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = DuplicateNameException.class)
+    public ResponseEntity<String> duplicateName(DuplicateNameException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

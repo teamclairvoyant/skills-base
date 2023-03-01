@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
     property = "id")
 public class Skill extends Persistable {
 
-    @Column(name = "skill_name")
+    @Column(name = "skill_name", unique = true)
     private String skillName;
     private String description;
     @Column(name = "is_active")

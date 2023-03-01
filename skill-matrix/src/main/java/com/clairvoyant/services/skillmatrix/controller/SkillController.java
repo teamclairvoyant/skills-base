@@ -1,8 +1,7 @@
 package com.clairvoyant.services.skillmatrix.controller;
 
-
+import com.clairvoyant.services.skillmatrix.dto.SkillDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
-import com.clairvoyant.services.skillmatrix.model.Skill;
 import com.clairvoyant.services.skillmatrix.service.SkillService;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -30,24 +29,22 @@ public class SkillController {
 
     //get all skills
     @GetMapping
-    public List<Skill> findAll() {
-
+    public List<SkillDto> findAll() {
         return skillService.findAll();
     }
 
     //add or update skill to skills table
     @PutMapping
-    public Skill addOrUpdateSkill(@RequestBody Skill skill) {
+    public SkillDto addOrUpdateSkill(@RequestBody SkillDto skillDto) {
 
-        LOGGER.info(skill);
+        LOGGER.info("addOrUpdateSkill request: " + skillDto);
 
-        return skillService.addOrUpdateSkill(skill);
+        return skillService.addOrUpdateSkill(skillDto);
     }
 
     //get skill
     @GetMapping("/{skillId}")
-    public Skill find(@PathVariable String skillId) {
-
+    public SkillDto find(@PathVariable String skillId) {
         return skillService.findSkill(skillId);
     }
 

@@ -2,6 +2,8 @@ package com.clairvoyant.services.skillmatrix.controller;
 
 import com.clairvoyant.services.skillmatrix.dto.QualificationDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
+import com.clairvoyant.services.skillmatrix.exceptions.DuplicateNameException;
+import com.clairvoyant.services.skillmatrix.exceptions.ResourceNotFoundException;
 import com.clairvoyant.services.skillmatrix.service.QualificationService;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,32 @@ public class QualificationControllerTest {
     }
 
     @Test
+    public void addOrUpdateQualificationWithResourceNotFoundException() {
+        QualificationDto qualificationDto = new QualificationDto();
+        qualificationDto.setId("any-id");
+        qualificationDto.setName("any-name");
+        qualificationDto.setDescription("any-desc");
+
+        Mockito.when(qualificationService.addOrUpdateQualification(qualificationDto)).thenThrow(ResourceNotFoundException.class);
+        Assert.assertThrows(ResourceNotFoundException.class, () -> {
+            qualificationController.addOrUpdateQualification(qualificationDto);
+        });
+    }
+
+    @Test
+    public void addOrUpdateQualificationWithDuplicateNameException() {
+        QualificationDto qualificationDto = new QualificationDto();
+        qualificationDto.setId("any-id");
+        qualificationDto.setName("any-name");
+        qualificationDto.setDescription("any-desc");
+
+        Mockito.when(qualificationService.addOrUpdateQualification(qualificationDto)).thenThrow(DuplicateNameException.class);
+        Assert.assertThrows(DuplicateNameException.class, () -> {
+            qualificationController.addOrUpdateQualification(qualificationDto);
+        });
+    }
+
+    @Test
     public void findQualificationById() {
         QualificationDto qualificationDto = new QualificationDto();
         qualificationDto.setId("any-id");
@@ -71,7 +99,23 @@ public class QualificationControllerTest {
     }
 
     @Test
+    public void findQualificationByIdWithResourceNotFoundException() {
+        Mockito.when(qualificationService.findQualification("any-id")).thenThrow(ResourceNotFoundException.class);
+        Assert.assertThrows(ResourceNotFoundException.class, () -> {
+            qualificationController.find("any-id");
+        });
+    }
+
+    @Test
     public void deleteQualification() {
         Assert.assertEquals(Status.SUCCESS, qualificationController.deleteQualification("any-id"));
+    }
+
+    @Test
+    public void deleteQualificationWithResourceNotFoundException() {
+        Mockito.doThrow(ResourceNotFoundException.class).when(qualificationService).deleteQualification("any-id");
+        Assert.assertThrows(ResourceNotFoundException.class, () -> {
+            qualificationController.deleteQualification("any-id");
+        });
     }
 }

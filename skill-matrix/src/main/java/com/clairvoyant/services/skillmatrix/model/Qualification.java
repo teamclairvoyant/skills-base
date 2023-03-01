@@ -23,6 +23,7 @@ import lombok.Setter;
         property = "id")
 public class Qualification extends Persistable {
 
+    @Column(unique = true)
     private String name;
     private String description;
     @Column(name = "is_active")

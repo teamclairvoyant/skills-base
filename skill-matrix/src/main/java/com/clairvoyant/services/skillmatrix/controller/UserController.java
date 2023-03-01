@@ -7,8 +7,6 @@ import com.clairvoyant.services.skillmatrix.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("user")
 public class UserController {
-    private static final Logger LOGGER = LogManager.getLogger(UserController.class);
-    @Autowired
+
     private UserService userService;
 
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
-    public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive) {
+    public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive ) {
         return userService.findAll(isActive);
     }
 
@@ -39,7 +41,6 @@ public class UserController {
     @PostMapping
     public Status addOrUpdateUser(@Valid @RequestBody UserDto userDto) {
 
-        LOGGER.info(userDto);
         return userService.addOrUpdateUser(userDto);
 
     }

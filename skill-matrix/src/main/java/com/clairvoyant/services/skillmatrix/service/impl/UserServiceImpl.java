@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserSearchResponseDto search(int page, int size, List<UserSearchQuery> queries) {
-        int pageNo = page-1;
+        int pageNo = page - 1;
         Pageable pageable = PageRequest.of(pageNo,size, Sort.Direction.ASC, "name");
         var wrapper = new Object() {
             String name = "";
@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
         List<UserResponseDto> userResponseDtoList = getUserMappings(pagedUser);
 
         var userSearchResponseDto = new UserSearchResponseDto();
-        userSearchResponseDto.setCurrentPage(searchedUser.getNumber()+1);
+        userSearchResponseDto.setCurrentPage(searchedUser.getNumber() + 1);
         userSearchResponseDto.setTotalPages(searchedUser.getTotalPages());
         userSearchResponseDto.setUserResponseDto(userResponseDtoList);
         userSearchResponseDto.setTotalCount(searchedUser.getTotalElements());

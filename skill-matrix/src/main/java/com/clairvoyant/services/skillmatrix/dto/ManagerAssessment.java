@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Builder
 public class ManagerAssessment {
-  private int skillLevel;
-  private String  managerName;
+    private int skillLevel;
+    private String managerName;
 }

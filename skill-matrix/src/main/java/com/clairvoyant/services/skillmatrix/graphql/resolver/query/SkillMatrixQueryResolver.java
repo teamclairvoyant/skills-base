@@ -13,7 +13,7 @@ public class SkillMatrixQueryResolver implements GraphQLQueryResolver {
     @Autowired
     private SkillMatrixService skillMatrixService;
 
-    public SkillMatrixResponse getSkillMatrix(String userId, List<String>categoryIds) {
+    public SkillMatrixResponse getSkillMatrix(String userId, List<String> categoryIds) {
 
         return skillMatrixService.getSkills(userId, categoryIds);
     }

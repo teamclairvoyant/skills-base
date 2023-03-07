@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Builder
 public class SelfAssessment {
-   private int skillLevel;
+    private int skillLevel;
 
 }

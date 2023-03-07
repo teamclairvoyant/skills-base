@@ -1,7 +1,6 @@
 package com.clairvoyant.services.skillmatrix.service;
 
 import com.clairvoyant.services.skillmatrix.dto.SkillMatrixResponse;
-
 import java.util.List;
 
 public interface SkillMatrixService {

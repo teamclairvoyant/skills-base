@@ -1,16 +1,22 @@
 package com.clairvoyant.services.skillmatrix.service.impl;
 
-import com.clairvoyant.services.skillmatrix.dto.*;
+import com.clairvoyant.services.skillmatrix.dto.AveragedRatings;
+import com.clairvoyant.services.skillmatrix.dto.ManagerAssessment;
+import com.clairvoyant.services.skillmatrix.dto.SelfAssessment;
+import com.clairvoyant.services.skillmatrix.dto.SkillCategoryMatrixList;
+import com.clairvoyant.services.skillmatrix.dto.SkillMatrixList;
+import com.clairvoyant.services.skillmatrix.dto.SkillMatrixResponse;
 import com.clairvoyant.services.skillmatrix.model.SkillAssessment;
 import com.clairvoyant.services.skillmatrix.model.SkillCategory;
 import com.clairvoyant.services.skillmatrix.repository.SkillAssessmentRepository;
 import com.clairvoyant.services.skillmatrix.repository.SkillCategoryRepository;
 import com.clairvoyant.services.skillmatrix.repository.UserRepository;
 import com.clairvoyant.services.skillmatrix.service.SkillMatrixService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
 
 @Component
 public class SkillMatrixServiceImpl implements SkillMatrixService {
@@ -103,6 +109,8 @@ public class SkillMatrixServiceImpl implements SkillMatrixService {
                 break;
             case HIGHLY_SKILLED:
                 skillRating = 5;
+                break;
+            default: skillRating = -1;
                 break;
         }
 

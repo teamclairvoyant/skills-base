@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Builder
 public class AveragedRatings {
-   private float skillLevel;
+    private float skillLevel;
 
 }

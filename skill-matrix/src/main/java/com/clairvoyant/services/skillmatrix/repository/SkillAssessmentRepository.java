@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SkillAssessmentRepository extends JpaRepository<SkillAssessment,String> {
 
-    SkillAssessment findBySkillCategoryId(String skillCategoryId);
+    List<SkillAssessment> findBySkillCategoryId(String skillCategoryId);
 
     List<SkillAssessment> findByAssessmentId(String skillCategoryId);
 }

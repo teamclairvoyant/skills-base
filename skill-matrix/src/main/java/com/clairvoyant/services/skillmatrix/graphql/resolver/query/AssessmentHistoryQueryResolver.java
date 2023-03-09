@@ -1,10 +1,8 @@
 package com.clairvoyant.services.skillmatrix.graphql.resolver.query;
 
 import com.clairvoyant.services.skillmatrix.dto.AssessmentHistoryResponse;
-
 import com.clairvoyant.services.skillmatrix.service.AssessmentHistoryService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +14,7 @@ public class AssessmentHistoryQueryResolver implements GraphQLQueryResolver {
 
 
     public AssessmentHistoryResponse getAssessmentHistory(String userId, String assessmentId) {
-        return assessmentHistoryService.getAssessmentHistory(userId,assessmentId);
+        return assessmentHistoryService.getAssessmentHistory(userId, assessmentId);
     }
 
 }

@@ -2,8 +2,6 @@ package com.clairvoyant.services.skillmatrix.service.impl;
 
 import com.clairvoyant.services.skillmatrix.dto.AssessmentHistory;
 import com.clairvoyant.services.skillmatrix.dto.AssessmentHistoryResponse;
-import com.clairvoyant.services.skillmatrix.dto.ManagerAssessment;
-import com.clairvoyant.services.skillmatrix.dto.SelfAssessment;
 import com.clairvoyant.services.skillmatrix.model.SkillAssessment;
 import com.clairvoyant.services.skillmatrix.repository.SkillAssessmentRepository;
 import com.clairvoyant.services.skillmatrix.service.AssessmentHistoryService;
@@ -34,10 +32,10 @@ public class AssessmentHistoryServiceImpl implements AssessmentHistoryService {
         Set<String> skillIds = new HashSet<>();
 
         for (SkillAssessment skillAssessment : skillAssessmentList) {
-            if(!categoryIds.contains(skillAssessment.getSkillCategory().getCategory().getId())){
+            if (!categoryIds.contains(skillAssessment.getSkillCategory().getCategory().getId())) {
                 categoryIds.add(skillAssessment.getSkillCategory().getCategory().getId());
             }
-            if(!skillIds.contains(skillAssessment.getSkillCategory().getSkill().getId())){
+            if (!skillIds.contains(skillAssessment.getSkillCategory().getSkill().getId())) {
                 skillIds.add(skillAssessment.getSkillCategory().getSkill().getId());
             }
         }
@@ -48,7 +46,9 @@ public class AssessmentHistoryServiceImpl implements AssessmentHistoryService {
         boolean selfAssessmentFlag = false;
         boolean supervisorAssessmentFlag = false;
         for (SkillAssessment skillAssessment : skillAssessmentList) {
-            if(selfAssessmentFlag && supervisorAssessmentFlag) break;
+            if (selfAssessmentFlag && supervisorAssessmentFlag) {
+                break;
+            }
 
             AssessmentHistory assessmentHistory = new AssessmentHistory();
             if (!selfAssessmentFlag && userId.equals(skillAssessment.getAssessment().getUser().getId())) {
@@ -60,7 +60,7 @@ public class AssessmentHistoryServiceImpl implements AssessmentHistoryService {
                 assessmentHistory.setSkills(skillIds.size());
 
                 selfAssessmentFlag = true;
-            } else if(!supervisorAssessmentFlag){
+            } else if (!supervisorAssessmentFlag) {
                 assessmentHistory.setType(ASSESSMENT_STATUS_SUPERVISORASSESSMENT);
                 assessmentHistory.setComments(skillAssessment.getAssessment().getComments());
                 assessmentHistory.setCompletedBy(skillAssessment.getAssessment().getUser().getId());

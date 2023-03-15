@@ -1,15 +1,15 @@
 package com.clairvoyant.services.skillmatrix.service;
 
-import com.clairvoyant.services.skillmatrix.model.Skill;
+import com.clairvoyant.services.skillmatrix.dto.SkillDto;
 import java.util.List;
 
 public interface SkillService {
 
-    List<Skill> findAll();
+    List<SkillDto> findAll();
 
-    Skill addOrUpdateSkill(Skill skill);
+    SkillDto addOrUpdateSkill(SkillDto skillDto);
 
-    Skill findSkill(String skillId);
+    SkillDto findSkill(String skillId);
 
     void deleteSkill(String skillId);
 

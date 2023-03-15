@@ -7,29 +7,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+//qualification model
 @Entity
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "skills")
+@Table(name = "qualification")
 @JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
-public class Skill extends Persistable {
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Qualification extends Persistable {
 
-    @Column(name = "skill_name", unique = true)
-    private String skillName;
+    @Column(unique = true)
+    private String name;
     private String description;
     @Column(name = "is_active")
     private boolean isActive;
 }
-
-
-
-
-

@@ -1,5 +1,6 @@
 package com.clairvoyant.services.skillmatrix.configuration;
 
+import com.clairvoyant.services.skillmatrix.dto.AuthenticationEntryPointJwt;
 import com.clairvoyant.services.skillmatrix.security.AuthorizationFilter;
 import com.clairvoyant.services.skillmatrix.service.impl.UserDetailsServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceDefault userDetailsServiceDefault;
 
+    @Autowired
+    private AuthenticationEntryPointJwt authenticationEntryPoint;
+
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsServiceDefault).passwordEncoder(passwordEncoder());
@@ -37,15 +41,13 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/security", "/swagger-ui/**", "/swagger-ui",
-            "/webjars/**", "/skillbase/login");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/skillbase/login", "/swagger-ui.html").permitAll().anyRequest().authenticated().and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/skillbase/login", "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
+                        "/configuration/security", "/swagger-ui/**", "/swagger-ui", "/webjars/**", "/swagger-ui.html")
+                .permitAll().anyRequest().authenticated().and().exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

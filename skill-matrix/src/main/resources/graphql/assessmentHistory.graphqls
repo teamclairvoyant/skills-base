@@ -1,0 +1,18 @@
+type AssessmentHistoryResponse{
+    assessmentHistoryList:[AssessmentHistory]!
+
+}
+
+type AssessmentHistory {
+    type:String!
+    skillSet:String!
+    categories:Int!
+    skills:Int!
+    comments:String!
+    completedBy:String!
+    completionDate:String!
+}
+
+extend type Query{
+    getAssessmentHistory(userId:String!,assessmentId:String!):AssessmentHistoryResponse!
+}

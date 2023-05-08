@@ -16,4 +16,15 @@ public class LoginResponseDto {
     private User reportingManager;
     private String grade;
     private String token;
+
+    @Override
+    public String toString() {
+        return "LoginResponseDto{"
+                + "name='" + name + '\''
+                + ", emailAddress='" + "********" + '\''
+                + ", reportingManager=" + reportingManager
+                + ", grade='" + grade + '\''
+                + ", token='" + token + '\''
+                + '}';
+    }
 }

@@ -9,4 +9,12 @@ public class LoginDto {
 
     private String emailAddress;
     private String password;
+
+    @Override
+    public String toString() {
+        return "LoginDto{"
+                + "emailAddress='" + "*****" + '\''
+                + ", password='" + "*****" + '\''
+                + '}';
+    }
 }

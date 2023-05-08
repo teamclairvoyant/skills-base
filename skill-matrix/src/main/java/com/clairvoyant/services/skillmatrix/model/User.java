@@ -47,4 +47,13 @@ public class User extends Persistable {
     @Column(name = "is_active", length = 45)
     private boolean isActive;
 
+    @Override
+    public String toString() {
+        return "User{"
+                + "name='" + name + '\''
+                + ", grade='" + grade + '\''
+                + ", reportingManager=" + reportingManager
+                + ", isActive=" + isActive
+                + '}';
+    }
 }

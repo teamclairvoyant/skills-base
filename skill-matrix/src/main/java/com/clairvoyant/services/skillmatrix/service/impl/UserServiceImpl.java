@@ -5,6 +5,8 @@ import com.clairvoyant.services.skillmatrix.dto.UserDesignationDto;
 import com.clairvoyant.services.skillmatrix.dto.UserDto;
 import com.clairvoyant.services.skillmatrix.dto.UserResponseDto;
 import com.clairvoyant.services.skillmatrix.dto.UserRoleDto;
+import com.clairvoyant.services.skillmatrix.dto.UserSearchQuery;
+import com.clairvoyant.services.skillmatrix.dto.UserSearchResponseDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.exceptions.ResourceNotFoundException;
 import com.clairvoyant.services.skillmatrix.model.Category;
@@ -26,6 +28,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -52,29 +58,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Status addOrUpdateUser(UserDto userDto) {
-        User user = new User();
+        var user = new User();
         if (StringUtils.hasText(userDto.getId())) {
             Optional<User> result = userRepository.findById(userDto.getId());
             if (result.isPresent()) {
-                if (StringUtils.hasLength(userDto.getName())) {
-                    result.get().setName(userDto.getName());
-                }
-                if (StringUtils.hasLength(userDto.getEmailAddress())) {
-                    result.get().setEmailAddress(userDto.getEmailAddress());
-                }
-                if (StringUtils.hasLength(userDto.getPassword())) {
-                    result.get().setPassword(PasswordUtil.encode(userDto.getPassword()));
-                }
-                if (StringUtils.hasLength(userDto.getGrade())) {
-                    result.get().setGrade(userDto.getGrade());
-                }
-            }
-            try {
+                result.get().setName(userDto.getName());
+                result.get().setEmailAddress(userDto.getEmailAddress());
+                result.get().setPassword(PasswordUtil.encode(userDto.getPassword()));
+                result.get().setGrade(userDto.getGrade());
+
                 user = result.get();
                 userRepository.save(user);
                 return Status.SUCCESS;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                throw new ResourceNotFoundException("User does not exist with Id : " + userDto.getId());
             }
 
         } else {
@@ -90,27 +87,27 @@ public class UserServiceImpl implements UserService {
                 }
                 user.setActive(true);
                 user.setPassword(PasswordUtil.encode(user.getPassword()));
-                User savedUser = userRepository.save(user);
+                var savedUser = userRepository.save(user);
                 userDesignationService.addOrUpdateUserDesignation(
-                    UserDesignationDto
-                        .builder()
-                        .userId(savedUser.getId())
-                        .designationId(userDto.getUserDesignationId())
-                        .build()
+                        UserDesignationDto
+                                .builder()
+                                .userId(savedUser.getId())
+                                .designationId(userDto.getUserDesignationId())
+                                .build()
                 );
                 userRoleService.addOrUpdateUserRole(
-                    UserRoleDto
-                        .builder()
-                        .userId(savedUser.getId())
-                        .roleIds(userDto.getUserRoleIds())
-                        .build()
+                        UserRoleDto
+                                .builder()
+                                .userId(savedUser.getId())
+                                .roleIds(userDto.getUserRoleIds())
+                                .build()
                 );
                 userCategoryService.addOrUpdateUserCategory(
-                    UserCategoryDto
-                        .builder()
-                        .userId(savedUser.getId())
-                        .categoryIds(userDto.getUserCategoryIds())
-                        .build()
+                        UserCategoryDto
+                                .builder()
+                                .userId(savedUser.getId())
+                                .categoryIds(userDto.getUserCategoryIds())
+                                .build()
                 );
                 return Status.SUCCESS;
             } catch (Exception e) {
@@ -131,27 +128,74 @@ public class UserServiceImpl implements UserService {
         if (result.isEmpty()) {
             throw new ResourceNotFoundException("User not found");
         }
-        UserResponseDto userResponseDto = new UserResponseDto();
+        var userResponseDto = new UserResponseDto();
         BeanUtils.copyProperties(result.get(), userResponseDto);
-        UserDesignationMapping userDesignationMapping = userDesignationService.findUserDesignationMappingByUserId(id);
-        Designation designation = userDesignationMapping.getDesignation();
+        var userDesignationMapping = userDesignationService.findUserDesignationMappingByUserId(id);
+        var designation = userDesignationMapping.getDesignation();
         userResponseDto.setDesignation(designation);
         Optional<List<UserRoleMapping>> userRoles = userRoleService.findUserRoleMappingByUserId(id);
         List<Role> roles = new ArrayList<>();
-        for (UserRoleMapping userRoleMapping : userRoles.get()) {
-            Role role = userRoleMapping.getRoles();
-            roles.add(role);
+
+        if (userRoles.isPresent()) {
+            for (UserRoleMapping userRoleMapping : userRoles.get()) {
+                var role = userRoleMapping.getRoles();
+                roles.add(role);
+            }
+        } else {
+            throw new ResourceNotFoundException("Roles is not available for user : " + result.get().getId());
         }
         userResponseDto.setUserRoles(roles);
 
         Optional<List<UserCategoryMapping>> userCategories = userCategoryService.findUserCategoryMappingByUserId(id);
         List<Category> categories = new ArrayList<>();
-        for (UserCategoryMapping userCategoryMapping : userCategories.get()) {
-            Category category = userCategoryMapping.getCategory();
-            categories.add(category);
+
+        if (userCategories.isPresent()) {
+
+            for (UserCategoryMapping userCategoryMapping : userCategories.get()) {
+                var category = userCategoryMapping.getCategory();
+                categories.add(category);
+            }
+        } else {
+            throw new ResourceNotFoundException("Categories are not available for user : " + result.get().getId());
         }
+
         userResponseDto.setUserCategories(categories);
         return userResponseDto;
+    }
+
+    /**
+     * @param page    - It is a page number on which data should be paginated.
+     * @param size    - Total number of records to be displayed on particular page
+     * @param queries - Contains parameter name and value to be searched .
+     * @return SearchUserResponse - It contains info about total number of records , current page
+     *                              UserResponse , total No of pages .
+     */
+    @Override
+    public UserSearchResponseDto search(int page, int size, List<UserSearchQuery> queries) {
+        int pageNo = page - 1;
+        Pageable pageable = PageRequest.of(pageNo,size, Sort.Direction.ASC, "name");
+        var wrapper = new Object() {
+            String name = "";
+            String email = "";
+        };
+        queries.stream().forEach(q -> {
+            if ("name".equals(q.getColumn())) {
+                wrapper.name = q.getValue();
+            } else if ("email".equals(q.getColumn())) {
+                wrapper.email = q.getValue();
+            }
+        });
+        Page<User> searchedUser = userRepository.search(wrapper.name, wrapper.email,pageable);
+        List<User> pagedUser = searchedUser.getContent().stream().distinct().collect(Collectors.toList());
+        List<UserResponseDto> userResponseDtoList = getUserMappings(pagedUser);
+
+        var userSearchResponseDto = new UserSearchResponseDto();
+        userSearchResponseDto.setCurrentPage(searchedUser.getNumber() + 1);
+        userSearchResponseDto.setTotalPages(searchedUser.getTotalPages());
+        userSearchResponseDto.setUserResponseDto(userResponseDtoList);
+        userSearchResponseDto.setTotalCount(searchedUser.getTotalElements());
+
+        return userSearchResponseDto;
     }
 
     @Override
@@ -159,7 +203,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optUser = userRepository.findById(userId);
         if (optUser.isPresent()) {
             try {
-                User user = optUser.get();
+                var user = optUser.get();
                 user.setActive(false);
                 userRepository.save(user);
                 return Status.SUCCESS;
@@ -180,25 +224,37 @@ public class UserServiceImpl implements UserService {
         } else {
             users = userRepository.findByIsActive(true);
         }
+
+        return getUserMappings(users);
+    }
+
+    private List<UserResponseDto> getUserMappings(List<User> users) {
+
         List<UserResponseDto> userResponse = new ArrayList<>();
         List<UserDesignationMapping> userDesignationMappings = userDesignationService.findAllUserDesignationMappings();
         List<UserRoleMapping> userRoleMappings = userRoleService.findAllUserRoleMapping();
         List<UserCategoryMapping> userCategoryMappings = userCategoryService.findAllUserCategoryMapping();
         for (User user : users) {
-            UserResponseDto userResponseDto = new UserResponseDto();
+            var userResponseDto = new UserResponseDto();
             BeanUtils.copyProperties(user, userResponseDto);
 
-            Designation designation = userDesignationMappings.stream()
-                .filter(userDesignationMapping -> user.getId().equals(userDesignationMapping.getUser().getId()))
-                .map(userDesignationMapping -> userDesignationMapping.getDesignation()).findFirst().get();
+            Designation designation;
+            Optional<Designation> optionalDesignation = userDesignationMappings.stream()
+                    .filter(userDesignationMapping -> user.getId().equals(userDesignationMapping.getUser().getId()))
+                    .map(UserDesignationMapping::getDesignation).findFirst();
+            if (optionalDesignation.isPresent()) {
+                designation = optionalDesignation.get();
+            } else {
+                throw new ResourceNotFoundException("Designation is not mapped for User Id" + user.getId());
+            }
 
             List<Role> roles = userRoleMappings.stream()
-                .filter(userRoleMapping -> user.getId().equals(userRoleMapping.getUser().getId()))
-                .map(userRoleMapping -> userRoleMapping.getRoles()).collect(Collectors.toList());
+                    .filter(userRoleMapping -> user.getId().equals(userRoleMapping.getUser().getId()))
+                    .map(UserRoleMapping::getRoles).collect(Collectors.toList());
 
             List<Category> categories = userCategoryMappings.stream()
-                .filter(userCategoryMapping -> user.getId().equals(userCategoryMapping.getUser().getId()))
-                .map(userCategoryMapping -> userCategoryMapping.getCategory()).collect(Collectors.toList());
+                    .filter(userCategoryMapping -> user.getId().equals(userCategoryMapping.getUser().getId()))
+                    .map(UserCategoryMapping::getCategory).collect(Collectors.toList());
 
             userResponseDto.setDesignation(designation);
             userResponseDto.setUserRoles(roles);
@@ -206,5 +262,6 @@ public class UserServiceImpl implements UserService {
             userResponse.add(userResponseDto);
         }
         return userResponse;
+
     }
 }

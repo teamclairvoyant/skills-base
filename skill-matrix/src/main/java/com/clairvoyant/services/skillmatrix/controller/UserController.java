@@ -2,6 +2,8 @@ package com.clairvoyant.services.skillmatrix.controller;
 
 import com.clairvoyant.services.skillmatrix.dto.UserDto;
 import com.clairvoyant.services.skillmatrix.dto.UserResponseDto;
+import com.clairvoyant.services.skillmatrix.dto.UserSearchDto;
+import com.clairvoyant.services.skillmatrix.dto.UserSearchResponseDto;
 import com.clairvoyant.services.skillmatrix.enums.Status;
 import com.clairvoyant.services.skillmatrix.service.UserService;
 import java.util.List;
@@ -31,6 +33,11 @@ public class UserController {
     @GetMapping
     public List<UserResponseDto> getAllUsers(@RequestParam(name = "isActive",defaultValue = "true") Optional<Boolean> isActive ) {
         return userService.findAll(isActive);
+    }
+
+    @GetMapping("/search")
+    public UserSearchResponseDto search(@RequestBody UserSearchDto userSearchDto) {
+        return userService.search(userSearchDto.getPage(), userSearchDto.getSize(), userSearchDto.getQueries());
     }
 
     @GetMapping("/{userId}")

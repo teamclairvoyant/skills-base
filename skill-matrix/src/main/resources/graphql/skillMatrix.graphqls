@@ -1,0 +1,31 @@
+extend type Query {
+    getSkillMatrix(userId:String!, categoryIds:[String]!):SkillMatrixResponse!
+}
+
+type SkillMatrixResponse{
+    skillMatrixLists:[SkillMatrixList]!
+
+}
+type SkillMatrixList{
+    categoryId:String!
+    categoryName:String!
+    skillCategoryMatrixList:[SkillCategoryMatrixList]!
+
+}
+type SkillCategoryMatrixList{
+    skillCategoryId:String!
+    skillName:String!
+    averagedRatings:AveragedRatings
+    selfAssessment:SelfAssessment
+    managerAssessment:ManagerAssessment
+}
+type AveragedRatings{
+    skillLevel: Float
+}
+type SelfAssessment{
+    skillLevel:Int
+}
+type ManagerAssessment{
+    skillLevel:Int
+    managerName:String
+}
